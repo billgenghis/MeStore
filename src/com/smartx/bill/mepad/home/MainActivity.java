@@ -29,10 +29,10 @@ public class MainActivity extends Activity {
 	TextView t1, t2, t3, t4;
 	List<TextView> tViews;
 
-	private int offset = 0;// 动画图片偏移量
+//	private int offset = 0;// 动画图片偏移量
 //	private int currIndex = 0;// 当前页卡编号
-	private int bmpW;// 动画图片宽度
-	private ImageView cursor;// 动画图片
+//	private int bmpW;// 动画图片宽度
+//	private ImageView cursor;// 动画图片
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
 		initdatas();
-		InitImageView();
+//		InitImageView();
 		initPagerViewer();
 		initTextView();
 
@@ -51,12 +51,13 @@ public class MainActivity extends Activity {
 
 	private void initdatas(){
 		pager = (ViewPager) findViewById(R.id.viewpage);
-		cursor = (ImageView) findViewById(R.id.cursor);
+//		cursor = (ImageView) findViewById(R.id.cursor);
 		tViews = new ArrayList<TextView>();
 		t1 = (TextView) findViewById(R.id.home_me);
 		t2 = (TextView) findViewById(R.id.home_ranking);
 		t3 = (TextView) findViewById(R.id.home_category);
 		t4 = (TextView) findViewById(R.id.home_special);
+		t1.setTextColor(getResources().getColor(android.R.color.black));
 		tViews.add(t1);
 		tViews.add(t2);
 		tViews.add(t3);
@@ -88,23 +89,23 @@ public class MainActivity extends Activity {
 
 		pager.setAdapter(new MyPagerAdapter(list));
 		pager.setCurrentItem(0);
-		pager.setOnPageChangeListener(new MyOnPageChangeListener(cursor));
+		pager.setOnPageChangeListener(new MyOnPageChangeListener(this,tViews));
 	}
 
-	/**
-	 * 初始化动画
-	 */
-	private void InitImageView() {
-		bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
-				.getWidth();// 获取图片宽度
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		int screenW = dm.widthPixels;// 获取分辨率宽度
-		offset = (screenW / 14 - bmpW) / 2;// 计算偏移量
-		Matrix matrix = new Matrix();
-		matrix.postTranslate(offset, 0);
-		cursor.setImageMatrix(matrix);// 设置动画初始位置
-	}
+//	/**
+//	 * 初始化动画
+//	 */
+//	private void InitImageView() {
+//		bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
+//				.getWidth();// 获取图片宽度
+//		DisplayMetrics dm = new DisplayMetrics();
+//		getWindowManager().getDefaultDisplay().getMetrics(dm);
+//		int screenW = dm.widthPixels;// 获取分辨率宽度
+//		offset = (screenW / 14 - bmpW) / 2;// 计算偏移量
+//		Matrix matrix = new Matrix();
+//		matrix.postTranslate(offset, 0);
+//		cursor.setImageMatrix(matrix);// 设置动画初始位置
+//	}
 
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {

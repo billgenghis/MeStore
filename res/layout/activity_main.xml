@@ -68,13 +68,13 @@
         </SearchView>
     </LinearLayout>
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/cursor"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#EEEEEE"
         android:scaleType="matrix"
-        android:src="@drawable/roller" />
+        android:src="@drawable/roller" /> -->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpage"

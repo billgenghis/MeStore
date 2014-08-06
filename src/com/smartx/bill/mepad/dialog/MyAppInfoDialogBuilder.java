@@ -70,18 +70,18 @@ public class MyAppInfoDialogBuilder extends AlertDialog.Builder {
 	private void initPagerViewer() {
 		pager = (ViewPager) mActivity.findViewById(R.id.dialog_viewpage);
 		final ArrayList<View> list = new ArrayList<View>();
-		Intent intent = new Intent(mContext, Me.class);
-		list.add(getView("Me", intent));
-		Intent intent2 = new Intent(mContext, Me.class);
-		list.add(getView("Me", intent2));
-		Intent intent3 = new Intent(mContext, Me.class);
-		list.add(getView("Me", intent3));
-		Intent intent4 = new Intent(mContext, Me.class);
-		list.add(getView("Me", intent4));
-
-		pager.setAdapter(new MyPagerAdapter(list));
-		pager.setCurrentItem(0);
-		pager.setOnPageChangeListener(new MyOnPageChangeListener(cursor));
+//		Intent intent = new Intent(mContext, Me.class);
+//		list.add(getView("Me", intent));
+//		Intent intent2 = new Intent(mContext, Me.class);
+//		list.add(getView("Me", intent2));
+//		Intent intent3 = new Intent(mContext, Me.class);
+//		list.add(getView("Me", intent3));
+//		Intent intent4 = new Intent(mContext, Me.class);
+//		list.add(getView("Me", intent4));
+//
+//		pager.setAdapter(new MyPagerAdapter(list));
+//		pager.setCurrentItem(0);
+//		pager.setOnPageChangeListener(new MyOnPageChangeListener(cursor,this,));
 	}
 
 	/**
