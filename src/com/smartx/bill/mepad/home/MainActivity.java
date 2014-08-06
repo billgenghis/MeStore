@@ -1,6 +1,7 @@
 package com.smartx.bill.mepad.home;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.LocalActivityManager;
@@ -11,13 +12,13 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.R;
 import com.smartx.bill.mepad.adapter.MyPagerAdapter;
+import com.smartx.bill.mepad.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.listener.MyOnPageChangeListener;
 
 public class MainActivity extends Activity {
@@ -26,9 +27,10 @@ public class MainActivity extends Activity {
 	LocalActivityManager manager = null;
 	ViewPager pager = null;
 	TextView t1, t2, t3, t4;
+	List<TextView> tViews;
 
 	private int offset = 0;// 动画图片偏移量
-	private int currIndex = 0;// 当前页卡编号
+//	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private ImageView cursor;// 动画图片
 
@@ -40,43 +42,49 @@ public class MainActivity extends Activity {
 		context = MainActivity.this;
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
-
+		initdatas();
 		InitImageView();
-		initTextView();
 		initPagerViewer();
+		initTextView();
 
 	}
 
+	private void initdatas(){
+		pager = (ViewPager) findViewById(R.id.viewpage);
+		cursor = (ImageView) findViewById(R.id.cursor);
+		tViews = new ArrayList<TextView>();
+		t1 = (TextView) findViewById(R.id.home_me);
+		t2 = (TextView) findViewById(R.id.home_ranking);
+		t3 = (TextView) findViewById(R.id.home_category);
+		t4 = (TextView) findViewById(R.id.home_special);
+		tViews.add(t1);
+		tViews.add(t2);
+		tViews.add(t3);
+		tViews.add(t4);
+	}
 	/**
 	 * 初始化标题
 	 */
 	private void initTextView() {
-		t1 = (TextView) findViewById(R.id.text1);
-		t2 = (TextView) findViewById(R.id.text2);
-		t3 = (TextView) findViewById(R.id.text3);
-		t4 = (TextView) findViewById(R.id.text4);
-
-		t1.setOnClickListener(new MyOnClickListener(0));
-		t2.setOnClickListener(new MyOnClickListener(1));
-		t3.setOnClickListener(new MyOnClickListener(2));
-		t4.setOnClickListener(new MyOnClickListener(3));
-
+		t1.setOnClickListener(new MyHomeTextClickListener(0,pager,this,tViews));
+		t2.setOnClickListener(new MyHomeTextClickListener(1,pager,this,tViews));
+		t3.setOnClickListener(new MyHomeTextClickListener(2,pager,this,tViews));
+		t4.setOnClickListener(new MyHomeTextClickListener(3,pager,this,tViews));
 	}
 
 	/**
 	 * 初始化PageViewer
 	 */
 	private void initPagerViewer() {
-		pager = (ViewPager) findViewById(R.id.viewpage);
 		final ArrayList<View> list = new ArrayList<View>();
 		Intent intent = new Intent(context, Me.class);
 		list.add(getView("Me", intent));
-		Intent intent2 = new Intent(context, Me.class);
-		list.add(getView("Me", intent2));
+		Intent intent2 = new Intent(context, Ranking.class);
+		list.add(getView("Ranking", intent2));
 		Intent intent3 = new Intent(context, Me.class);
-		list.add(getView("Me", intent3));
+		list.add(getView("Category", intent3));
 		Intent intent4 = new Intent(context, Me.class);
-		list.add(getView("Me", intent4));
+		list.add(getView("Special", intent4));
 
 		pager.setAdapter(new MyPagerAdapter(list));
 		pager.setCurrentItem(0);
@@ -87,7 +95,6 @@ public class MainActivity extends Activity {
 	 * 初始化动画
 	 */
 	private void InitImageView() {
-		cursor = (ImageView) findViewById(R.id.cursor);
 		bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
 				.getWidth();// 获取图片宽度
 		DisplayMetrics dm = new DisplayMetrics();
@@ -113,8 +120,6 @@ public class MainActivity extends Activity {
 	 * @return
 	 */
 	private View getView(String id, Intent intent) {
-		manager.dispatchPause(true);
-		manager.dispatchResume();
 		return manager.startActivity(id, intent).getDecorView();
 	}
 
@@ -234,21 +239,21 @@ public class MainActivity extends Activity {
 //		}
 //	}
 //
-	/**
-	 * 头标点击监听
-	 */
-	public class MyOnClickListener implements View.OnClickListener {
-		private int index = 0;
-
-		public MyOnClickListener(int i) {
-			index = i;
-		}
-
-		@Override
-		public void onClick(View v) {
-			pager.setCurrentItem(index);
-		}
-	};
+//	/**
+//	 * 头标点击监听
+//	 */
+//	public class MyOnClickListener implements View.OnClickListener {
+//		private int index = 0;
+//
+//		public MyOnClickListener(int i) {
+//			index = i;
+//		}
+//
+//		@Override
+//		public void onClick(View v) {
+//			pager.setCurrentItem(index);
+//		}
+//	};
 
 	@Override
 	protected void onPause() {

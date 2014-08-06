@@ -3,9 +3,7 @@
     android:id="@+id/relativeLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="5dp" >
-    <!-- 
-    android:background="@drawable/border" -->
+    android:padding="@dimen/abc_action_bar_icon_vertical_padding" >
 
     <ImageView
         android:id="@+id/app_icon"
@@ -13,20 +11,21 @@
         android:layout_height="55dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="@string/item_imageView_discription"
-        android:src="@drawable/ic_launcher" />
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/item_imageiew_discription"
+        android:src="@drawable/weipinhui_icon" />
 
+    
     <TextView
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/app_download_count"
+        android:layout_alignLeft="@+id/app_score"
         android:layout_alignTop="@+id/app_icon"
         android:ellipsize="marquee"
-        android:text="@string/hello_world"
+        android:text="@string/dialog_app_title"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="18sp" />
-
     <RatingBar
         android:id="@+id/app_score"
         style="?android:attr/ratingBarStyleSmall"
