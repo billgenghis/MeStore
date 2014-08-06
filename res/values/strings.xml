@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">com.smartx.bill.mepad</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- home elements -->
+    <string name="home_me">我的</string>
+    <string name="home_ranking">排行</string>
+    <string name="home_category">分类</string>
+    <string name="home_special">专题</string>
+    <!-- gridView's item elements -->
+    <string name="item_imageView_discription">Just for the apps icon</string>
+    <string name="item_download_count">12万次下载</string>
+    <!-- dialog -->
+    <string name="alert_image_content_description">Alert Image</string>
+    <string name="dialog_app_interview">
+        		违章查询助手是开车出行必备工具，由汽车之家移动团队精心打造，
+        		免费绿色无广告，操作简单，方便您随时随地查询自己的车辆违章情况。\n 
+			功能介绍\n 
+			【最稳定】专业团队进行数据维护，第一时间解决各种问题 \n
+			【最安全】支持新浪微博、腾讯账号和汽车之家账号同步您的车辆信息在云端，信息永不丢失，多重体系保护您的信息安全 \n
+			【最及时】目前覆盖全国300多个城市，并在持续增加，我们会第一时间把对接稳定的城市发布到城市列表中，
+			无需重下客户端便可使用最新服务
+	</string>
+    <string name="dialog_app_update_log">
+        		1.新版界面全新升级，不变的简洁和流畅\n 
+       	 	4.优化了诸多细节，修复了一些bug
+    </string>
+    <string name="dialog_app_other_info">
+        		开发商:XX公司\n 
+        		更新时间:2014年6月28日 \n
+        		版本号:1.01 
+    </string>
+
+</resources>
