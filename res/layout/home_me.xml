@@ -13,8 +13,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="126dp"
-            android:layout_weight="0.05"
-            android:background="#EEEEEE" >
+            android:layout_weight="0.05" >
 
             <ImageView
                 android:id="@+id/me_setting"
@@ -26,7 +25,7 @@
                 android:layout_marginTop="14dp"
                 android:src="@drawable/abc_ab_bottom_solid_light_holo" />
 
-            <ImageView
+            <com.smartx.bill.mepad.myview.MyCircularImage
                 android:id="@+id/me_head_pic"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -54,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.71"
+                    android:background="@drawable/shape"
                     android:text="更新" />
 
                 <Button
@@ -62,128 +62,110 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.61"
+                    android:background="@drawable/shape"
                     android:text="已安装应用" />
             </LinearLayout>
         </RelativeLayout>
 
-      <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="0dp"
-          android:layout_weight="0.20"
-          android:background="#EEEEEE"
-          android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.20"
+            android:background="#EEEEEE"
+            android:orientation="vertical" >
 
-          <!--
-            <View
+
+            <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#EEEEEE" >
-            </View>
-          -->
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" >
 
-          <RelativeLayout
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="0.1" >
+                <TextView
+                    android:id="@+id/me_competitve_introduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="为XX准备的精品应用" />
 
-              <TextView
-                  android:id="@+id/me_competitve_introduce"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentLeft="true"
-                  android:layout_centerVertical="true"
-                  android:layout_marginLeft="20dp"
-                  android:text="为XX准备的精品应用" />
+                <TextView
+                    android:id="@+id/me_competitve_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="更多 >" />
+            </RelativeLayout>
 
-              <TextView
-                  android:id="@+id/me_competitve_more"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentRight="true"
-                  android:layout_centerVertical="true"
-                  android:layout_marginRight="15dp"
-                  android:text="更多 >" />
+            <com.smartx.bill.mepad.myview.MyGridView
+                android:id="@+id/me_competitive_girdview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
 
-          </RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.10"
+            android:background="#EEEEEE"
+            android:orientation="vertical" >
 
-          <com.smartx.bill.mepad.myview.MyGridView
-              android:id="@+id/me_competitive_girdview"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="0.9"
-              android:horizontalSpacing="10dp"
-              android:numColumns="auto_fit"
-              android:verticalSpacing="10dp" />
+            <Gallery
+                android:id="@+id/gallery1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="39dp"
+                android:layout_toRightOf="@+id/textView2" />
+        </LinearLayout>
 
-      </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.20"
+            android:background="#EEEEEE"
+            android:orientation="vertical" >
 
-      <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="0dp"
-          android:layout_weight="0.10"
-          android:background="#EEEEEE"
-          android:orientation="vertical" >
 
-       <Gallery
-                  android:id="@+id/gallery1"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentTop="true"
-                  android:layout_marginLeft="39dp"
-                  android:layout_toRightOf="@+id/textView2" />
-       </LinearLayout>
- <LinearLayout
-          android:layout_width="fill_parent"
-          android:layout_height="0dp"
-          android:layout_weight="0.20"
-          android:background="#EEEEEE"
-          android:orientation="vertical" >
-
-          <!--
-            <View
+            <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="#EEEEEE" >
-            </View>
-          -->
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1" >
 
-          <RelativeLayout
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="0.1" >
+                <TextView
+                    android:id="@+id/me_new_introduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:text="为XX准备的新品应用" />
 
-              <TextView
-                  android:id="@+id/me_new_introduce"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentLeft="true"
-                  android:layout_centerVertical="true"
-                  android:layout_marginLeft="20dp"
-                  android:text="为XX准备的新品应用" />
+                <TextView
+                    android:id="@+id/me_new_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:text="更多 >" />
+            </RelativeLayout>
 
-              <TextView
-                  android:id="@+id/me_new_more"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentRight="true"
-                  android:layout_centerVertical="true"
-                  android:layout_marginRight="15dp"
-                  android:text="更多 >" />
-
-             
-          </RelativeLayout>
-
-          <com.smartx.bill.mepad.myview.MyGridView
-              android:id="@+id/me_new_girdview"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="0.9"
-              android:horizontalSpacing="10dp"
-              android:numColumns="auto_fit"
-              android:verticalSpacing="10dp" />
-
-      </LinearLayout>
-      
+            <com.smartx.bill.mepad.myview.MyGridView
+                android:id="@+id/me_new_girdview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="10dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </com.smartx.bill.mepad.myview.MyScrollView>
