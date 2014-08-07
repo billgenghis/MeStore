@@ -34,5 +34,9 @@
     <string name="dialog_app_other_info">        		开发商:XX公司\n 
         		更新时间:2014年6月28日 \n
         		版本号:1.01 </string>
+    <string name="title_activity_category">Category</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

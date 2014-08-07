@@ -1,7 +1,10 @@
 package com.smartx.bill.mepad.home;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -14,12 +17,14 @@ import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
 import com.smartx.bill.mepad.adapter.GridviewAdapter;
+import com.smartx.bill.mepad.iostream.DownLoadDatas;
 
 public class Ranking extends Activity {
 
 
 	private GridView mRankingGridView;
 	private GridviewAdapter mRankingAdapter;
+	private JSONArray jsonArrayTop;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +34,14 @@ public class Ranking extends Activity {
 	}
 
 	private void initGridView() {
-
+		try {
+			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null,null,null);
+		} catch (IOException | JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mRankingAdapter = new GridviewAdapter(this,
-				new ArrayList<HashMap<String, Object>>());
+				jsonArrayTop);
 		mRankingGridView = (GridView) findViewById(R.id.ranking_gridView);
 		mRankingGridView.setNumColumns(3);
 		mRankingGridView.setAdapter(mRankingAdapter);
@@ -39,8 +49,6 @@ public class Ranking extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Toast.makeText(Ranking.this, mRankingAdapter.getItem(position),
-						Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

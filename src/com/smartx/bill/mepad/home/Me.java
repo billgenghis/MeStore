@@ -1,18 +1,19 @@
 package com.smartx.bill.mepad.home;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,7 +22,8 @@ import android.widget.Toast;
 import com.smartx.bill.mepad.R;
 import com.smartx.bill.mepad.adapter.GridviewAdapter;
 import com.smartx.bill.mepad.dialog.MyAppInfoDialogBuilder;
-import com.smartx.bill.mepad.dialog.QustomDialogBuilder;
+import com.smartx.bill.mepad.iostream.DownLoadDatas;
+import com.smartx.bill.mepad.matadata.IOStreamDatas;
 
 public class Me extends Activity {
 
@@ -29,6 +31,11 @@ public class Me extends Activity {
 	private GridviewAdapter mNewAdapter;
 	private GridView mCompetitiveGridView;
 	private GridView mNewGridView;
+	private Gallery mySpecialGallery;
+	private TextView mUpdateApps;
+	private TextView mAllApps;
+	private TextView mUpdateAppsNum;
+	private TextView mAllAppsNum;
 	private TextView mName;
 	private TextView mComIntroduce;
 	private TextView mComMore;
@@ -36,16 +43,21 @@ public class Me extends Activity {
 	private TextView mNewMore;
 	private ImageView mHeadPic;
 	private ImageView mSetting;
-	private Button mUpdateAppsButton;
-	private Button mAllAppsButton;
 	private Bundle savedInstanceState;
 	private Activity mActivity;
 	private Context mContext;
+	private JSONArray jsonArrayExcellent;
+	private JSONArray jsonArrayNew;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_me);
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 		this.savedInstanceState = savedInstanceState;
 		mActivity = this;
 		mContext = this;
@@ -61,14 +73,24 @@ public class Me extends Activity {
 		mNewMore = (TextView) findViewById(R.id.me_new_more);
 		mHeadPic = (ImageView) findViewById(R.id.me_head_pic);
 		mSetting = (ImageView) findViewById(R.id.me_setting);
-		mUpdateAppsButton = (Button) findViewById(R.id.me_update_apps_button);
-		mAllAppsButton = (Button) findViewById(R.id.me_all_apps_button);
-		mCompetitiveAdapter = new GridviewAdapter(this,
-				new ArrayList<HashMap<String, Object>>());
+		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
+		mAllApps = (TextView) findViewById(R.id.me_all_apps);
+		mUpdateAppsNum = (TextView) findViewById(R.id.me_update_apps_num);
+		mAllAppsNum = (TextView) findViewById(R.id.me_all_apps_num);
+		mySpecialGallery = (Gallery) findViewById(R.id.me_special_gallery);
+		try {
+			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
+					IOStreamDatas.POSITION_EXCELLENT, null);
+			jsonArrayNew = DownLoadDatas.getDatasFromServer(null, null,
+					IOStreamDatas.POSITION_NEW, null);
+		} catch (IOException | JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mCompetitiveAdapter = new GridviewAdapter(this, jsonArrayExcellent);
 		mCompetitiveGridView = (GridView) findViewById(R.id.me_competitive_girdview);
 
-		mNewAdapter = new GridviewAdapter(this,
-				new ArrayList<HashMap<String, Object>>());
+		mNewAdapter = new GridviewAdapter(this, jsonArrayNew);
 		mNewGridView = (GridView) findViewById(R.id.me_new_girdview);
 	}
 
@@ -89,39 +111,18 @@ public class Me extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-
-				Resources resources = arg1.getContext().getResources();
-				int indentify = resources.getIdentifier(mCompetitiveAdapter
-						.getItem(position), "drawable", arg1.getContext()
-						.getPackageName());
-				if (indentify > 0) {
-					MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-							mContext, mActivity, savedInstanceState);
-					qustomDialogBuilder.show();
-				}
+				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+						mContext, mActivity, savedInstanceState);
+				qustomDialogBuilder.show();
 			}
 		});
 		mNewGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-
-				Resources resources = arg1.getContext().getResources();
-				int indentify = resources.getIdentifier(mNewAdapter
-						.getItem(position), "drawable", arg1.getContext()
-						.getPackageName());
-				Log.i("drawable", mNewAdapter.getItem(position) + indentify
-						+ "" + arg1.getContext().getPackageName());
-				if (indentify > 0) {
-					QustomDialogBuilder qustomDialogBuilder = new QustomDialogBuilder(
-							arg1.getContext())
-							.setMessage(
-									"                                                         ")
-							.setCustomView(R.layout.dialog_detail_info,
-									arg1.getContext())
-							.setIcon(getResources().getDrawable(indentify));
-					qustomDialogBuilder.show();
-				}
+				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+						mContext, mActivity, savedInstanceState);
+				qustomDialogBuilder.show();
 			}
 		});
 	}

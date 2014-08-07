@@ -1,10 +1,8 @@
 package com.smartx.bill.mepad.adapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -22,7 +20,7 @@ public class GridviewAdapter extends BaseAdapter
 //	private ArrayList<String> listCountry;
 //	private ArrayList<Integer> listFlag;
 	private Activity activity;
-	private ArrayList<HashMap<String, Object>> appsInfo;
+	private JSONArray appsInfo;
 	
 //	public GridviewAdapter(Activity activity,ArrayList<String> listCountry, ArrayList<Integer> listFlag) {
 //		super();
@@ -30,21 +28,36 @@ public class GridviewAdapter extends BaseAdapter
 //		this.listFlag = listFlag;
 //		this.activity = activity;
 //	}
-	public GridviewAdapter(Activity activity,ArrayList<HashMap<String, Object>> appsInfo) {
+	public GridviewAdapter(Activity activity,JSONArray appsInfo) {
 		super();
 		this.appsInfo = appsInfo;
 		this.activity = activity;
 	}
+	private String getItemDatas(String key, int position){
+		try {
+			return this.getItem(position).getString(key);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return appsInfo.size();
+		return appsInfo.length();
 	}
 
 	@Override
-	public String getItem(int position) {
+	public JSONObject getItem(int position) {
 		// TODO Auto-generated method stub
-		return appsInfo.get(position).toString();
+		try {
+			return appsInfo.getJSONObject(position);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -71,7 +84,6 @@ public class GridviewAdapter extends BaseAdapter
 		{
 			view = new ViewHolder();
 			convertView = inflator.inflate(R.layout.gridview_item, null);
-			
 			view.txtViewTitle = (TextView) convertView.findViewById(R.id.app_title);
 			view.imgViewFlag = (ImageView) convertView.findViewById(R.id.app_icon);
 			view.appScore = (RatingBar)convertView.findViewById(R.id.app_score);
@@ -82,10 +94,9 @@ public class GridviewAdapter extends BaseAdapter
 		{
 			view = (ViewHolder) convertView.getTag();
 		}
-		HashMap<String, Object> items = appsInfo.get(position);
-		view.txtViewTitle.setText(items.get("title").toString());
-		view.downloadCount.setText(items.get("downloadCount").toString());
-		view.appScore.setNumStars(Integer.parseInt(items.get("appScore").toString()));
+		view.txtViewTitle.setText(getItemDatas("title",position));
+		view.downloadCount.setText(getItemDatas("downloads",position));
+		view.appScore.setRating(Float.parseFloat(getItemDatas("score",position)));
 //		view.imgViewFlag.setImageResource(items.get("title"));
 		
 		return convertView;

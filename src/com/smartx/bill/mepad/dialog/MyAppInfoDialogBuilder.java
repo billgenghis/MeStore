@@ -17,10 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.R;
-import com.smartx.bill.mepad.adapter.MyPagerAdapter;
-import com.smartx.bill.mepad.home.Me;
-import com.smartx.bill.mepad.listener.MyHomeTextClickListener;
-import com.smartx.bill.mepad.listener.MyOnPageChangeListener;
 
 public class MyAppInfoDialogBuilder extends AlertDialog.Builder {
 	private View mDialogView;

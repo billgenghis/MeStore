@@ -3,6 +3,7 @@
     android:id="@+id/relativeLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center_vertical|center|clip_horizontal"
     android:padding="@dimen/abc_action_bar_icon_vertical_padding" >
 
     <ImageView
@@ -26,6 +27,7 @@
         android:text="@string/dialog_app_title"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="18sp" />
+
     <RatingBar
         android:id="@+id/app_score"
         style="?android:attr/ratingBarStyleSmall"
@@ -33,7 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_title"
         android:layout_toRightOf="@+id/app_icon"
-        android:numStars="5" />
+        android:numStars="5"
+        android:rating="0" />
 
     <TextView
         android:id="@+id/app_download_count"

@@ -7,13 +7,9 @@ import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.R;
@@ -82,7 +78,7 @@ public class MainActivity extends Activity {
 		list.add(getView("Me", intent));
 		Intent intent2 = new Intent(context, Ranking.class);
 		list.add(getView("Ranking", intent2));
-		Intent intent3 = new Intent(context, Me.class);
+		Intent intent3 = new Intent(context, Category.class);
 		list.add(getView("Category", intent3));
 		Intent intent4 = new Intent(context, Me.class);
 		list.add(getView("Special", intent4));
