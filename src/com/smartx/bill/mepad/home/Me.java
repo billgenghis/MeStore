@@ -21,21 +21,20 @@ import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
 import com.smartx.bill.mepad.adapter.GridviewAdapter;
+import com.smartx.bill.mepad.adapter.MeGridviewAdapter;
 import com.smartx.bill.mepad.dialog.MyAppInfoDialogBuilder;
 import com.smartx.bill.mepad.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
 
 public class Me extends Activity {
 
-	private GridviewAdapter mCompetitiveAdapter;
-	private GridviewAdapter mNewAdapter;
+	private MeGridviewAdapter mCompetitiveAdapter;
+	private MeGridviewAdapter mNewAdapter;
 	private GridView mCompetitiveGridView;
 	private GridView mNewGridView;
 	private Gallery mySpecialGallery;
 	private TextView mUpdateApps;
 	private TextView mAllApps;
-	private TextView mUpdateAppsNum;
-	private TextView mAllAppsNum;
 	private TextView mName;
 	private TextView mComIntroduce;
 	private TextView mComMore;
@@ -75,8 +74,6 @@ public class Me extends Activity {
 		mSetting = (ImageView) findViewById(R.id.me_setting);
 		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
 		mAllApps = (TextView) findViewById(R.id.me_all_apps);
-		mUpdateAppsNum = (TextView) findViewById(R.id.me_update_apps_num);
-		mAllAppsNum = (TextView) findViewById(R.id.me_all_apps_num);
 		mySpecialGallery = (Gallery) findViewById(R.id.me_special_gallery);
 		try {
 			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
@@ -87,10 +84,10 @@ public class Me extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mCompetitiveAdapter = new GridviewAdapter(this, jsonArrayExcellent);
+		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent);
 		mCompetitiveGridView = (GridView) findViewById(R.id.me_competitive_girdview);
 
-		mNewAdapter = new GridviewAdapter(this, jsonArrayNew);
+		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew);
 		mNewGridView = (GridView) findViewById(R.id.me_new_girdview);
 	}
 
@@ -103,7 +100,7 @@ public class Me extends Activity {
 		mNewGridView.setNumColumns(3);
 		mNewGridView.setAdapter(mNewAdapter);
 		mNewGridView.setFocusable(false);
-		setGridViewListener();
+//		setGridViewListener();
 	}
 
 	private void setGridViewListener() {

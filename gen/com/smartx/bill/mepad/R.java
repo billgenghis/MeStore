@@ -981,13 +981,19 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int head_default=0x7f020057;
-        public static final int home_background=0x7f020058;
-        public static final int home_setting=0x7f020059;
-        public static final int me_store=0x7f02005a;
-        public static final int roller=0x7f02005b;
-        public static final int shape=0x7f02005c;
-        public static final int weipinhui_icon=0x7f02005d;
+        public static final int division_01=0x7f020057;
+        public static final int head_default=0x7f020058;
+        public static final int home_background=0x7f020059;
+        public static final int home_setting=0x7f02005a;
+        public static final int ic_menu_search=0x7f02005b;
+        public static final int me_store=0x7f02005c;
+        public static final int my_ratingbar_full=0x7f02005d;
+        public static final int search_big=0x7f02005e;
+        public static final int shape=0x7f02005f;
+        public static final int star_empty=0x7f020060;
+        public static final int star_full=0x7f020061;
+        public static final int star_half=0x7f020062;
+        public static final int weipinhui_icon=0x7f020063;
     }
     public static final class id {
         public static final int TextView01=0x7f05004c;
@@ -1003,9 +1009,9 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050077;
+        public static final int action_settings=0x7f050074;
         public static final int activity_chooser_view_content=0x7f050025;
-        public static final int alertTitle=0x7f050071;
+        public static final int alertTitle=0x7f050070;
         public static final int always=0x7f05000b;
         public static final int app_download_count=0x7f050054;
         public static final int app_icon=0x7f05005f;
@@ -1018,9 +1024,9 @@ containing a value of this type.
         public static final int button4=0x7f05004f;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
-        public static final int contentPanel=0x7f050072;
+        public static final int contentPanel=0x7f050071;
         public static final int cursor=0x7f05005b;
-        public static final int customPanel=0x7f050074;
+        public static final int customPanel=0x7f050073;
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int dialog_app_icon=0x7f050052;
@@ -1051,31 +1057,29 @@ containing a value of this type.
         public static final int linearLayout1=0x7f05003d;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
-        public static final int me_all_apps=0x7f050063;
-        public static final int me_all_apps_num=0x7f050065;
-        public static final int me_competitive_girdview=0x7f050068;
-        public static final int me_competitve_introduce=0x7f050066;
-        public static final int me_competitve_more=0x7f050067;
+        public static final int me_all_apps=0x7f050064;
+        public static final int me_competitive_girdview=0x7f050067;
+        public static final int me_competitve_introduce=0x7f050065;
+        public static final int me_competitve_more=0x7f050066;
         public static final int me_head_pic=0x7f050060;
         public static final int me_name=0x7f050062;
-        public static final int me_new_girdview=0x7f05006c;
-        public static final int me_new_introduce=0x7f05006a;
-        public static final int me_new_more=0x7f05006b;
+        public static final int me_new_girdview=0x7f05006b;
+        public static final int me_new_introduce=0x7f050069;
+        public static final int me_new_more=0x7f05006a;
         public static final int me_setting=0x7f050061;
-        public static final int me_special_gallery=0x7f050069;
-        public static final int me_update_apps=0x7f050076;
-        public static final int me_update_apps_num=0x7f050064;
-        public static final int message=0x7f050073;
+        public static final int me_special_gallery=0x7f050068;
+        public static final int me_update_apps=0x7f050063;
+        public static final int message=0x7f050072;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int pager=0x7f05003c;
-        public static final int parentPanel=0x7f05006e;
+        public static final int parentPanel=0x7f05006d;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
-        public static final int ranking_gridView=0x7f05006d;
+        public static final int ranking_gridView=0x7f05006c;
         public static final int relativeLayout1=0x7f05005e;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
@@ -1100,11 +1104,10 @@ containing a value of this type.
         public static final int textView2=0x7f05004a;
         public static final int textView3=0x7f05004b;
         public static final int textView4=0x7f050051;
-        public static final int textView5=0x7f050075;
         public static final int title=0x7f05002b;
         public static final int titleDivider=0x7f050048;
-        public static final int title_template=0x7f050070;
-        public static final int topPanel=0x7f05006f;
+        public static final int title_template=0x7f05006f;
+        public static final int topPanel=0x7f05006e;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
@@ -1167,11 +1170,9 @@ containing a value of this type.
         public static final int fragment_category=0x7f03001b;
         public static final int gridview_item=0x7f03001c;
         public static final int home_me=0x7f03001d;
-        public static final int home_me_temp=0x7f03001e;
-        public static final int home_ranking=0x7f03001f;
-        public static final int qustom_dialog_layout=0x7f030020;
-        public static final int support_simple_spinner_dropdown_item=0x7f030021;
-        public static final int text=0x7f030022;
+        public static final int home_ranking=0x7f03001e;
+        public static final int qustom_dialog_layout=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
     }
     public static final class menu {
         public static final int category=0x7f0c0000;
@@ -1465,12 +1466,23 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0b000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0b0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0b0022;
+        public static final int gridview_items_downnum_textview_style=0x7f0b0087;
+        /**  gridview items for apps style. 
+         */
+        public static final int gridview_items_picture_style=0x7f0b0085;
+        public static final int gridview_items_ratingbar=0x7f0b0088;
+        public static final int gridview_items_titletextview_style=0x7f0b0086;
+        public static final int gridview_style=0x7f0b008c;
+        public static final int home_searchview_style=0x7f0b008a;
         /**  homepage textview style. 
          */
-        public static final int home_style=0x7f0b0085;
+        public static final int home_textview_style=0x7f0b0089;
         /**  mepage textview style. 
          */
-        public static final int mepage_style=0x7f0b0086;
+        public static final int mepage_apps_update_all_style=0x7f0b008b;
+        public static final int mepage_guide_more_style=0x7f0b008f;
+        public static final int mepage_guide_style=0x7f0b008d;
+        public static final int mepage_relative_layout_style=0x7f0b008e;
     }
     public static final class styleable {
         /**  ============================================ 

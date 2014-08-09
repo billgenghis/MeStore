@@ -141,7 +141,7 @@
         android:layout_height="wrap_content"
         android:background="#EEEEEE"
         android:scaleType="matrix"
-        android:src="@drawable/roller" />
+        android:src="@drawable/search_big" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/dialog_viewpage"

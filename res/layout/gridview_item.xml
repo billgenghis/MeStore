@@ -8,44 +8,24 @@
 
     <ImageView
         android:id="@+id/app_icon"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
-        android:contentDescription="@string/item_imageiew_discription"
-        android:src="@drawable/weipinhui_icon" />
+        style="@style/gridview_items_picture_style" />
 
-    
     <TextView
         android:id="@+id/app_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/gridview_items_titletextview_style"
         android:layout_alignLeft="@+id/app_score"
-        android:layout_alignTop="@+id/app_icon"
-        android:ellipsize="marquee"
-        android:text="@string/dialog_app_title"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="18sp" />
+        android:layout_alignTop="@+id/app_icon" />
 
     <RatingBar
         android:id="@+id/app_score"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/gridview_items_ratingbar"
         android:layout_below="@+id/app_title"
-        android:layout_toRightOf="@+id/app_icon"
-        android:numStars="5"
-        android:rating="0" />
+        android:layout_toRightOf="@+id/app_icon" />
 
     <TextView
         android:id="@+id/app_download_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/gridview_items_downnum_textview_style"
         android:layout_below="@+id/app_score"
-        android:layout_toRightOf="@+id/app_icon"
-        android:ellipsize="marquee"
-        android:text="@string/item_download_count"
-        android:textSize="12sp" />
+        android:layout_toRightOf="@+id/app_icon" />
 
 </RelativeLayout>

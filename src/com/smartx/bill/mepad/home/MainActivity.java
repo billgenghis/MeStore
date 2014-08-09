@@ -106,6 +106,7 @@ public class MainActivity extends Activity {
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //		getMenuInflater().inflate(R.menu.activity_main, menu);
+//		SearchView searchView = (SearchView) menu.findItem(R.id.my_search_view).getActionView();
 //		return true;
 //	}
 

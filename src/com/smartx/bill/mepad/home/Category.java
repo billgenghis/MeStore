@@ -36,7 +36,7 @@ public class Category extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_me_temp);
+		setContentView(R.layout.home_me);
 
 //		// Create the adapter that will return a fragment for each of the three
 //		// primary sections of the activity.

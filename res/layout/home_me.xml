@@ -67,53 +67,28 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/me_all_apps"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="115dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="2dp"
-                    android:text="更新"
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5" >
 
-                <TextView
-                    android:id="@+id/me_update_apps_num"
+                    <TextView
+                        android:id="@+id/me_update_apps"
+                        style="@style/mepage_apps_update_all_style"
+                        android:gravity="center"
+                        android:text="更新" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="115dp"
-                    android:layout_marginTop="6dp"
-                    android:text="5"
-                    android:textColor="@android:color/white"
-                    android:textSize="35dp" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5" >
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center_horizontal|center"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/roller" />
-
-                <TextView
-                    android:id="@+id/me_all_apps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="90dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="2dp"
-                    android:text="已购应用"
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/me_all_apps_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="20"
-                    android:textColor="@android:color/white"
-                    android:textSize="35dp" />
+                    <TextView
+                        android:id="@+id/me_all_apps"
+                        style="@style/mepage_apps_update_all_style"
+                        android:text="已购应用" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -124,44 +99,23 @@
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <RelativeLayout style="@style/mepage_relative_layout_style" >
 
                 <TextView
                     android:id="@+id/me_competitve_introduce"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="为Sandy准备的精品应用"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="25sp" />
+                    style="@style/mepage_guide_style"
+                    android:text="为Sandy 挑选的精品应用" />
 
                 <TextView
                     android:id="@+id/me_competitve_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:text="更多 >"
-                    android:textColor="@android:color/holo_blue_light"
-                    android:textSize="20sp" />
-
+                    style="@style/mepage_guide_more_style" />
             </RelativeLayout>
 
             <com.smartx.bill.mepad.myview.MyGridView
                 android:id="@+id/me_competitive_girdview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:horizontalSpacing="10dp"
-                android:numColumns="auto_fit"
-                android:verticalSpacing="10dp" />
-
+                style="@style/gridview_style" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -173,51 +127,31 @@
                 android:id="@+id/me_special_gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="39dp"/>
+                android:layout_marginLeft="39dp" />
         </LinearLayout>
-          <LinearLayout
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="0.20"
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+            <RelativeLayout style="@style/mepage_relative_layout_style" >
 
                 <TextView
                     android:id="@+id/me_new_introduce"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="为Sandy准备的新品应用"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="25sp" />
+                    style="@style/mepage_guide_style"
+                    android:text="为Sandy 挑选的新品应用" />
 
                 <TextView
                     android:id="@+id/me_new_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:text="更多 >"
-                    android:textColor="@android:color/holo_blue_light"
-                    android:textSize="20sp" />
-
+                    style="@style/mepage_guide_more_style" />
             </RelativeLayout>
 
             <com.smartx.bill.mepad.myview.MyGridView
                 android:id="@+id/me_new_girdview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:horizontalSpacing="10dp"
-                android:numColumns="auto_fit"
-                android:verticalSpacing="10dp" />
+                style="@style/gridview_style" />
         </LinearLayout>
     </LinearLayout>
 

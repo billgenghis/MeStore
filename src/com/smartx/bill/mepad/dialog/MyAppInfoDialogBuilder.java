@@ -85,7 +85,7 @@ public class MyAppInfoDialogBuilder extends AlertDialog.Builder {
 	 */
 	private void InitImageView() {
 		cursor = (ImageView) mActivity.findViewById(R.id.cursor);
-		bmpW = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.roller)
+		bmpW = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.division_01)
 				.getWidth();// 获取图片宽度
 		DisplayMetrics dm = new DisplayMetrics();
 		mActivity.getWindowManager().getDefaultDisplay().getMetrics(dm);

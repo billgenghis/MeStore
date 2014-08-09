@@ -2,7 +2,10 @@ package com.smartx.bill.mepad.iostream;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +24,23 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
 
 public class DownLoadDatas {
 	/*
 	 * get appsinfo from server
 	 */
-	public static JSONArray getDatasFromServer(String class_id, String age, String position_id,String keyword)
-			throws ClientProtocolException, IOException, JSONException {
+	public static JSONArray getDatasFromServer(String class_id, String age,
+			String position_id, String keyword) throws ClientProtocolException,
+			IOException, JSONException {
 		String appUrl = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
 		UrlEncodedFormEntity entity;
 		HttpClient httpclient = new DefaultHttpClient();
-		httpclient.getParams().setParameter(  
-                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);  
+		httpclient.getParams().setParameter(
+				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		StringBuilder builder = new StringBuilder();
 
@@ -57,5 +64,26 @@ public class DownLoadDatas {
 			return jsonArray;
 		}
 		return null;
+	}
+
+	public static Bitmap getImageFromServer(String image)
+			throws ClientProtocolException, IOException, JSONException {
+		String url = image;
+		Bitmap bmp = null;
+		try {
+			URL myurl = new URL(url);
+			// 获得连接
+			HttpURLConnection conn = (HttpURLConnection) myurl.openConnection();
+			conn.setConnectTimeout(6000);// 设置超时
+			conn.setDoInput(true);
+			conn.setUseCaches(false);// 不缓存
+			conn.connect();
+			InputStream is = conn.getInputStream();// 获得图片的数据流
+			bmp = BitmapFactory.decodeStream(is);
+			is.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bmp;
 	}
 }

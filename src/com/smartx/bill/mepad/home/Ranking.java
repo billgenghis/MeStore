@@ -30,7 +30,7 @@ public class Ranking extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
-		initGridView();
+//		initGridView();
 	}
 
 	private void initGridView() {
