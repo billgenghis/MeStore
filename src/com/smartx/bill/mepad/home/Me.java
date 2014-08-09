@@ -22,9 +22,11 @@ import android.widget.Toast;
 import com.smartx.bill.mepad.R;
 import com.smartx.bill.mepad.adapter.GridviewAdapter;
 import com.smartx.bill.mepad.adapter.MeGridviewAdapter;
+import com.smartx.bill.mepad.adapter.MyGalleryAdapter;
 import com.smartx.bill.mepad.dialog.MyAppInfoDialogBuilder;
 import com.smartx.bill.mepad.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.myview.MyGalleryView;
 
 public class Me extends Activity {
 
@@ -32,7 +34,7 @@ public class Me extends Activity {
 	private MeGridviewAdapter mNewAdapter;
 	private GridView mCompetitiveGridView;
 	private GridView mNewGridView;
-	private Gallery mySpecialGallery;
+	private MyGalleryView mySpecialGallery;
 	private TextView mUpdateApps;
 	private TextView mAllApps;
 	private TextView mName;
@@ -74,7 +76,7 @@ public class Me extends Activity {
 		mSetting = (ImageView) findViewById(R.id.me_setting);
 		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
 		mAllApps = (TextView) findViewById(R.id.me_all_apps);
-		mySpecialGallery = (Gallery) findViewById(R.id.me_special_gallery);
+		mySpecialGallery = (MyGalleryView) findViewById(R.id.me_special_gallery);
 		try {
 			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
 					IOStreamDatas.POSITION_EXCELLENT, null);
@@ -89,6 +91,8 @@ public class Me extends Activity {
 
 		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew);
 		mNewGridView = (GridView) findViewById(R.id.me_new_girdview);
+		
+		mySpecialGallery.setAdapter(new MyGalleryAdapter(this, null));// 暂时没有数据  
 	}
 
 	private void initGridView() {
@@ -114,6 +118,15 @@ public class Me extends Activity {
 			}
 		});
 		mNewGridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+						mContext, mActivity, savedInstanceState);
+				qustomDialogBuilder.show();
+			}
+		});
+		mySpecialGallery.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {

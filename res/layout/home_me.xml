@@ -99,7 +99,7 @@
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-            <RelativeLayout style="@style/mepage_relative_layout_style" >
+            <RelativeLayout style="@style/mepage_relative_layout_style" android:layout_marginTop="30dp">
 
                 <TextView
                     android:id="@+id/me_competitve_introduce"
@@ -116,19 +116,39 @@
                 style="@style/gridview_style" />
         </LinearLayout>
 
-        <LinearLayout
+        <View
             android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="22dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/division_02" />
+
+        <LinearLayout
+            android:layout_width="1080dp"
             android:layout_height="0dp"
             android:layout_weight="0.1"
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-            <Gallery
+            <com.smartx.bill.mepad.myview.MyGalleryView
                 android:id="@+id/me_special_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="39dp" />
+                android:layout_width="fill_parent"
+                android:spacing="18dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_height="80dp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/division_02" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -137,7 +157,8 @@
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-            <RelativeLayout style="@style/mepage_relative_layout_style" >
+            <RelativeLayout style="@style/mepage_relative_layout_style"
+                android:layout_marginTop="25dp" >
 
                 <TextView
                     android:id="@+id/me_new_introduce"
