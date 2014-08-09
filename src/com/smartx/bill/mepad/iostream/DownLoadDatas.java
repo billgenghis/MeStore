@@ -25,10 +25,11 @@ import com.smartx.bill.mepad.matadata.IOStreamDatas;
 
 public class DownLoadDatas {
 	/*
-	 * 
+	 * get appsinfo from server
 	 */
 	public static JSONArray getDatasFromServer(String class_id, String age, String position_id,String keyword)
 			throws ClientProtocolException, IOException, JSONException {
+		String appUrl = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
 		UrlEncodedFormEntity entity;
 		HttpClient httpclient = new DefaultHttpClient();
 		httpclient.getParams().setParameter(  
@@ -41,7 +42,7 @@ public class DownLoadDatas {
 		params.add(new BasicNameValuePair("position_id", position_id));
 		params.add(new BasicNameValuePair("age", age));
 		entity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
-		HttpPost postRequest = new HttpPost(IOStreamDatas.SERVER_URL);
+		HttpPost postRequest = new HttpPost(appUrl);
 		postRequest.setEntity(entity);
 		HttpResponse response = httpclient.execute(postRequest);
 		HttpEntity resEntity = response.getEntity();
@@ -52,9 +53,6 @@ public class DownLoadDatas {
 				builder.append(s);
 			}
 			JSONArray jsonArray = new JSONArray(builder.toString());
-//			JSONObject jsonObject = jsonArray.getJSONObject(0);
-//			Log.i("JsonArray",	jsonArray.length() + "");
-//			Log.i("jsonObject",	jsonObject.get("title").toString());
 			httpclient.getConnectionManager().shutdown();
 			return jsonArray;
 		}

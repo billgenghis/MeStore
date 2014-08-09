@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">com.smartx.bill.mepad</string>
+    <string name="app_name">Me商店</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
@@ -12,6 +12,7 @@
     <string name="home_ranking">排行</string>
     <string name="home_category">分类</string>
     <string name="home_special">专题</string>
+    <string name="title_search_hint">搜索应用</string>
     <!-- gridView's item elements -->
     <string name="item_imageiew_discription">Just for the apps icon</string>
     <string name="item_download_count">12万次下载</string>

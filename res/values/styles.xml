@@ -17,4 +17,23 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+     <!-- homepage textview style. -->
+    <style name="home_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textColor">#A0A1A2</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+     <!-- mepage textview style. -->
+    <style name="mepage_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">115dp</item>
+        <item name="android:textColor">#A0A1A2</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

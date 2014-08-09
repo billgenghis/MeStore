@@ -984,7 +984,7 @@ containing a value of this type.
         public static final int head_default=0x7f020057;
         public static final int home_background=0x7f020058;
         public static final int home_setting=0x7f020059;
-        public static final int ic_launcher=0x7f02005a;
+        public static final int me_store=0x7f02005a;
         public static final int roller=0x7f02005b;
         public static final int shape=0x7f02005c;
         public static final int weipinhui_icon=0x7f02005d;
@@ -1219,18 +1219,18 @@ containing a value of this type.
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int action_settings=0x7f0a000f;
-        public static final int alert_image_content_description=0x7f0a001c;
+        public static final int alert_image_content_description=0x7f0a001d;
         public static final int app_name=0x7f0a000d;
-        public static final int dialog_app_interview=0x7f0a001d;
-        public static final int dialog_app_other_info=0x7f0a001f;
-        public static final int dialog_app_title=0x7f0a0018;
-        public static final int dialog_app_update_log=0x7f0a001e;
+        public static final int dialog_app_interview=0x7f0a001e;
+        public static final int dialog_app_other_info=0x7f0a0020;
+        public static final int dialog_app_title=0x7f0a0019;
+        public static final int dialog_app_update_log=0x7f0a001f;
         /**  dialog default info 
          */
-        public static final int dialog_detail_info=0x7f0a0017;
-        public static final int dialog_detail_permission=0x7f0a001b;
-        public static final int dialog_judge_score=0x7f0a0019;
-        public static final int dialog_same_developers=0x7f0a001a;
+        public static final int dialog_detail_info=0x7f0a0018;
+        public static final int dialog_detail_permission=0x7f0a001c;
+        public static final int dialog_judge_score=0x7f0a001a;
+        public static final int dialog_same_developers=0x7f0a001b;
         public static final int hello_world=0x7f0a000e;
         public static final int home_category=0x7f0a0013;
         /**  home elements 
@@ -1241,14 +1241,15 @@ containing a value of this type.
         /**  app status 
          */
         public static final int install_status=0x7f0a0010;
-        public static final int item_download_count=0x7f0a0016;
+        public static final int item_download_count=0x7f0a0017;
         /**  gridView's item elements 
          */
-        public static final int item_imageiew_discription=0x7f0a0015;
-        public static final int title_activity_category=0x7f0a0020;
-        public static final int title_section1=0x7f0a0021;
-        public static final int title_section2=0x7f0a0022;
-        public static final int title_section3=0x7f0a0023;
+        public static final int item_imageiew_discription=0x7f0a0016;
+        public static final int title_activity_category=0x7f0a0021;
+        public static final int title_search_hint=0x7f0a0015;
+        public static final int title_section1=0x7f0a0022;
+        public static final int title_section2=0x7f0a0023;
+        public static final int title_section3=0x7f0a0024;
     }
     public static final class style {
         /** 
@@ -1464,6 +1465,12 @@ containing a value of this type.
         public static final int Widget_AppCompat_ProgressBar=0x7f0b000a;
         public static final int Widget_AppCompat_ProgressBar_Horizontal=0x7f0b0009;
         public static final int Widget_AppCompat_Spinner_DropDown_ActionBar=0x7f0b0022;
+        /**  homepage textview style. 
+         */
+        public static final int home_style=0x7f0b0085;
+        /**  mepage textview style. 
+         */
+        public static final int mepage_style=0x7f0b0086;
     }
     public static final class styleable {
         /**  ============================================ 
