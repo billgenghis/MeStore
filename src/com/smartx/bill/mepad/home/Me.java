@@ -10,17 +10,18 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
-import com.smartx.bill.mepad.adapter.GridviewAdapter;
 import com.smartx.bill.mepad.adapter.MeGridviewAdapter;
 import com.smartx.bill.mepad.adapter.MyGalleryAdapter;
 import com.smartx.bill.mepad.dialog.MyAppInfoDialogBuilder;
@@ -72,11 +73,13 @@ public class Me extends Activity {
 		mComMore = (TextView) findViewById(R.id.me_competitve_more);
 		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
 		mNewMore = (TextView) findViewById(R.id.me_new_more);
+		
 		mHeadPic = (ImageView) findViewById(R.id.me_head_pic);
 		mSetting = (ImageView) findViewById(R.id.me_setting);
 		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
 		mAllApps = (TextView) findViewById(R.id.me_all_apps);
 		mySpecialGallery = (MyGalleryView) findViewById(R.id.me_special_gallery);
+		
 		try {
 			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
 					IOStreamDatas.POSITION_EXCELLENT, null);

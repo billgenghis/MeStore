@@ -67,7 +67,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5" >
@@ -75,11 +75,16 @@
                     <TextView
                         android:id="@+id/me_update_apps"
                         style="@style/mepage_apps_update_all_style"
-                        android:gravity="center"
                         android:text="更新" />
-                </LinearLayout>
 
-                <LinearLayout
+                    <TextView
+                        android:id="@+id/me_update_apps_num"
+                        style="@style/mepage_apps_update_all_num_style"
+                        android:layout_marginLeft="60dp"
+                        android:text="5" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5" >
@@ -88,7 +93,13 @@
                         android:id="@+id/me_all_apps"
                         style="@style/mepage_apps_update_all_style"
                         android:text="已购应用" />
-                </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/me_all_apps_num"
+                        style="@style/mepage_apps_update_all_num_style"
+                        android:layout_marginLeft="110dp"
+                        android:text="30" />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -99,12 +110,18 @@
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-            <RelativeLayout style="@style/mepage_relative_layout_style" android:layout_marginTop="30dp">
+            <RelativeLayout
+                style="@style/mepage_relative_layout_style"
+                android:layout_marginTop="30dp" >
 
                 <TextView
                     android:id="@+id/me_competitve_introduce"
                     style="@style/mepage_guide_style"
                     android:text="为Sandy 挑选的精品应用" />
+
+                <ImageView
+                    android:id="@+id/me_competitve_more_array"
+                    style="@style/mepage_guide_more_array_style" />
 
                 <TextView
                     android:id="@+id/me_competitve_more"
@@ -119,10 +136,10 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="22dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/division_02" />
 
         <LinearLayout
@@ -135,19 +152,19 @@
             <com.smartx.bill.mepad.myview.MyGalleryView
                 android:id="@+id/me_special_gallery"
                 android:layout_width="fill_parent"
-                android:spacing="18dp"
+                android:layout_height="80dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
-                android:layout_height="80dp" />
+                android:spacing="18dp" />
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:layout_marginTop="25dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/division_02" />
 
         <LinearLayout
@@ -157,7 +174,8 @@
             android:background="#EEEEEE"
             android:orientation="vertical" >
 
-            <RelativeLayout style="@style/mepage_relative_layout_style"
+            <RelativeLayout
+                style="@style/mepage_relative_layout_style"
                 android:layout_marginTop="25dp" >
 
                 <TextView
@@ -168,6 +186,10 @@
                 <TextView
                     android:id="@+id/me_new_more"
                     style="@style/mepage_guide_more_style" />
+
+                <ImageView
+                    android:id="@+id/me_new_more_array"
+                    style="@style/mepage_guide_more_array_style" />
             </RelativeLayout>
 
             <com.smartx.bill.mepad.myview.MyGridView
