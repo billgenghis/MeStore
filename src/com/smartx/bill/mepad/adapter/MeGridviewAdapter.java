@@ -2,13 +2,11 @@ package com.smartx.bill.mepad.adapter;
 
 import java.io.IOException;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +26,6 @@ public class MeGridviewAdapter extends BaseAdapter {
 		super();
 		this.appsInfo = appsInfo;
 		this.activity = activity;
-		Log.i("meLog", appsInfo.toString());
 	}
 
 	private String getItemDatas(String key, int position) {
@@ -80,7 +77,7 @@ public class MeGridviewAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			view = new ViewHolder();
-			convertView = inflator.inflate(R.layout.gridview_item, null);
+			convertView = inflator.inflate(R.layout.me_gridview_item, null);
 			view.txtViewTitle = (TextView) convertView
 					.findViewById(R.id.app_title);
 			view.imgViewFlag = (ImageView) convertView

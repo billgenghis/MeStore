@@ -16,34 +16,38 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
-import com.smartx.bill.mepad.adapter.GridviewAdapter;
+import com.smartx.bill.mepad.adapter.RankingGridviewAdapter;
 import com.smartx.bill.mepad.iostream.DownLoadDatas;
+import com.smartx.bill.mepad.matadata.IOStreamDatas;
 
 public class Ranking extends Activity {
 
-
 	private GridView mRankingGridView;
-	private GridviewAdapter mRankingAdapter;
+	private RankingGridviewAdapter mRankingAdapter;
 	private JSONArray jsonArrayTop;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
-//		initGridView();
+		initDatas();
+		initGridView();
 	}
 
-	private void initGridView() {
+	private void initDatas() {
 		try {
-			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null,null,null);
+			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null, null,
+					null);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mRankingAdapter = new GridviewAdapter(this,
-				jsonArrayTop);
+		mRankingAdapter = new RankingGridviewAdapter(this, jsonArrayTop);
 		mRankingGridView = (GridView) findViewById(R.id.ranking_gridView);
-		mRankingGridView.setNumColumns(3);
+	}
+
+	private void initGridView() {
+		mRankingGridView.setNumColumns(2);
 		mRankingGridView.setAdapter(mRankingAdapter);
 		mRankingGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -52,7 +56,6 @@ public class Ranking extends Activity {
 			}
 		});
 	}
-
 
 	@Override
 	protected void onPause() {
@@ -77,7 +80,8 @@ public class Ranking extends Activity {
 			// 如果屏幕是竖屏，则显示3列，如果是横屏，则显示4列
 			if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				imageCol = 4;
-				Toast.makeText(Ranking.this, "现在是横屏", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Ranking.this, "现在是横屏", Toast.LENGTH_SHORT)
+						.show();
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}

@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.smartx.bill.mepad.myview.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#b8e8d8"
-    android:orientation="vertical" >
+    android:fillViewport="true"
+    android:scrollbars="vertical" >
 
-    <GridView
-        android:id="@+id/ranking_gridView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@drawable/division_01" />
+
+        <com.smartx.bill.mepad.myview.MyGridView
+            android:id="@+id/ranking_gridView"
+            android:listSelector="#00000000" 
+            style="@style/ranking_gridview_style" />
+    </LinearLayout>
+
+</com.smartx.bill.mepad.myview.MyScrollView>

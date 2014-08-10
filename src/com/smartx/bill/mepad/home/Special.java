@@ -26,7 +26,7 @@ import com.smartx.bill.mepad.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.myview.MyGalleryView;
 
-public class Category extends Activity {
+public class Special extends Activity {
 
 	private MeGridviewAdapter mCompetitiveAdapter;
 	private MeGridviewAdapter mNewAdapter;

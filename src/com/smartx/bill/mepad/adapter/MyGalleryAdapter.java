@@ -59,7 +59,7 @@ public class MyGalleryAdapter extends BaseAdapter {
 
 		if (convertView == null) {
 			view = new ViewHolder();
-			convertView = inflator.inflate(R.layout.galley_item, null);
+			convertView = inflator.inflate(R.layout.me_galley_item, null);
 			view.galleyImage = (ImageView) convertView
 					.findViewById(R.id.galley_image);
 			view.galleyImage.setImageResource(images[position]);

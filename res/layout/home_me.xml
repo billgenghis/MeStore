@@ -130,15 +130,14 @@
 
             <com.smartx.bill.mepad.myview.MyGridView
                 android:id="@+id/me_competitive_girdview"
-                style="@style/gridview_style" />
+                style="@style/me_gridview_style" />
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:layout_marginBottom="22dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/division_02" />
 
@@ -153,7 +152,7 @@
                 android:id="@+id/me_special_gallery"
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
-                android:layout_marginLeft="25dp"
+                android:layout_marginLeft="30dp"
                 android:layout_marginRight="25dp"
                 android:spacing="18dp" />
         </LinearLayout>
@@ -161,9 +160,9 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
+            android:layout_marginLeft="30dp"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="0dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/division_02" />
 
@@ -194,7 +193,7 @@
 
             <com.smartx.bill.mepad.myview.MyGridView
                 android:id="@+id/me_new_girdview"
-                style="@style/gridview_style" />
+                style="@style/me_gridview_style" />
         </LinearLayout>
     </LinearLayout>
 
