@@ -98,7 +98,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:horizontalSpacing">29dp</item>
         <item name="android:layout_marginRight">35dp</item>
-        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
         <item name="android:numColumns">auto_fit</item>
         <item name="android:verticalSpacing">10dp</item>
     </style>
@@ -116,9 +116,9 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">20dp</item>
-        <!-- <item name="android:layout_marginTop">30dp</item> -->
-        <item name="android:layout_marginLeft">30dp</item>
-        <item name="android:layout_marginBottom">0dp</item>
+       <item name="android:layout_marginTop">22dp</item>
+        <item name="android:layout_marginLeft">27dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="mepage_guide_more_style">

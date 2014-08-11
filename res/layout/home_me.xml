@@ -46,7 +46,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="34dp"
                     android:layout_toLeftOf="@+id/textView1"
                     android:scaleType="centerInside"
                     android:src="@drawable/home_setting" />
@@ -115,8 +116,7 @@
             android:orientation="vertical" >
 
             <RelativeLayout
-                style="@style/mepage_relative_layout_style"
-                android:layout_marginTop="30dp" >
+                style="@style/mepage_relative_layout_style">
 
                 <TextView
                     android:id="@+id/me_competitve_introduce"
@@ -141,12 +141,13 @@
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:layout_marginBottom="22dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="14dp"
             android:background="@drawable/division_02" />
 
         <LinearLayout
-            android:layout_width="1080dp"
+            android:id="@+id/me_gallery_layout"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="0.1"
             android:orientation="vertical" >
@@ -155,7 +156,7 @@
                 android:id="@+id/me_special_gallery"
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="28dp"
                 android:layout_marginRight="25dp"
                 android:spacing="18dp" />
         </LinearLayout>
@@ -163,7 +164,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginBottom="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="25dp"
@@ -176,8 +177,7 @@
             android:orientation="vertical" >
 
             <RelativeLayout
-                style="@style/mepage_relative_layout_style"
-                android:layout_marginTop="25dp" >
+                style="@style/mepage_relative_layout_style">
 
                 <TextView
                     android:id="@+id/me_new_introduce"
@@ -195,6 +195,7 @@
 
             <com.smartx.bill.mepad.mestore.myview.MyGridView
                 android:id="@+id/me_new_girdview"
+                android:layout_marginBottom="30dp"
                 style="@style/me_gridview_style" />
         </LinearLayout>
     </LinearLayout>

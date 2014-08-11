@@ -21,11 +21,15 @@ import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 public class MeGridviewAdapter extends BaseAdapter {
 	private Activity activity;
 	private JSONArray appsInfo;
+//	private ImageLoader imageLoader;
+//	private DisplayImageOptions options;
 
 	public MeGridviewAdapter(Activity activity, JSONArray appsInfo) {
 		super();
 		this.appsInfo = appsInfo;
 		this.activity = activity;
+//		this.imageLoader = imageLoader;
+//		this.options = options;
 	}
 
 	private String getItemDatas(String key, int position) {
@@ -95,6 +99,7 @@ public class MeGridviewAdapter extends BaseAdapter {
 		view.appScore.setRating(Float
 				.parseFloat(getItemDatas("score", position)));
 		try {
+//			imageLoader.displayImage(getItemDatas("image", position), view.imgViewFlag, options);
 			view.imgViewFlag.setImageBitmap(DownLoadDatas
 					.getImageFromServer(getItemDatas("image", position)));
 		} catch (IOException | JSONException e) {

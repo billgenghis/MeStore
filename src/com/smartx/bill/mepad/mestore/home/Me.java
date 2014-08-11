@@ -25,7 +25,7 @@ import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
-
+@SuppressWarnings("deprecation")
 public class Me extends Activity {
 
 	private MeGridviewAdapter mCompetitiveAdapter;
@@ -47,7 +47,8 @@ public class Me extends Activity {
 	private Context mContext;
 	private JSONArray jsonArrayExcellent;
 	private JSONArray jsonArrayNew;
-
+//	DisplayImageOptions options;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,6 +62,17 @@ public class Me extends Activity {
 		mActivity = this;
 		mContext = this;
 		initdatas();
+		
+//		options = new DisplayImageOptions.Builder()
+//		.showImageOnLoading(R.drawable.category_icon)
+//		.showImageForEmptyUri(R.drawable.category_icon)
+//		.showImageOnFail(R.drawable.category_icon)
+//		.cacheInMemory(true)
+//		.cacheOnDisc(true)
+//		.considerExifParams(true)
+//		.bitmapConfig(Bitmap.Config.RGB_565)
+//		.build();
+
 		initGridView();
 	}
 
@@ -87,9 +99,11 @@ public class Me extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent,imageLoader,options);
 		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent);
 		mCompetitiveGridView = (MyGridView) findViewById(R.id.me_competitive_girdview);
 
+//		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew,imageLoader,options);
 		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew);
 		mNewGridView = (MyGridView) findViewById(R.id.me_new_girdview);
 

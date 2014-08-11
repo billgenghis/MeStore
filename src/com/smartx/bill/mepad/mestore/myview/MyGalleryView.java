@@ -6,6 +6,7 @@ import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.view.animation.Transformation;
 import android.widget.Gallery;
  
@@ -63,7 +64,7 @@ public class MyGalleryView extends Gallery {
         protected void onSizeChanged(int w, int h, int oldw, int oldh) {
                 if (!flag) {
                         mWidth = w;
-                        getLayoutParams().width = mWidth;
+                        getLayoutParams().width = mWidth + 266*2;
                         flag = true;
                 }
                 super.onSizeChanged(w, h, oldw, oldh);
