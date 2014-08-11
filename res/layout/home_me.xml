@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.smartx.bill.mepad.myview.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.smartx.bill.mepad.mestore.myview.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
@@ -132,7 +132,7 @@
                     style="@style/mepage_guide_more_style" />
             </RelativeLayout>
 
-            <com.smartx.bill.mepad.myview.MyGridView
+            <com.smartx.bill.mepad.mestore.myview.MyGridView
                 android:id="@+id/me_competitive_girdview"
                 style="@style/me_gridview_style" />
         </LinearLayout>
@@ -151,7 +151,7 @@
             android:layout_weight="0.1"
             android:orientation="vertical" >
 
-            <com.smartx.bill.mepad.myview.MyGalleryView
+            <com.smartx.bill.mepad.mestore.myview.MyGalleryView
                 android:id="@+id/me_special_gallery"
                 android:layout_width="fill_parent"
                 android:layout_height="80dp"
@@ -193,10 +193,10 @@
                     style="@style/mepage_guide_more_array_style" />
             </RelativeLayout>
 
-            <com.smartx.bill.mepad.myview.MyGridView
+            <com.smartx.bill.mepad.mestore.myview.MyGridView
                 android:id="@+id/me_new_girdview"
                 style="@style/me_gridview_style" />
         </LinearLayout>
     </LinearLayout>
 
-</com.smartx.bill.mepad.myview.MyScrollView>
+</com.smartx.bill.mepad.mestore.myview.MyScrollView>

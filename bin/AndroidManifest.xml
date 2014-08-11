@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.smartx.bill.mepad"
+    package="com.smartx.bill.mepad.mestore"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -15,7 +15,7 @@
         android:icon="@drawable/me_store"
         android:label="@string/app_name" >
         <activity
-            android:name="com.smartx.bill.mepad.home.MainActivity"
+            android:name="com.smartx.bill.mepad.mestore.home.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,14 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.smartx.bill.mepad.home.Me" >
+        <activity android:name="com.smartx.bill.mepad.mestore.home.Me" >
         </activity>
-        <activity android:name="com.smartx.bill.mepad.home.Ranking" >
+        <activity android:name="com.smartx.bill.mepad.mestore.home.Ranking" >
         </activity>
-          <activity android:name="com.smartx.bill.mepad.home.Special" >
+          <activity android:name="com.smartx.bill.mepad.mestore.home.Special" >
         </activity>
         <activity
-            android:name="com.smartx.bill.mepad.home.Category"
+            android:name="com.smartx.bill.mepad.mestore.home.Category"
             android:label="@string/title_activity_category" >
         </activity>
     </application>
