@@ -107,11 +107,11 @@ public class MainActivity extends Activity {
 		final ArrayList<View> list = new ArrayList<View>();
 		Intent intent = new Intent(context, Me.class);
 		list.add(getView("Me", intent));
-		Intent intent2 = new Intent(context, Me.class);
+		Intent intent2 = new Intent(context, Ranking.class);
 		list.add(getView("Ranking", intent2));
-		Intent intent3 = new Intent(context, Me.class);
+		Intent intent3 = new Intent(context, Category.class);
 		list.add(getView("Category", intent3));
-		Intent intent4 = new Intent(context, Me.class);
+		Intent intent4 = new Intent(context, Special.class);
 		list.add(getView("Special", intent4));
 
 		pager.setAdapter(new MyPagerAdapter(list));
