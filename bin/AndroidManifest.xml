@@ -27,6 +27,8 @@
         </activity>
         <activity android:name="com.smartx.bill.mepad.home.Ranking" >
         </activity>
+          <activity android:name="com.smartx.bill.mepad.home.Special" >
+        </activity>
         <activity
             android:name="com.smartx.bill.mepad.home.Category"
             android:label="@string/title_activity_category" >

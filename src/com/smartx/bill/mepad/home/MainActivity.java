@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 		list.add(getView("Ranking", intent2));
 		Intent intent3 = new Intent(context, Category.class);
 		list.add(getView("Category", intent3));
-		Intent intent4 = new Intent(context, Me.class);
+		Intent intent4 = new Intent(context, Special.class);
 		list.add(getView("Special", intent4));
 
 		pager.setAdapter(new MyPagerAdapter(list));

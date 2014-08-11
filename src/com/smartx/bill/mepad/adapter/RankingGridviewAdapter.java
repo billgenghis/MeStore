@@ -63,7 +63,7 @@ public class RankingGridviewAdapter extends BaseAdapter
 		return position;
 	}
 
-	public static class ViewHolder
+	public static class RankingViewHolder
 	{
 		public ImageView imgViewFlag;
 		public TextView txtViewTitle;
@@ -77,12 +77,12 @@ public class RankingGridviewAdapter extends BaseAdapter
 			position = position % 9;
 		}
 		
-		ViewHolder view;
+		RankingViewHolder view;
 		LayoutInflater inflator = activity.getLayoutInflater();
 		
 		if(convertView==null)
 		{
-			view = new ViewHolder();
+			view = new RankingViewHolder();
 			convertView = inflator.inflate(R.layout.ranking_gridview_item, null);
 			view.txtViewTitle = (TextView) convertView.findViewById(R.id.app_title);
 			view.imgViewFlag = (ImageView) convertView.findViewById(R.id.app_icon);
@@ -92,7 +92,7 @@ public class RankingGridviewAdapter extends BaseAdapter
 		}
 		else
 		{
-			view = (ViewHolder) convertView.getTag();
+			view = (RankingViewHolder) convertView.getTag();
 		}
 		view.txtViewTitle.setText(getItemDatas("title", position));
 		view.downloadCount.setText(getItemDatas("downloads", position)+ "次下载");

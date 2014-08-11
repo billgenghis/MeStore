@@ -10,9 +10,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,19 +19,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
+import com.smartx.bill.mepad.adapter.MeGalleryAdapter;
 import com.smartx.bill.mepad.adapter.MeGridviewAdapter;
-import com.smartx.bill.mepad.adapter.MyGalleryAdapter;
 import com.smartx.bill.mepad.dialog.MyAppInfoDialogBuilder;
 import com.smartx.bill.mepad.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.myview.MyGalleryView;
+import com.smartx.bill.mepad.myview.MyGridView;
 
 public class Me extends Activity {
 
 	private MeGridviewAdapter mCompetitiveAdapter;
 	private MeGridviewAdapter mNewAdapter;
-	private GridView mCompetitiveGridView;
-	private GridView mNewGridView;
+	private MyGridView mCompetitiveGridView;
+	private MyGridView mNewGridView;
 	private MyGalleryView mySpecialGallery;
 	private TextView mUpdateApps;
 	private TextView mAllApps;
@@ -73,29 +71,30 @@ public class Me extends Activity {
 		mComMore = (TextView) findViewById(R.id.me_competitve_more);
 		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
 		mNewMore = (TextView) findViewById(R.id.me_new_more);
-		
+
 		mHeadPic = (ImageView) findViewById(R.id.me_head_pic);
 		mSetting = (ImageView) findViewById(R.id.me_setting);
 		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
 		mAllApps = (TextView) findViewById(R.id.me_all_apps);
 		mySpecialGallery = (MyGalleryView) findViewById(R.id.me_special_gallery);
-		
+
 		try {
 			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
-					IOStreamDatas.POSITION_EXCELLENT, null);
+					IOStreamDatas.POSITION_EXCELLENT, null,
+					IOStreamDatas.APP_DATA);
 			jsonArrayNew = DownLoadDatas.getDatasFromServer(null, null,
-					IOStreamDatas.POSITION_NEW, null);
+					IOStreamDatas.POSITION_NEW, null, IOStreamDatas.APP_DATA);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent);
-		mCompetitiveGridView = (GridView) findViewById(R.id.me_competitive_girdview);
+		mCompetitiveGridView = (MyGridView) findViewById(R.id.me_competitive_girdview);
 
 		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew);
-		mNewGridView = (GridView) findViewById(R.id.me_new_girdview);
-		
-		mySpecialGallery.setAdapter(new MyGalleryAdapter(this, null));// 暂时没有数据  
+		mNewGridView = (MyGridView) findViewById(R.id.me_new_girdview);
+
+		mySpecialGallery.setAdapter(new MeGalleryAdapter(this, null));// 暂时没有数据
 	}
 
 	private void initGridView() {
@@ -107,7 +106,7 @@ public class Me extends Activity {
 		mNewGridView.setNumColumns(3);
 		mNewGridView.setAdapter(mNewAdapter);
 		mNewGridView.setFocusable(false);
-//		setGridViewListener();
+		// setGridViewListener();
 	}
 
 	private void setGridViewListener() {

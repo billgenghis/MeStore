@@ -6,133 +6,87 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
-import com.smartx.bill.mepad.adapter.MeGridviewAdapter;
-import com.smartx.bill.mepad.adapter.MyGalleryAdapter;
-import com.smartx.bill.mepad.dialog.MyAppInfoDialogBuilder;
+import com.smartx.bill.mepad.adapter.CategoryGridviewAdapter;
 import com.smartx.bill.mepad.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.myview.MyGalleryView;
+import com.smartx.bill.mepad.myview.MyGridView;
 
 public class Category extends Activity {
 
-	private MeGridviewAdapter mCompetitiveAdapter;
-	private MeGridviewAdapter mNewAdapter;
-	private GridView mCompetitiveGridView;
-	private GridView mNewGridView;
-	private MyGalleryView mySpecialGallery;
-	private TextView mUpdateApps;
-	private TextView mAllApps;
-	private TextView mName;
-	private TextView mComIntroduce;
-	private TextView mComMore;
-	private TextView mNewIntroduce;
-	private TextView mNewMore;
-	private ImageView mHeadPic;
-	private ImageView mSetting;
-	private Bundle savedInstanceState;
-	private Activity mActivity;
-	private Context mContext;
-	private JSONArray jsonArrayExcellent;
-	private JSONArray jsonArrayNew;
+	private MyGridView mCategoryGridView01;
+	private MyGridView mCategoryGridView02;
+	private MyGridView mCategoryGridView03;
+	private CategoryGridviewAdapter mCategoryAdapter01;
+	private CategoryGridviewAdapter mCategoryAdapter02;
+	private CategoryGridviewAdapter mCategoryAdapter03;
+	private JSONArray jsonArrayCategory;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_me);
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-					.permitAll().build();
-			StrictMode.setThreadPolicy(policy);
+		setContentView(R.layout.home_category);
+		try {
+			initDatas();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		this.savedInstanceState = savedInstanceState;
-		mActivity = this;
-		mContext = this;
-		initdatas();
 		initGridView();
 	}
 
-	private void initdatas() {
-		mName = (TextView) findViewById(R.id.me_name);
-		mComIntroduce = (TextView) findViewById(R.id.me_competitve_introduce);
-		mComMore = (TextView) findViewById(R.id.me_competitve_more);
-		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
-		mNewMore = (TextView) findViewById(R.id.me_new_more);
-
-		mHeadPic = (ImageView) findViewById(R.id.me_head_pic);
-		mSetting = (ImageView) findViewById(R.id.me_setting);
-		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
-		mAllApps = (TextView) findViewById(R.id.me_all_apps);
-		mySpecialGallery = (MyGalleryView) findViewById(R.id.me_special_gallery);
-
+	private void initDatas() throws JSONException {
+		mCategoryGridView01 = (MyGridView) findViewById(R.id.category_gridView01);
+		mCategoryGridView02 = (MyGridView) findViewById(R.id.category_gridView02);
+		mCategoryGridView03 = (MyGridView) findViewById(R.id.category_gridView03);
 		try {
-			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
-					IOStreamDatas.POSITION_EXCELLENT, null);
-			jsonArrayNew = DownLoadDatas.getDatasFromServer(null, null,
-					IOStreamDatas.POSITION_NEW, null);
+			jsonArrayCategory = DownLoadDatas.getDatasFromServer(null, null,
+					null, null, IOStreamDatas.CATEGORY_DATA);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent);
-		mCompetitiveGridView = (GridView) findViewById(R.id.me_competitive_girdview);
-
-		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew);
-		mNewGridView = (GridView) findViewById(R.id.me_new_girdview);
-
-		mySpecialGallery.setAdapter(new MyGalleryAdapter(this, null));// 暂时没有数据
+		Log.i("category", jsonArrayCategory.toString());
+		mCategoryAdapter01 = new CategoryGridviewAdapter(this,
+				jsonArrayCategory,"7");
+		mCategoryAdapter02 = new CategoryGridviewAdapter(this,
+				jsonArrayCategory,"8");
+		mCategoryAdapter03 = new CategoryGridviewAdapter(this,
+				jsonArrayCategory,"9");
 	}
 
 	private void initGridView() {
-
-		mCompetitiveGridView.setNumColumns(3);
-		mCompetitiveGridView.setAdapter(mCompetitiveAdapter);
-		mCompetitiveGridView.setFocusable(false);
-
-		mNewGridView.setNumColumns(3);
-		mNewGridView.setAdapter(mNewAdapter);
-		mNewGridView.setFocusable(false);
-		// setGridViewListener();
-	}
-
-	private void setGridViewListener() {
-		mCompetitiveGridView.setOnItemClickListener(new OnItemClickListener() {
+		mCategoryGridView01.setNumColumns(5);
+		mCategoryGridView01.setAdapter(mCategoryAdapter01);
+		mCategoryGridView01.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
 			}
 		});
-		mNewGridView.setOnItemClickListener(new OnItemClickListener() {
+		mCategoryGridView02.setNumColumns(5);
+		mCategoryGridView02.setAdapter(mCategoryAdapter02);
+		mCategoryGridView02.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
 			}
 		});
-		mySpecialGallery.setOnItemClickListener(new OnItemClickListener() {
+		mCategoryGridView03.setNumColumns(5);
+		mCategoryGridView03.setAdapter(mCategoryAdapter03);
+		mCategoryGridView03.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
 			}
 		});
 	}
@@ -159,14 +113,17 @@ public class Category extends Activity {
 			// 如果屏幕是竖屏，则显示3列，如果是横屏，则显示4列
 			if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				imageCol = 4;
-				Toast.makeText(Special.this, "现在是横屏", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Category.this, "现在是横屏", Toast.LENGTH_SHORT)
+						.show();
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}
-			mCompetitiveGridView.setNumColumns(imageCol);
-			mCompetitiveGridView.setAdapter(mCompetitiveAdapter);
-			mNewGridView.setNumColumns(imageCol);
-			mNewGridView.setAdapter(mNewAdapter);
+			mCategoryGridView01.setNumColumns(5);
+			mCategoryGridView01.setAdapter(mCategoryAdapter01);
+			mCategoryGridView02.setNumColumns(5);
+			mCategoryGridView02.setAdapter(mCategoryAdapter02);
+			mCategoryGridView03.setNumColumns(5);
+			mCategoryGridView03.setAdapter(mCategoryAdapter03);
 			// ia.notifyDataSetChanged();
 		} catch (Exception ex) {
 			ex.printStackTrace();

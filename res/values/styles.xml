@@ -51,8 +51,8 @@
     <style name="gridview_items_ratingbar" parent="@android:style/Widget.RatingBar">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">12dp</item>
-         <item name="android:layout_marginTop">2dp</item>
-          <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
         <item name="android:minHeight">12dp</item>
         <item name="android:maxHeight">12dp</item>
         <item name="android:numStars">5</item>
@@ -84,11 +84,11 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:gravity">center</item>
     </style>
-    
+
     <style name="mepage_apps_update_all_num_style">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:gravity">center</item>
     </style>
@@ -151,7 +151,7 @@
         <item name="android:numColumns">auto_fit</item>
         <item name="android:verticalSpacing">0dp</item>
     </style>
-    
+
     <style name="ranking_gridview_items_picture_style">
         <item name="android:layout_width">62dp</item>
         <item name="android:layout_height">62dp</item>
@@ -164,5 +164,43 @@
         <item name="android:contentDescription">@string/item_imageiew_discription</item>
         <item name="android:src">@drawable/weipinhui_icon</item>
     </style>
+
+    <!-- for category's layout view -->
+    <style name="category_view_line_style">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:background">@drawable/division_02</item>
+    </style>
+    
+    <style name="category_gridview_style">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:verticalSpacing">8dp</item>
+        <item name="android:numColumns">auto_fit</item>
+        <item name="android:horizontalSpacing">16dp</item>
+    </style>
+        
+    <style name="category_guide_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+         <item name="android:layout_marginLeft">26dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">#707070</item>
+    </style>
+    
+    <style name="category_gridview_item_textview_style">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">分类</item>
+        <item name="android:textColor">#88898a</item>
+    </style>
+    
     
 </resources>

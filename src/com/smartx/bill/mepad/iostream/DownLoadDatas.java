@@ -34,9 +34,16 @@ public class DownLoadDatas {
 	 * get appsinfo from server
 	 */
 	public static JSONArray getDatasFromServer(String class_id, String age,
-			String position_id, String keyword) throws ClientProtocolException,
-			IOException, JSONException {
-		String appUrl = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
+			String position_id, String keyword, int dataTypes)
+			throws ClientProtocolException, IOException, JSONException {
+		String dateURL = null;
+		if (dataTypes == IOStreamDatas.APP_DATA) {
+			dateURL = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
+		} else if (dataTypes == IOStreamDatas.CATEGORY_DATA) {
+			dateURL = IOStreamDatas.SERVER_URL + IOStreamDatas.CATEGORY_URL;
+		} else if (dataTypes == IOStreamDatas.SPECIAL_DATA) {
+			dateURL = IOStreamDatas.SERVER_URL + IOStreamDatas.SPECIAL_URL;
+		}
 		UrlEncodedFormEntity entity;
 		HttpClient httpclient = new DefaultHttpClient();
 		httpclient.getParams().setParameter(
@@ -49,7 +56,7 @@ public class DownLoadDatas {
 		params.add(new BasicNameValuePair("position_id", position_id));
 		params.add(new BasicNameValuePair("age", age));
 		entity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
-		HttpPost postRequest = new HttpPost(appUrl);
+		HttpPost postRequest = new HttpPost(dateURL);
 		postRequest.setEntity(entity);
 		HttpResponse response = httpclient.execute(postRequest);
 		HttpEntity resEntity = response.getEntity();

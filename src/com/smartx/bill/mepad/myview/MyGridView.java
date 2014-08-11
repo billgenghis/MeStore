@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.GridView;
 
 /**
- * @Type: MyGridView ��GridView������ScrollView���ӿؼ������ߴ粻���С
+ * @Type: MyGridView 
  */
 public class MyGridView extends GridView {
 

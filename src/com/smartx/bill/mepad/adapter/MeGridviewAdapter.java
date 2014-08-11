@@ -62,7 +62,7 @@ public class MeGridviewAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public static class ViewHolder {
+	public static class MeViewHolder {
 		public ImageView imgViewFlag;
 		public TextView txtViewTitle;
 		public TextView downloadCount;
@@ -72,11 +72,11 @@ public class MeGridviewAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		ViewHolder view;
+		MeViewHolder view;
 		LayoutInflater inflator = activity.getLayoutInflater();
 
 		if (convertView == null) {
-			view = new ViewHolder();
+			view = new MeViewHolder();
 			convertView = inflator.inflate(R.layout.me_gridview_item, null);
 			view.txtViewTitle = (TextView) convertView
 					.findViewById(R.id.app_title);
@@ -88,7 +88,7 @@ public class MeGridviewAdapter extends BaseAdapter {
 					.findViewById(R.id.app_download_count);
 			convertView.setTag(view);
 		} else {
-			view = (ViewHolder) convertView.getTag();
+			view = (MeViewHolder) convertView.getTag();
 		}
 		view.txtViewTitle.setText(getItemDatas("title", position));
 		view.downloadCount.setText(getItemDatas("downloads", position)+ "次下载");

@@ -6,27 +6,27 @@
     android:scrollbars="vertical" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="254dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/home_background"
             android:orientation="vertical" >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="197dp" >
+                android:layout_height="wrap_content" >
 
                 <ImageView
                     android:id="@+id/me_head_pic"
                     android:layout_width="wrap_content"
-                    android:layout_height="116dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="34dp"
+                    android:layout_marginTop="21dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/head_default" />
 
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/me_setting"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="12dp"
                     android:text="" />
 
                 <ImageView
@@ -55,16 +55,21 @@
                     android:id="@+id/me_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_below="@+id/me_head_pic"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="10dp"
                     android:text="Sandy"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:baselineAligned="false" 
                 android:orientation="horizontal" >
 
                 <RelativeLayout
@@ -107,7 +112,6 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="0.20"
-            android:background="#EEEEEE"
             android:orientation="vertical" >
 
             <RelativeLayout
@@ -145,7 +149,6 @@
             android:layout_width="1080dp"
             android:layout_height="0dp"
             android:layout_weight="0.1"
-            android:background="#EEEEEE"
             android:orientation="vertical" >
 
             <com.smartx.bill.mepad.myview.MyGalleryView
@@ -170,7 +173,6 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="0.20"
-            android:background="#EEEEEE"
             android:orientation="vertical" >
 
             <RelativeLayout

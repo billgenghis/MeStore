@@ -2,7 +2,6 @@ package com.smartx.bill.mepad.home;
 
 import java.io.IOException;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -12,17 +11,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.smartx.bill.mepad.R;
 import com.smartx.bill.mepad.adapter.RankingGridviewAdapter;
 import com.smartx.bill.mepad.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.myview.MyGridView;
 
 public class Ranking extends Activity {
 
-	private GridView mRankingGridView;
+	private MyGridView mRankingGridView;
 	private RankingGridviewAdapter mRankingAdapter;
 	private JSONArray jsonArrayTop;
 
@@ -37,13 +36,13 @@ public class Ranking extends Activity {
 	private void initDatas() {
 		try {
 			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null, null,
-					null);
+					null, IOStreamDatas.APP_DATA);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mRankingAdapter = new RankingGridviewAdapter(this, jsonArrayTop);
-		mRankingGridView = (GridView) findViewById(R.id.ranking_gridView);
+		mRankingGridView = (MyGridView) findViewById(R.id.ranking_gridView);
 	}
 
 	private void initGridView() {
