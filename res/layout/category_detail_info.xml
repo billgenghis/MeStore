@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/me_competitve_more_array"
-            style="@style/mepage_recommendation_back_array_style"
+            style="@style/common_back_array_style"
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/home_me_back"
             android:layout_marginLeft="11dp" />
@@ -72,6 +72,7 @@
             <Button
                 android:id="@+id/category_recom_excellent"
                 style="@style/tab_button_style"
+                android:textColor="#ffffff"
                 android:layout_weight="0.50"
                 android:text="精品推荐" />
 
@@ -79,12 +80,14 @@
                 android:id="@+id/category_recom_ranking"
                 style="@style/tab_button_style"
                 android:layout_weight="0.73"
+                android:textColor="#a1a2a3"
                 android:text="排行" />
 
             <Button
                 android:id="@+id/category_recom_new"
                 style="@style/tab_button_style"
                 android:layout_weight="0.50"
+                android:textColor="#a1a2a3"
                 android:text="新品推荐" />
         </LinearLayout>
     </LinearLayout>

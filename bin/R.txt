@@ -629,6 +629,7 @@ int style category_gridview_item_textview_style 0x7f0b0097
 int style category_gridview_style 0x7f0b0095
 int style category_guide_style 0x7f0b0096
 int style category_view_line_style 0x7f0b0094
+int style common_back_array_style 0x7f0b0098
 int style gridview_items_downnum_textview_style 0x7f0b0087
 int style gridview_items_picture_style 0x7f0b0085
 int style gridview_items_ratingbar 0x7f0b0088
@@ -642,7 +643,6 @@ int style mepage_apps_update_all_style 0x7f0b008b
 int style mepage_guide_more_array_style 0x7f0b0091
 int style mepage_guide_more_style 0x7f0b0090
 int style mepage_guide_style 0x7f0b008e
-int style mepage_recommendation_back_array_style 0x7f0b0098
 int style mepage_relative_layout_style 0x7f0b008f
 int style ranking_gridview_items_picture_style 0x7f0b0093
 int style ranking_gridview_style 0x7f0b0092

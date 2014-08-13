@@ -88,37 +88,13 @@ public class CategoryDetail extends Activity {
 		list.add(getView("CategoryNew", intent3));
 
 		pager.setAdapter(new MyViewPagerAdapter(list));
-		if (recomType == IOStreamDatas.TAB_EXCELLENT) {
-			pager.setCurrentItem(0);
-			findViewById(R.id.category_recom_tab).setBackgroundResource(
-					R.drawable.tab2_left);
-			((TextView) findViewById(R.id.category_recom_excellent))
-					.setTextColor(Color.parseColor("#ffffff"));
-			((TextView) findViewById(R.id.category_recom_ranking))
-					.setTextColor(Color.parseColor("#a1a2a3"));
-			((TextView) findViewById(R.id.category_recom_new))
-					.setTextColor(Color.parseColor("#a1a2a3"));
-		} else if (recomType == IOStreamDatas.TAB_RANKING) {
-			pager.setCurrentItem(1);
-			findViewById(R.id.category_recom_tab).setBackgroundResource(
-					R.drawable.tab2_middle);
-			((TextView) findViewById(R.id.category_recom_excellent))
-					.setTextColor(Color.parseColor("#ffffff"));
-			((TextView) findViewById(R.id.category_recom_ranking))
-					.setTextColor(Color.parseColor("#a1a2a3"));
-			((TextView) findViewById(R.id.category_recom_new))
-					.setTextColor(Color.parseColor("#a1a2a3"));
-		} else if (recomType == IOStreamDatas.TAB_NEW) {
-			pager.setCurrentItem(2);
-			findViewById(R.id.category_recom_tab).setBackgroundResource(
-					R.drawable.tab2_right);
-			((TextView) findViewById(R.id.category_recom_excellent))
-					.setTextColor(Color.parseColor("#ffffff"));
-			((TextView) findViewById(R.id.category_recom_ranking))
-					.setTextColor(Color.parseColor("#a1a2a3"));
-			((TextView) findViewById(R.id.category_recom_new))
-					.setTextColor(Color.parseColor("#a1a2a3"));
-		}
+//		if (recomType == IOStreamDatas.TAB_EXCELLENT) {
+//			pager.setCurrentItem(0);
+//		} else if (recomType == IOStreamDatas.TAB_RANKING) {
+//			pager.setCurrentItem(1);
+//		} else if (recomType == IOStreamDatas.TAB_NEW) {
+//			pager.setCurrentItem(2);
+//		}
 		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,
 				IOStreamDatas.VIEWPAGER_CATE_RECOM));
 	}

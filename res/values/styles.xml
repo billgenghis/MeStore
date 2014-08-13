@@ -202,10 +202,10 @@
         <item name="android:textColor">#88898a</item>
     </style>
 
-    <style name="mepage_recommendation_back_array_style">
+    <style name="common_back_array_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@drawable/array_back</item>

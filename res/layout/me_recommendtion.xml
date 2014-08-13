@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/me_competitve_more_array"
-            style="@style/mepage_recommendation_back_array_style"
+            style="@style/common_back_array_style"
             android:layout_alignParentLeft="true"
             android:layout_alignTop="@+id/home_me_back"
             android:layout_marginLeft="11dp"/>
