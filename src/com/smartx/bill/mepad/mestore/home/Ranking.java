@@ -5,23 +5,25 @@ import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RankingGridviewAdapter;
 import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
+import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 
-public class Ranking extends Activity {
+public class Ranking extends AbsListViewBaseActivity {
 
-	private MyGridView mRankingGridView;
+//	private MyGridView mRankingGridView;
 	private RankingGridviewAdapter mRankingAdapter;
 	private JSONArray jsonArrayTop;
 
@@ -41,14 +43,16 @@ public class Ranking extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mRankingAdapter = new RankingGridviewAdapter(this, jsonArrayTop);
-		mRankingGridView = (MyGridView) findViewById(R.id.ranking_gridView);
+		mRankingAdapter = new RankingGridviewAdapter(this, jsonArrayTop,imageLoader);
+//		mRankingGridView = (MyGridView) findViewById(R.id.ranking_gridView);
+		myGridView = (MyGridView) findViewById(R.id.ranking_gridView);
 	}
 
 	private void initGridView() {
-		mRankingGridView.setNumColumns(2);
-		mRankingGridView.setAdapter(mRankingAdapter);
-		mRankingGridView.setOnItemClickListener(new OnItemClickListener() {
+		((GridView) myGridView).setNumColumns(2);
+		myGridView.setAdapter(mRankingAdapter);
+		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));  
+		myGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
@@ -59,12 +63,6 @@ public class Ranking extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
 	}
 
 	/**
@@ -84,8 +82,8 @@ public class Ranking extends Activity {
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}
-			mRankingGridView.setNumColumns(imageCol);
-			mRankingGridView.setAdapter(mRankingAdapter);
+			((GridView) myGridView).setNumColumns(imageCol);
+			myGridView.setAdapter(mRankingAdapter);
 			// ia.notifyDataSetChanged();
 		} catch (Exception ex) {
 			ex.printStackTrace();

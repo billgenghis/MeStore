@@ -21,4 +21,14 @@ public class IOStreamDatas {
 	// 分类类型管理
 	public final static String CATEGORY_TYPE = "0";
 	public final static String CATEGORY_APP_TYPE = "1";
+
+	// ViewPagers管理
+	public final static int VIEWPAGER_RECOM = 1;
+	public final static int VIEWPAGER_HOME = 2;
+	public final static int VIEWPAGER_CATE_RECOM = 3;
+
+	// Tabs管理
+	public final static int TAB_EXCELLENT = 1;
+	public final static int TAB_NEW = 2;
+	public final static int TAB_RANKING = 3;
 }

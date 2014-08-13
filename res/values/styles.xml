@@ -27,7 +27,7 @@
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:contentDescription">@string/item_imageiew_discription</item>
-        <item name="android:src">@drawable/weipinhui_icon</item>
+        <item name="android:src">@drawable/empty_icon</item>
     </style>
 
     <style name="gridview_items_titletextview_style">
@@ -72,7 +72,7 @@
 
     <style name="home_searchview_style">
         <item name="searchDropdownBackground">@drawable/search_big</item>
-        <item name="searchViewSearchIcon">@drawable/ic_menu_search</item>
+        <item name="searchViewSearchIcon">@drawable/home_search</item>
         <item name="searchViewEditQueryBackground">@drawable/search_big</item>
     </style>
 
@@ -116,7 +116,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginRight">20dp</item>
-       <item name="android:layout_marginTop">22dp</item>
+        <item name="android:layout_marginTop">22dp</item>
         <item name="android:layout_marginLeft">27dp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
@@ -155,14 +155,14 @@
     <style name="ranking_gridview_items_picture_style">
         <item name="android:layout_width">62dp</item>
         <item name="android:layout_height">62dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <!-- <item name="android:layout_marginLeft">30dp</item> -->
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:contentDescription">@string/item_imageiew_discription</item>
-        <item name="android:src">@drawable/weipinhui_icon</item>
+        <item name="android:src">@drawable/empty_icon</item>
     </style>
 
     <!-- for category's layout view -->
@@ -174,7 +174,7 @@
         <item name="android:layout_marginBottom">12dp</item>
         <item name="android:background">@drawable/division_02</item>
     </style>
-    
+
     <style name="category_gridview_style">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -183,17 +183,17 @@
         <item name="android:numColumns">auto_fit</item>
         <item name="android:horizontalSpacing">16dp</item>
     </style>
-        
+
     <style name="category_guide_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">20sp</item>
-         <item name="android:layout_marginLeft">26dp</item>
+        <item name="android:layout_marginLeft">26dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">#707070</item>
     </style>
-    
+
     <style name="category_gridview_item_textview_style">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
@@ -201,6 +201,30 @@
         <item name="android:text">分类</item>
         <item name="android:textColor">#88898a</item>
     </style>
-    
-    
+
+    <style name="mepage_recommendation_back_array_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/array_back</item>
+    </style>
+
+    <style name="home_back_textview_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#A0A1A2</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="tab_button_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:textColor">#A0A1A2</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
 </resources>

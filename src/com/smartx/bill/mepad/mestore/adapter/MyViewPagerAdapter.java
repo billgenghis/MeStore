@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 /**
  * Pager适配器
  */
-public class MyPagerAdapter extends PagerAdapter {
+public class MyViewPagerAdapter extends PagerAdapter {
 	List<View> list = new ArrayList<View>();
 
-	public MyPagerAdapter(ArrayList<View> list) {
+	public MyViewPagerAdapter(ArrayList<View> list) {
 		this.list = list;
 	}
 

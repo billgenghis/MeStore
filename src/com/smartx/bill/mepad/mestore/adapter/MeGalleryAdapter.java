@@ -1,7 +1,6 @@
 package com.smartx.bill.mepad.mestore.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import com.smartx.bill.mepad.mestore.R;
 public class MeGalleryAdapter extends BaseAdapter {
 	private int[] images = { R.drawable.special_01, R.drawable.special_02,
 			R.drawable.special_03, R.drawable.special_04 };// 数据源
-	private Context context;
 	private Activity activity;
 
 	public MeGalleryAdapter(Activity activity, int[] images) {
@@ -57,6 +55,7 @@ public class MeGalleryAdapter extends BaseAdapter {
 			convertView.setTag(view);
 		} else {
 			view = (MeGalleryViewHolder) convertView.getTag();
+			
 			view.galleyImage.setImageResource(images[position]);
 		}
 		return convertView;

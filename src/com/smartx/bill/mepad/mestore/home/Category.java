@@ -4,8 +4,9 @@ import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +17,12 @@ import android.widget.Toast;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.CategoryGridviewAdapter;
+import com.smartx.bill.mepad.mestore.category.CategoryDetail;
 import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
 
-public class Category extends Activity {
+public class Category extends MyBaseActivity {
 
 	private MyGridView mCategoryGridView01;
 	private MyGridView mCategoryGridView02;
@@ -28,6 +30,9 @@ public class Category extends Activity {
 	private CategoryGridviewAdapter mCategoryAdapter01;
 	private CategoryGridviewAdapter mCategoryAdapter02;
 	private CategoryGridviewAdapter mCategoryAdapter03;
+	private JSONArray jsonArrayCategory01;
+	private JSONArray jsonArrayCategory02;
+	private JSONArray jsonArrayCategory03;
 	private JSONArray jsonArrayCategory;
 
 	@Override
@@ -55,12 +60,15 @@ public class Category extends Activity {
 			e.printStackTrace();
 		}
 		Log.i("category", jsonArrayCategory.toString());
+		jsonArrayCategory01 = seperateCategory("7");
+		jsonArrayCategory02 = seperateCategory("8");
+		jsonArrayCategory03 = seperateCategory("9");
 		mCategoryAdapter01 = new CategoryGridviewAdapter(this,
-				jsonArrayCategory,"7");
+				jsonArrayCategory01, "7", imageLoader);
 		mCategoryAdapter02 = new CategoryGridviewAdapter(this,
-				jsonArrayCategory,"8");
+				jsonArrayCategory02, "8", imageLoader);
 		mCategoryAdapter03 = new CategoryGridviewAdapter(this,
-				jsonArrayCategory,"9");
+				jsonArrayCategory03, "9", imageLoader);
 	}
 
 	private void initGridView() {
@@ -70,6 +78,22 @@ public class Category extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
+				Intent intent = new Intent(Category.this, CategoryDetail.class);
+				Bundle mBundle = new Bundle();
+				JSONObject mJsonObject;
+				try {
+					mJsonObject = jsonArrayCategory01.getJSONObject(position);
+					mBundle.putString("name", mJsonObject.getString("name"));
+					mBundle.putString("classId",
+							mJsonObject.getString("class_id"));
+					mBundle.putInt("recomType", IOStreamDatas.TAB_EXCELLENT);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtra("CategoryInfo", mBundle);
+				startActivity(intent);
+
 			}
 		});
 		mCategoryGridView02.setNumColumns(5);
@@ -78,6 +102,21 @@ public class Category extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
+				Intent intent = new Intent(Category.this, CategoryDetail.class);
+				Bundle mBundle = new Bundle();
+				JSONObject mJsonObject;
+				try {
+					mJsonObject = jsonArrayCategory02.getJSONObject(position);
+					mBundle.putString("name", mJsonObject.getString("name"));
+					mBundle.putString("classId",
+							mJsonObject.getString("class_id"));
+					mBundle.putInt("recomType", IOStreamDatas.TAB_RANKING);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtra("CategoryInfo", mBundle);
+				startActivity(intent);
 			}
 		});
 		mCategoryGridView03.setNumColumns(5);
@@ -86,6 +125,21 @@ public class Category extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
+				Intent intent = new Intent(Category.this, CategoryDetail.class);
+				Bundle mBundle = new Bundle();
+				JSONObject mJsonObject;
+				try {
+					mJsonObject = jsonArrayCategory03.getJSONObject(position);
+					mBundle.putString("name", mJsonObject.getString("name"));
+					mBundle.putString("classId",
+							mJsonObject.getString("class_id"));
+					mBundle.putInt("recomType", IOStreamDatas.TAB_NEW);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtra("CategoryInfo", mBundle);
+				startActivity(intent);
 			}
 		});
 	}
@@ -95,9 +149,26 @@ public class Category extends Activity {
 		super.onPause();
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+	private JSONArray seperateCategory(String myType) throws JSONException {
+		JSONArray categorysInfo = new JSONArray();
+		JSONObject categoryInfo;
+		for (int i = 0; i < jsonArrayCategory.length(); i++) {
+			categoryInfo = jsonArrayCategory.getJSONObject(i);
+			if (categoryInfo.get("class_id").equals(myType)) {
+				i++;
+				for (int m = i; m < jsonArrayCategory.length(); m++) {
+					categoryInfo = jsonArrayCategory.getJSONObject(m);
+					if (categoryInfo.get("type").equals(
+							IOStreamDatas.CATEGORY_APP_TYPE)) {
+						categorysInfo.put(categoryInfo);
+					} else {
+						i = m;
+						break;
+					}
+				}
+			}
+		}
+		return categorysInfo;
 	}
 
 	/**

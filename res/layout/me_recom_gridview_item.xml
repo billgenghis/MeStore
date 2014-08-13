@@ -57,6 +57,14 @@
                 android:layout_toRightOf="@+id/app_icon" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/app_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="作为去哪儿旅行全新出租车打车引擎，车车联手国内七大优质在线出租车预约服务提供商"
+            android:textColor="#a7a7a9"
+            android:textSize="14sp" />
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"

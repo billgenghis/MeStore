@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/weipinhui_icon" />
+            android:src="@drawable/empty_icon" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/imageView1"
-            android:src="@drawable/weipinhui_icon" />
+            android:src="@drawable/empty_icon" />
 
         <TextView
             android:id="@+id/textView1"

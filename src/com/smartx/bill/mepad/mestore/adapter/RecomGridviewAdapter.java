@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageView;
@@ -19,14 +18,13 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
 
-public class RankingGridviewAdapter extends MyBaseAdapter {
+public class RecomGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
 	private JSONArray appsInfo;
 	private ImageLoader imageLoader;
 	private int count = 30;// 模拟数据时使用
 
-	// }
-	public RankingGridviewAdapter(Activity activity, JSONArray appsInfo,
+	public RecomGridviewAdapter(Activity activity, JSONArray appsInfo,
 			ImageLoader imageLoader) {
 		super();
 		this.appsInfo = appsInfo;
@@ -75,13 +73,14 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		public RatingBar appScore;
 		public Button appInstall;
 		public RelativeLayout mRelativeLayout;
+		public TextView appDescription;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		int rankingCount = position + 1;
-		if (position > 8) {
-			position = position % 8;
+		if (position > 9) {
+			position = position % 9;
 		}
 
 		RankingViewHolder view;
@@ -90,7 +89,7 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		if (convertView == null) {
 			view = new RankingViewHolder();
 			convertView = inflator
-					.inflate(R.layout.ranking_gridview_item, null);
+					.inflate(R.layout.me_recom_gridview_item, null);
 			view.txtViewTitle = (TextView) convertView
 					.findViewById(R.id.app_title);
 			view.imgViewFlag = (ImageView) convertView
@@ -101,6 +100,8 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 					.findViewById(R.id.app_download_count);
 			view.appInstall = (Button) convertView
 					.findViewById(R.id.app_install);
+			view.appDescription = (TextView) convertView
+					.findViewById(R.id.app_description);
 			view.mRelativeLayout = (RelativeLayout) convertView
 					.findViewById(R.id.relative_item);
 			convertView.setTag(view);
@@ -114,7 +115,7 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 				.parseFloat(getItemDatas("score", position)));
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
-
+		view.appDescription.setText(getItemDatas("description", position));
 		// setLayout(position,view);
 		return convertView;
 	}

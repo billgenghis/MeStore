@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <ImageView
+            android:id="@+id/me_competitve_more_array"
+            style="@style/mepage_recommendation_back_array_style"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/home_me_back"
+            android:layout_marginLeft="11dp" />
+
+        <TextView
+            android:id="@+id/home_me_back"
+            style="@style/home_back_textview_style"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/me_competitve_more_array"
+            android:text="@string/home_category" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/category_name"
+                style="@style/home_back_textview_style"
+                android:text="模拟经营"
+                android:textColor="#303030" />
+        </LinearLayout>
+        <!-- 输入的搜索信息 -->
+
+        <EditText
+            android:id="@+id/home_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/search_small"
+            android:drawableLeft="@drawable/home_search"
+            android:hint="搜索应用"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:textColorHint="#bfbfbf"
+            android:textSize="17sp" >
+        </EditText>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:id="@+id/category_recom_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/tab2_left" >
+
+            <Button
+                android:id="@+id/category_recom_excellent"
+                style="@style/tab_button_style"
+                android:layout_weight="0.50"
+                android:text="精品推荐" />
+
+            <Button
+                android:id="@+id/category_recom_ranking"
+                style="@style/tab_button_style"
+                android:layout_weight="0.73"
+                android:text="排行" />
+
+            <Button
+                android:id="@+id/category_recom_new"
+                style="@style/tab_button_style"
+                android:layout_weight="0.50"
+                android:text="新品推荐" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/me_recom_viewpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

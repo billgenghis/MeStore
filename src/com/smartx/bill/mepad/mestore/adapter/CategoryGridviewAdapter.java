@@ -8,39 +8,40 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 
-public class CategoryGridviewAdapter extends BaseAdapter {
+public class CategoryGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
-	private JSONArray categorysInfo = new JSONArray();
-	private JSONObject categoryInfo;
+	private JSONArray categorysInfo;
+	private ImageLoader imageLoader;
 
 	// }
 	public CategoryGridviewAdapter(Activity activity, JSONArray categorysInfo,
-			String myType) throws JSONException {
+			String myType,ImageLoader imageLoader) throws JSONException {
 		super();
-		for (int i = 0; i < categorysInfo.length(); i++) {
-			categoryInfo = categorysInfo.getJSONObject(i);
-			if (categoryInfo.get("class_id").equals(myType)) {
-				i++;
-				for (int m = i; m < categorysInfo.length(); m++) {
-					categoryInfo = categorysInfo.getJSONObject(m);
-					if (categoryInfo.get("type").equals(
-							IOStreamDatas.CATEGORY_APP_TYPE)) {
-						this.categorysInfo.put(categoryInfo);
-					} else {
-						i = m;
-						break;
-					}
-				}
-			}
-			
-		}
+//		for (int i = 0; i < categorysInfo.length(); i++) {
+//			categoryInfo = categorysInfo.getJSONObject(i);
+//			if (categoryInfo.get("class_id").equals(myType)) {
+//				i++;
+//				for (int m = i; m < categorysInfo.length(); m++) {
+//					categoryInfo = categorysInfo.getJSONObject(m);
+//					if (categoryInfo.get("type").equals(
+//							IOStreamDatas.CATEGORY_APP_TYPE)) {
+//						this.categorysInfo.put(categoryInfo);
+//					} else {
+//						i = m;
+//						break;
+//					}
+//				}
+//			}
+//		}
+		this.categorysInfo = categorysInfo;
+		this.imageLoader = imageLoader;
 		this.activity = activity;
 	}
 
@@ -102,14 +103,7 @@ public class CategoryGridviewAdapter extends BaseAdapter {
 			view = (CategoryViewHolder) convertView.getTag();
 		}
 		view.txtViewTitle.setText(getItemDatas("name", position));
-
-		// try {
-		// view.imgViewFlag.setImageBitmap(DownLoadDatas
-		// .getImageFromServer(getItemDatas("image", position)));
-		// } catch (IOException | JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
+//		imageLoader.displayImage(getItemDatas("image", position), view.imgViewFlag, options);
 		return convertView;
 	}
 

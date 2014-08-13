@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="3dp"
-        android:src="@drawable/category_icon" />
+        android:src="@drawable/empty_icon" />
 
     <TextView
         android:id="@+id/category_name"

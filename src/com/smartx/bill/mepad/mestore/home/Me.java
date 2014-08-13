@@ -7,10 +7,12 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -25,8 +27,11 @@ import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
+import com.smartx.bill.mepad.mestore.recommend.Recommendation;
+import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
+
 @SuppressWarnings("deprecation")
-public class Me extends Activity {
+public class Me extends AbsListViewBaseActivity {
 
 	private MeGridviewAdapter mCompetitiveAdapter;
 	private MeGridviewAdapter mNewAdapter;
@@ -47,33 +52,24 @@ public class Me extends Activity {
 	private Context mContext;
 	private JSONArray jsonArrayExcellent;
 	private JSONArray jsonArrayNew;
-//	DisplayImageOptions options;
-	
+
+	// DisplayImageOptions options;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_me);
 		if (android.os.Build.VERSION.SDK_INT > 9) {
 			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 					.permitAll().build();
 			StrictMode.setThreadPolicy(policy);
 		}
+		setContentView(R.layout.home_me);
 		this.savedInstanceState = savedInstanceState;
 		mActivity = this;
 		mContext = this;
 		initdatas();
-		
-//		options = new DisplayImageOptions.Builder()
-//		.showImageOnLoading(R.drawable.category_icon)
-//		.showImageForEmptyUri(R.drawable.category_icon)
-//		.showImageOnFail(R.drawable.category_icon)
-//		.cacheInMemory(true)
-//		.cacheOnDisc(true)
-//		.considerExifParams(true)
-//		.bitmapConfig(Bitmap.Config.RGB_565)
-//		.build();
-
 		initGridView();
+		setListener();
 	}
 
 	private void initdatas() {
@@ -99,12 +95,11 @@ public class Me extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent,imageLoader,options);
-		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent);
+		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent,
+				imageLoader);
 		mCompetitiveGridView = (MyGridView) findViewById(R.id.me_competitive_girdview);
-
-//		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew,imageLoader,options);
-		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew);
+		myGridView = mCompetitiveGridView;
+		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew, imageLoader);
 		mNewGridView = (MyGridView) findViewById(R.id.me_new_girdview);
 
 		mySpecialGallery.setAdapter(new MeGalleryAdapter(this, null));// 暂时没有数据
@@ -119,7 +114,31 @@ public class Me extends Activity {
 		mNewGridView.setNumColumns(3);
 		mNewGridView.setAdapter(mNewAdapter);
 		mNewGridView.setFocusable(false);
-		// setGridViewListener();
+	}
+
+	private void setListener() {
+		setGridViewListener();
+		mComMore.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Me.this, Recommendation.class);
+				intent.putExtra("recomType", IOStreamDatas.POSITION_EXCELLENT);
+				startActivity(intent);
+			}
+		});
+		mNewMore.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Me.this, Recommendation.class);
+				intent.putExtra("recomType", IOStreamDatas.POSITION_NEW);
+				startActivity(intent);
+			}
+		});
+
 	}
 
 	private void setGridViewListener() {
@@ -155,11 +174,6 @@ public class Me extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
 	}
 
 	/**

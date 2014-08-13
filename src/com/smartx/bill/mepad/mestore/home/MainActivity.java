@@ -7,15 +7,17 @@ import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.mestore.R;
-import com.smartx.bill.mepad.mestore.adapter.MyPagerAdapter;
+import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
+import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 
 public class MainActivity extends Activity {
 
@@ -42,35 +44,8 @@ public class MainActivity extends Activity {
 		// InitImageView();
 		initPagerViewer();
 		initTextView();
-//		File testImageOnSdCard = new File("/mnt/sdcard", "Universal Image Loader @#&=+-_.,!()~'%20.png");
-//		if (!testImageOnSdCard.exists()) {
-//			copyTestImageToSdCard(testImageOnSdCard);
-//		}
 	}
-//	private void copyTestImageToSdCard(final File testImageOnSdCard) {
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				try {
-//					InputStream is = getAssets().open("Universal Image Loader @#&=+-_.,!()~'%20.png");
-//					FileOutputStream fos = new FileOutputStream(testImageOnSdCard);
-//					byte[] buffer = new byte[8192];
-//					int read;
-//					try {
-//						while ((read = is.read(buffer)) != -1) {
-//							fos.write(buffer, 0, read);
-//						}
-//					} finally {
-//						fos.flush();
-//						fos.close();
-//						is.close();
-//					}
-//				} catch (IOException e) {
-//					L.w("Can't copy test image onto SD card");
-//				}
-//			}
-//		}).start();
-//	}
+
 	private void initdatas() {
 		pager = (ViewPager) findViewById(R.id.viewpage);
 		// cursor = (ImageView) findViewById(R.id.cursor);
@@ -79,7 +54,7 @@ public class MainActivity extends Activity {
 		t2 = (TextView) findViewById(R.id.home_ranking);
 		t3 = (TextView) findViewById(R.id.home_category);
 		t4 = (TextView) findViewById(R.id.home_special);
-		t1.setTextColor(getResources().getColor(android.R.color.black));
+		t1.setTextColor(Color.parseColor("#303030"));
 		tViews.add(t1);
 		tViews.add(t2);
 		tViews.add(t3);
@@ -91,13 +66,13 @@ public class MainActivity extends Activity {
 	 */
 	private void initTextView() {
 		t1.setOnClickListener(new MyHomeTextClickListener(0, pager, this,
-				tViews));
+				tViews,IOStreamDatas.VIEWPAGER_HOME));
 		t2.setOnClickListener(new MyHomeTextClickListener(1, pager, this,
-				tViews));
+				tViews,IOStreamDatas.VIEWPAGER_HOME));
 		t3.setOnClickListener(new MyHomeTextClickListener(2, pager, this,
-				tViews));
+				tViews,IOStreamDatas.VIEWPAGER_HOME));
 		t4.setOnClickListener(new MyHomeTextClickListener(3, pager, this,
-				tViews));
+				tViews,IOStreamDatas.VIEWPAGER_HOME));
 	}
 
 	/**
@@ -114,9 +89,9 @@ public class MainActivity extends Activity {
 		Intent intent4 = new Intent(context, Special.class);
 		list.add(getView("Special", intent4));
 
-		pager.setAdapter(new MyPagerAdapter(list));
+		pager.setAdapter(new MyViewPagerAdapter(list));
 		pager.setCurrentItem(0);
-		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews));
+		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,IOStreamDatas.VIEWPAGER_HOME));
 	}
 
 	// /**

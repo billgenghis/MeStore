@@ -8,21 +8,23 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
 
-public class SpecialGridviewAdapter extends BaseAdapter {
+public class SpecialGridviewAdapter extends MyBaseAdapter {
 
 	private Activity activity;
 	private JSONArray specialsInfo = new JSONArray();
+	private ImageLoader imageLoader;
 
-	public SpecialGridviewAdapter(Activity activity, JSONArray specialsInfo){
+	public SpecialGridviewAdapter(Activity activity, JSONArray specialsInfo,ImageLoader imageLoader){
 		super();
 		this.specialsInfo = specialsInfo;
 		this.activity = activity;
+		this.imageLoader = imageLoader;
 	}
 
 	private String getItemDatas(String key, int position) {
@@ -90,14 +92,7 @@ public class SpecialGridviewAdapter extends BaseAdapter {
 		}
 		view.txtViewTitle.setText(getItemDatas("s_title", position));
 		view.txtViewDscription.setText(getItemDatas("s_description", position));
-//		view.txtViewTime.setText(getItemDatas("time", position));
-//		try {
-//			view.imgViewFlag.setImageBitmap(DownLoadDatas
-//					.getImageFromServer(getItemDatas("s_pic_url", position)));
-//		} catch (IOException | JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//		imageLoader.displayImage(getItemDatas("image", position), view.imgViewFlag, options);
 		return convertView;
 	}
 
