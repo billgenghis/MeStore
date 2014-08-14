@@ -13,17 +13,14 @@
         android:focusableInTouchMode="true" >
 
         <ImageView
-            android:id="@+id/me_competitve_more_array"
             style="@style/common_back_array_style"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/home_me_back"
-            android:layout_marginLeft="11dp"/>
+            android:id="@+id/common_back_array"/>
 
         <TextView
-            android:id="@+id/home_me_back"
-            style="@style/home_back_textview_style"
+            android:id="@+id/common_backhome"
+            style="@style/common_backhome_textview_style"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/me_competitve_more_array"
+            android:layout_toRightOf="@+id/common_back_array"
             android:text="@string/home_me" />
 
         <LinearLayout
@@ -55,19 +52,7 @@
 
         <EditText
             android:id="@+id/home_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/search_small"
-            android:drawableLeft="@drawable/home_search"
-            android:hint="搜索应用"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"
-            android:textColorHint="#bfbfbf"
-            android:textSize="17sp" >
-        </EditText>
+            style="@style/search_small_style" />
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager

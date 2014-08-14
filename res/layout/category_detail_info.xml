@@ -13,17 +13,13 @@
         android:focusableInTouchMode="true" >
 
         <ImageView
-            android:id="@+id/me_competitve_more_array"
-            style="@style/common_back_array_style"
-            android:layout_alignParentLeft="true"
-            android:layout_alignTop="@+id/home_me_back"
-            android:layout_marginLeft="11dp" />
+            android:id="@+id/common_back_array"
+            style="@style/common_back_array_style" />
 
         <TextView
-            android:id="@+id/home_me_back"
-            style="@style/home_back_textview_style"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/me_competitve_more_array"
+            android:id="@+id/common_backhome"
+            style="@style/common_backhome_textview_style"
+            android:layout_toRightOf="@+id/common_back_array"
             android:text="@string/home_category" />
 
         <LinearLayout
@@ -34,32 +30,20 @@
 
             <TextView
                 android:id="@+id/category_name"
-                style="@style/home_back_textview_style"
-                android:text="模拟经营"
+                style="@style/home_textview_style"
                 android:textColor="#303030" />
         </LinearLayout>
         <!-- 输入的搜索信息 -->
 
         <EditText
             android:id="@+id/home_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/search_small"
-            android:drawableLeft="@drawable/home_search"
-            android:hint="搜索应用"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"
-            android:textColorHint="#bfbfbf"
-            android:textSize="17sp" >
-        </EditText>
+            style="@style/search_small_style" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
         android:gravity="center" >
 
         <LinearLayout
@@ -72,23 +56,23 @@
             <Button
                 android:id="@+id/category_recom_excellent"
                 style="@style/tab_button_style"
-                android:textColor="#ffffff"
                 android:layout_weight="0.50"
-                android:text="精品推荐" />
+                android:text="精品推荐"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/category_recom_ranking"
                 style="@style/tab_button_style"
                 android:layout_weight="0.73"
-                android:textColor="#a1a2a3"
-                android:text="排行" />
+                android:text="排行"
+                android:textColor="#a1a2a3" />
 
             <Button
                 android:id="@+id/category_recom_new"
                 style="@style/tab_button_style"
                 android:layout_weight="0.50"
-                android:textColor="#a1a2a3"
-                android:text="新品推荐" />
+                android:text="新品推荐"
+                android:textColor="#a1a2a3" />
         </LinearLayout>
     </LinearLayout>
 

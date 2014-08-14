@@ -93,7 +93,6 @@ public class Category extends MyBaseActivity {
 				}
 				intent.putExtra("CategoryInfo", mBundle);
 				startActivity(intent);
-
 			}
 		});
 		mCategoryGridView02.setNumColumns(5);

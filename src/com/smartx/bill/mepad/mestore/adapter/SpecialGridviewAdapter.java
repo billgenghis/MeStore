@@ -20,7 +20,8 @@ public class SpecialGridviewAdapter extends MyBaseAdapter {
 	private JSONArray specialsInfo = new JSONArray();
 	private ImageLoader imageLoader;
 
-	public SpecialGridviewAdapter(Activity activity, JSONArray specialsInfo,ImageLoader imageLoader){
+	public SpecialGridviewAdapter(Activity activity, JSONArray specialsInfo,
+			ImageLoader imageLoader) {
 		super();
 		this.specialsInfo = specialsInfo;
 		this.activity = activity;
@@ -92,8 +93,8 @@ public class SpecialGridviewAdapter extends MyBaseAdapter {
 		}
 		view.txtViewTitle.setText(getItemDatas("s_title", position));
 		view.txtViewDscription.setText(getItemDatas("s_description", position));
-//		imageLoader.displayImage(getItemDatas("image", position), view.imgViewFlag, options);
+		// imageLoader.displayImage(getItemDatas("image", position),
+		// view.imgViewFlag, options);
 		return convertView;
 	}
-
 }

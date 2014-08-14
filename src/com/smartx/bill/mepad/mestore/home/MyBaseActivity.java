@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
 
 public class MyBaseActivity extends Activity {
 

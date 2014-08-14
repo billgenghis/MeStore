@@ -25,18 +25,19 @@ public class CategoryNew extends MyBaseActivity {
 	private MyGridView mRecomGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
 	private JSONArray jsonArrayTop;
-
+	private String  classId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
+		this.classId = getIntent().getStringExtra("classId");
 		initDatas();
 		initGridView();
 	}
 
 	private void initDatas() {
 		try {
-			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null, IOStreamDatas.POSITION_NEW,
+			jsonArrayTop = DownLoadDatas.getDatasFromServer(classId, null, IOStreamDatas.POSITION_NEW,
 					null, IOStreamDatas.APP_DATA);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block

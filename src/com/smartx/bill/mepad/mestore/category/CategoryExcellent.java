@@ -26,31 +26,36 @@ public class CategoryExcellent extends MyBaseActivity {
 	private MyGridView mRcomGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
 	private JSONArray jsonArrayTop;
+	private String classId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
+		this.classId = getIntent().getStringExtra("classId");
 		initDatas();
 		initGridView();
 	}
 
 	private void initDatas() {
 		try {
-			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null, IOStreamDatas.POSITION_EXCELLENT,
-					null, IOStreamDatas.APP_DATA);
+			jsonArrayTop = DownLoadDatas.getDatasFromServer(classId, null,
+					IOStreamDatas.POSITION_EXCELLENT, null,
+					IOStreamDatas.APP_DATA);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,imageLoader);
+		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,
+				imageLoader);
 		mRcomGridView = (MyGridView) findViewById(R.id.ranking_gridView);
 	}
 
 	private void initGridView() {
 		mRcomGridView.setNumColumns(2);
 		mRcomGridView.setAdapter(mRecomGridviewAdapter);
-		mRcomGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));  
+		mRcomGridView.setOnScrollListener(new PauseOnScrollListener(
+				imageLoader, true, true));
 		mRcomGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -82,8 +87,8 @@ public class CategoryExcellent extends MyBaseActivity {
 			// 如果屏幕是竖屏，则显示3列，如果是横屏，则显示4列
 			if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				imageCol = 4;
-				Toast.makeText(CategoryExcellent.this, "现在是横屏", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(CategoryExcellent.this, "现在是横屏",
+						Toast.LENGTH_SHORT).show();
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}

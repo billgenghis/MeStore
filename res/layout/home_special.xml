@@ -13,5 +13,6 @@
         <GridView
             android:id="@+id/special_gridView"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent" 
+            android:listSelector= "#00000000"/>
     </LinearLayout>

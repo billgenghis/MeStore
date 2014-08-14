@@ -7,17 +7,19 @@ import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
+import com.smartx.bill.mepad.mestore.listener.BackClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
 
 public class CategoryDetail extends Activity {
 	private Context context = null;
@@ -25,11 +27,13 @@ public class CategoryDetail extends Activity {
 	private ViewPager pager = null;
 	private TextView t1, t2, t3;
 	private TextView categoryName;
+	private TextView backText;
+	private ImageView backArray;
 	private List<TextView> tViews;
 	private Bundle mBundle;
 	private String className;
 	private String classId;
-	private int recomType;
+//	private int recomType;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +43,7 @@ public class CategoryDetail extends Activity {
 		mBundle = getIntent().getBundleExtra("CategoryInfo");
 		className = mBundle.getString("name");
 		classId = mBundle.getString("classId");
-		recomType = mBundle.getInt("recomType");
+//		recomType = mBundle.getInt("recomType");
 		context = CategoryDetail.this;
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
@@ -47,6 +51,7 @@ public class CategoryDetail extends Activity {
 		// InitImageView();
 		initPagerViewer();
 		initTextView();
+		CommonTools.onSearchClick(this);
 	}
 
 	private void initdatas() {
@@ -57,6 +62,10 @@ public class CategoryDetail extends Activity {
 		t2 = (TextView) findViewById(R.id.category_recom_ranking);
 		t3 = (TextView) findViewById(R.id.category_recom_new);
 		categoryName = (TextView) findViewById(R.id.category_name);
+		backText = (TextView) findViewById(R.id.common_backhome);
+		backArray = (ImageView) findViewById(R.id.common_back_array);
+		backText.setOnClickListener(new BackClickListener(this));
+		backArray.setOnClickListener(new BackClickListener(this));
 		categoryName.setText(className);
 		tViews.add(t1);
 		tViews.add(t2);
@@ -81,10 +90,13 @@ public class CategoryDetail extends Activity {
 	private void initPagerViewer() {
 		final ArrayList<View> list = new ArrayList<View>();
 		Intent intent = new Intent(context, CategoryExcellent.class);
+		intent.putExtra("classId", classId);
 		list.add(getView("CategoryExcellent", intent));
 		Intent intent2 = new Intent(context, CategoryRanking.class);
+		intent2.putExtra("classId", classId);
 		list.add(getView("CategoryRanking", intent2));
 		Intent intent3 = new Intent(context, CategoryNew.class);
+		intent3.putExtra("classId", classId);
 		list.add(getView("CategoryNew", intent3));
 
 		pager.setAdapter(new MyViewPagerAdapter(list));

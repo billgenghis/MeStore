@@ -11,19 +11,25 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
+import com.smartx.bill.mepad.mestore.listener.BackClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
 
 public class Recommendation extends Activity {
 	private Context context = null;
 	private LocalActivityManager manager = null;
 	private ViewPager pager = null;
 	private TextView t1, t2;
+	private TextView backText;
+	private ImageView backArray;
 	private List<TextView> tViews;
 	private String recomType;
 
@@ -40,6 +46,7 @@ public class Recommendation extends Activity {
 		// InitImageView();
 		initPagerViewer();
 		initTextView();
+		CommonTools.onSearchClick(this);
 	}
 
 	private void initdatas() {
@@ -48,6 +55,10 @@ public class Recommendation extends Activity {
 		tViews = new ArrayList<TextView>();
 		t1 = (TextView) findViewById(R.id.me_recom_excellent);
 		t2 = (TextView) findViewById(R.id.me_recom_new);
+		backText = (TextView) findViewById(R.id.common_backhome);
+		backArray = (ImageView) findViewById(R.id.common_back_array);
+		backText.setOnClickListener(new BackClickListener(this));
+		backArray.setOnClickListener(new BackClickListener(this));
 		tViews.add(t1);
 		tViews.add(t2);
 	}
@@ -75,16 +86,20 @@ public class Recommendation extends Activity {
 		pager.setAdapter(new MyViewPagerAdapter(list));
 		if (recomType.equals(IOStreamDatas.POSITION_EXCELLENT)) {
 			pager.setCurrentItem(0);
-			findViewById(R.id.me_recom_tab)
-			.setBackgroundResource(R.drawable.tab_left);
-			((TextView) findViewById(R.id.me_recom_excellent)).setTextColor(Color.parseColor("#ffffff"));
-			((TextView) findViewById(R.id.me_recom_new)).setTextColor(Color.parseColor("#a1a2a3"));
-		}else if(recomType.equals(IOStreamDatas.POSITION_NEW)){
+			findViewById(R.id.me_recom_tab).setBackgroundResource(
+					R.drawable.tab_left);
+			((TextView) findViewById(R.id.me_recom_excellent))
+					.setTextColor(Color.parseColor("#ffffff"));
+			((TextView) findViewById(R.id.me_recom_new)).setTextColor(Color
+					.parseColor("#a1a2a3"));
+		} else if (recomType.equals(IOStreamDatas.POSITION_NEW)) {
 			pager.setCurrentItem(1);
-			findViewById(R.id.me_recom_tab)
-			.setBackgroundResource(R.drawable.tab_right);
-			((TextView) findViewById(R.id.me_recom_excellent)).setTextColor(Color.parseColor("#a1a2a3"));
-			((TextView) findViewById(R.id.me_recom_new)).setTextColor(Color.parseColor("#ffffff"));
+			findViewById(R.id.me_recom_tab).setBackgroundResource(
+					R.drawable.tab_right);
+			((TextView) findViewById(R.id.me_recom_excellent))
+					.setTextColor(Color.parseColor("#a1a2a3"));
+			((TextView) findViewById(R.id.me_recom_new)).setTextColor(Color
+					.parseColor("#ffffff"));
 		}
 		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,
 				IOStreamDatas.VIEWPAGER_RECOM));

@@ -55,6 +55,7 @@ public class DownLoadDatas {
 		params.add(new BasicNameValuePair("age", age));
 		params.add(new BasicNameValuePair("position_id", position_id));
 		params.add(new BasicNameValuePair("age", age));
+		params.add(new BasicNameValuePair("keyword", keyword));
 		entity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
 		HttpPost postRequest = new HttpPost(dateURL);
 		postRequest.setEntity(entity);

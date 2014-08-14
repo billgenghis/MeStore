@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
+import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
 public class RecomGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
@@ -45,7 +47,8 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return count;
+		return appsInfo.length();
+//		return count;
 	}
 
 	@Override
@@ -66,15 +69,15 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 		return position;
 	}
 
-	public static class RankingViewHolder {
-		public ImageView imgViewFlag;
-		public TextView txtViewTitle;
-		public TextView downloadCount;
-		public RatingBar appScore;
-		public Button appInstall;
-		public RelativeLayout mRelativeLayout;
-		public TextView appDescription;
-	}
+//	public static class CommonViewHolder {
+//		public ImageView imgViewFlag;
+//		public TextView txtViewTitle;
+//		public TextView downloadCount;
+//		public RatingBar appScore;
+//		public Button appInstall;
+//		public RelativeLayout mRelativeLayout;
+//		public TextView appDescription;
+//	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -83,30 +86,17 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 			position = position % 9;
 		}
 
-		RankingViewHolder view;
+		CommonViewHolder view;
 		LayoutInflater inflator = activity.getLayoutInflater();
 
 		if (convertView == null) {
-			view = new RankingViewHolder();
+			view = new CommonViewHolder();
 			convertView = inflator
 					.inflate(R.layout.me_recom_gridview_item, null);
-			view.txtViewTitle = (TextView) convertView
-					.findViewById(R.id.app_title);
-			view.imgViewFlag = (ImageView) convertView
-					.findViewById(R.id.app_icon);
-			view.appScore = (RatingBar) convertView
-					.findViewById(R.id.app_score);
-			view.downloadCount = (TextView) convertView
-					.findViewById(R.id.app_download_count);
-			view.appInstall = (Button) convertView
-					.findViewById(R.id.app_install);
-			view.appDescription = (TextView) convertView
-					.findViewById(R.id.app_description);
-			view.mRelativeLayout = (RelativeLayout) convertView
-					.findViewById(R.id.relative_item);
+			CommonTools.setViewById(view, convertView);
 			convertView.setTag(view);
 		} else {
-			view = (RankingViewHolder) convertView.getTag();
+			view = (CommonViewHolder) convertView.getTag();
 		}
 		view.txtViewTitle.setText(rankingCount + "."
 				+ getItemDatas("title", position));
@@ -116,23 +106,7 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
 		view.appDescription.setText(getItemDatas("description", position));
-		// setLayout(position,view);
+		CommonTools.setLayout(position,view);
 		return convertView;
 	}
-
-	private void setLayout(int position, RankingViewHolder view) {
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		// lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-		// lp.addRule(RelativeLayout.CENTER_VERTICAL);
-		// lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		if (position % 2 == 1) {
-			lp.setMargins(30, 0, 12, 0);
-			view.imgViewFlag.setLayoutParams(lp);
-		} else {
-			lp.setMargins(20, 0, 20, 0);
-			view.appInstall.setLayoutParams(lp);
-		}
-	}
-
 }

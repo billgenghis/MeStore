@@ -17,7 +17,6 @@
 
         <com.smartx.bill.mepad.mestore.myview.MyGridView
             android:id="@+id/ranking_gridView"
-            android:listSelector="#00000000" 
             style="@style/ranking_gridview_style" />
     </LinearLayout>
 

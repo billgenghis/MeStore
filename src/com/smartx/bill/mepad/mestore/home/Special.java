@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +17,10 @@ import android.widget.Toast;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.SpecialGridviewAdapter;
+import com.smartx.bill.mepad.mestore.category.CategoryDetail;
 import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.special.SpecialDetail;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 
 public class Special extends AbsListViewBaseActivity {
@@ -52,6 +56,22 @@ public class Special extends AbsListViewBaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
+				Intent intent = new Intent(Special.this, SpecialDetail.class);
+				Bundle mBundle = new Bundle();
+				JSONObject mJsonObject;
+				try {
+					mJsonObject = jsonArraySpecial.getJSONObject(position);
+					mBundle.putString("sPicUrl", mJsonObject.getString("s_pic_url"));
+					mBundle.putString("specialId",
+							mJsonObject.getString("special_id"));
+					mBundle.putString("specialTitle", mJsonObject.getString("s_title"));
+					mBundle.putString("specialDescription", mJsonObject.getString("s_description"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtra("SpecialInfo", mBundle);
+				startActivity(intent);
 			}
 		});
 	}

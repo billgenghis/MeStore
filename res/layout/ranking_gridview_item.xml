@@ -13,54 +13,13 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_marginRight="1dp"
         android:orientation="vertical" >
 
-        <RelativeLayout
-            android:id="@+id/relative_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center|clip_horizontal"
-            android:padding="@dimen/abc_action_bar_icon_vertical_padding" >
-
-            <ImageView
-                android:id="@+id/app_icon"
-                style="@style/ranking_gridview_items_picture_style" />
-
-            <RatingBar
-                android:id="@+id/app_score"
-                style="@style/gridview_items_ratingbar"
-                android:layout_below="@+id/app_title"
-                android:layout_toRightOf="@+id/app_icon" />
-
-            <Button
-                android:id="@+id/app_install"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/button_install" />
-
-            <TextView
-                android:id="@+id/app_download_count"
-                style="@style/gridview_items_downnum_textview_style"
-                android:layout_below="@+id/app_score"
-                android:layout_toLeftOf="@+id/app_install"
-                android:layout_toRightOf="@+id/app_icon" />
-
-            <TextView
-                android:id="@+id/app_title"
-                style="@style/gridview_items_titletextview_style"
-                android:layout_alignTop="@+id/app_icon"
-                android:layout_toLeftOf="@+id/app_install"
-                android:layout_toRightOf="@+id/app_icon" />
-        </RelativeLayout>
+        <include layout="@layout/common_appsinfo" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:layout_marginTop="5dp"
             android:background="@drawable/division_02" />
     </LinearLayout>
 

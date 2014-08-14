@@ -4,14 +4,21 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/special_item_pic"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:layout_marginLeft="23dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/special01" />
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="8dp" >
+
+        <ImageView
+            android:id="@+id/special_item_pic"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:src="@drawable/special02" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -22,13 +29,7 @@
 
         <TextView
             android:id="@+id/special_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="足球之夜"
-            android:textColor="#333333"
-            android:textSize="21sp" />
+            style="@style/special_title_textview_style" />
 
         <TextView
             android:id="@+id/special_item_time"
@@ -43,13 +44,7 @@
 
     <TextView
         android:id="@+id/special_item_description"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="25dp"
-        android:text=""
-        android:textColor="#a7a7a9"
-        android:textSize="14sp" />
+        style="@style/special_textview_style" />
+/>
 
 </LinearLayout>

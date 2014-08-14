@@ -19,14 +19,12 @@ import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
-public class RankingGridviewAdapter extends MyBaseAdapter {
+public class SearchGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
 	private JSONArray appsInfo;
 	private ImageLoader imageLoader;
-	private int count = 30;// 模拟数据时使用
 
-	// }
-	public RankingGridviewAdapter(Activity activity, JSONArray appsInfo,
+	public SearchGridviewAdapter(Activity activity, JSONArray appsInfo,
 			ImageLoader imageLoader) {
 		super();
 		this.appsInfo = appsInfo;
@@ -47,7 +45,7 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return count;
+		return appsInfo.length();
 	}
 
 	@Override
@@ -68,20 +66,26 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		return position;
 	}
 
+	// public static class CommonViewHolder {
+	// public ImageView imgViewFlag;
+	// public TextView txtViewTitle;
+	// public TextView downloadCount;
+	// public RatingBar appScore;
+	// public Button appInstall;
+	// public RelativeLayout mRelativeLayout;
+	// public ImageView appReview;
+	// public TextView appDescription;
+	// }
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		int rankingCount = position + 1;
-		if (position > 8) {
-			position = position % 8;
-		}
-
 		CommonViewHolder view;
 		LayoutInflater inflator = activity.getLayoutInflater();
 
 		if (convertView == null) {
 			view = new CommonViewHolder();
-			convertView = inflator
-					.inflate(R.layout.ranking_gridview_item, null);
+			convertView = inflator.inflate(R.layout.search_gridview_item, null);
 			CommonTools.setViewById(view, convertView);
 			convertView.setTag(view);
 		} else {
@@ -94,8 +98,10 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 				.parseFloat(getItemDatas("score", position)));
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
+		// imageLoader.displayImage(getItemDatas("image", position),
+		// view.appReview, options);
 		CommonTools.setLayout(position, view);
-		view.appDescription.setVisibility(TextView.GONE);
+		view.appDescription.setHeight(0);
 		return convertView;
 	}
 }

@@ -3,23 +3,26 @@ package com.smartx.bill.mepad.mestore.home;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
+import com.smartx.bill.mepad.mestore.listener.SearchOnEditorActionListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
 
-public class MainActivity extends Activity {
+public class MainActivity extends MyBaseActivity {
 
 	Context context = null;
 	LocalActivityManager manager = null;
@@ -44,6 +47,10 @@ public class MainActivity extends Activity {
 		// InitImageView();
 		initPagerViewer();
 		initTextView();
+		EditText searchText;
+		searchText = (EditText)findViewById(R.id.home_search);
+		Log.i("searchName1", searchText.getText().toString());
+		searchText.setOnEditorActionListener(new SearchOnEditorActionListener(this));
 	}
 
 	private void initdatas() {
@@ -66,13 +73,13 @@ public class MainActivity extends Activity {
 	 */
 	private void initTextView() {
 		t1.setOnClickListener(new MyHomeTextClickListener(0, pager, this,
-				tViews,IOStreamDatas.VIEWPAGER_HOME));
+				tViews, IOStreamDatas.VIEWPAGER_HOME));
 		t2.setOnClickListener(new MyHomeTextClickListener(1, pager, this,
-				tViews,IOStreamDatas.VIEWPAGER_HOME));
+				tViews, IOStreamDatas.VIEWPAGER_HOME));
 		t3.setOnClickListener(new MyHomeTextClickListener(2, pager, this,
-				tViews,IOStreamDatas.VIEWPAGER_HOME));
+				tViews, IOStreamDatas.VIEWPAGER_HOME));
 		t4.setOnClickListener(new MyHomeTextClickListener(3, pager, this,
-				tViews,IOStreamDatas.VIEWPAGER_HOME));
+				tViews, IOStreamDatas.VIEWPAGER_HOME));
 	}
 
 	/**
@@ -91,7 +98,14 @@ public class MainActivity extends Activity {
 
 		pager.setAdapter(new MyViewPagerAdapter(list));
 		pager.setCurrentItem(0);
-		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,IOStreamDatas.VIEWPAGER_HOME));
+		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,
+				IOStreamDatas.VIEWPAGER_HOME));
+	}
+
+	@Override
+	public void onBackPressed() {
+		imageLoader.stop();
+		super.onBackPressed();
 	}
 
 	// /**

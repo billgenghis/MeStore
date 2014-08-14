@@ -26,18 +26,20 @@ public class CategoryRanking extends MyBaseActivity {
 	private MyGridView mRcomGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
 	private JSONArray jsonArrayTop;
+	private String classId; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
+		this.classId = getIntent().getStringExtra("classId");
 		initDatas();
 		initGridView();
 	}
 
 	private void initDatas() {
 		try {
-			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null, IOStreamDatas.POSITION_EXCELLENT,
+			jsonArrayTop = DownLoadDatas.getDatasFromServer(classId, null, null,
 					null, IOStreamDatas.APP_DATA);
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
