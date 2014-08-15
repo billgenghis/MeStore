@@ -3,6 +3,8 @@ package com.smartx.bill.mepad.mestore.home;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +16,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.listener.SearchOnEditorActionListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.util.CommonTools;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class MainActivity extends MyBaseActivity {
 
@@ -43,13 +46,12 @@ public class MainActivity extends MyBaseActivity {
 		context = MainActivity.this;
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
+		Log.i("manager", manager.toString());
 		initdatas();
-		// InitImageView();
 		initPagerViewer();
 		initTextView();
 		EditText searchText;
 		searchText = (EditText)findViewById(R.id.home_search);
-		Log.i("searchName1", searchText.getText().toString());
 		searchText.setOnEditorActionListener(new SearchOnEditorActionListener(this));
 	}
 
@@ -62,6 +64,7 @@ public class MainActivity extends MyBaseActivity {
 		t3 = (TextView) findViewById(R.id.home_category);
 		t4 = (TextView) findViewById(R.id.home_special);
 		t1.setTextColor(Color.parseColor("#303030"));
+		
 		tViews.add(t1);
 		tViews.add(t2);
 		tViews.add(t3);
@@ -108,29 +111,6 @@ public class MainActivity extends MyBaseActivity {
 		super.onBackPressed();
 	}
 
-	// /**
-	// * 初始化动画
-	// */
-	// private void InitImageView() {
-	// bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.roller)
-	// .getWidth();// 获取图片宽度
-	// DisplayMetrics dm = new DisplayMetrics();
-	// getWindowManager().getDefaultDisplay().getMetrics(dm);
-	// int screenW = dm.widthPixels;// 获取分辨率宽度
-	// offset = (screenW / 14 - bmpW) / 2;// 计算偏移量
-	// Matrix matrix = new Matrix();
-	// matrix.postTranslate(offset, 0);
-	// cursor.setImageMatrix(matrix);// 设置动画初始位置
-	// }
-
-	// @Override
-	// public boolean onCreateOptionsMenu(Menu menu) {
-	// getMenuInflater().inflate(R.menu.activity_main, menu);
-	// SearchView searchView = (SearchView)
-	// menu.findItem(R.id.my_search_view).getActionView();
-	// return true;
-	// }
-
 	/**
 	 * 通过activity获取视图
 	 * 
@@ -142,138 +122,6 @@ public class MainActivity extends MyBaseActivity {
 		return manager.startActivity(id, intent).getDecorView();
 	}
 
-	// /**
-	// * Pager适配器
-	// */
-	// public class MyPagerAdapter extends PagerAdapter {
-	// List<View> list = new ArrayList<View>();
-	//
-	// public MyPagerAdapter(ArrayList<View> list) {
-	// this.list = list;
-	// }
-	//
-	// @Override
-	// public void destroyItem(ViewGroup container, int position, Object object)
-	// {
-	// ViewPager pViewPager = ((ViewPager) container);
-	// pViewPager.removeView(list.get(position));
-	// }
-	//
-	// @Override
-	// public boolean isViewFromObject(View arg0, Object arg1) {
-	// return arg0 == arg1;
-	// }
-	//
-	// @Override
-	// public int getCount() {
-	// return list.size();
-	// }
-	//
-	// @Override
-	// public Object instantiateItem(View arg0, int arg1) {
-	// ViewPager pViewPager = ((ViewPager) arg0);
-	// pViewPager.addView(list.get(arg1));
-	// return list.get(arg1);
-	// }
-	//
-	// @Override
-	// public void restoreState(Parcelable arg0, ClassLoader arg1) {
-	//
-	// }
-	//
-	// @Override
-	// public Parcelable saveState() {
-	// return null;
-	// }
-	//
-	// @Override
-	// public void startUpdate(View arg0) {
-	// }
-	// }
-	//
-	// /**
-	// * 页卡切换监听
-	// */
-	// public class MyOnPageChangeListener implements OnPageChangeListener {
-	//
-	// int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
-	// int two = one * 2;// 页卡1 -> 页卡3 偏移量
-	// int three = one * 3;// 页卡1 -> 页卡4 偏移量
-	//
-	// @Override
-	// public void onPageSelected(int arg0) {
-	// Animation animation = null;
-	// switch (arg0) {
-	// case 0:
-	// if (currIndex == 1) {
-	// animation = new TranslateAnimation(one, 0, 0, 0);
-	// } else if (currIndex == 2) {
-	// animation = new TranslateAnimation(two, 0, 0, 0);
-	// } else if (currIndex == 3) {
-	// animation = new TranslateAnimation(three, 0, 0, 0);
-	// }
-	// break;
-	// case 1:
-	// if (currIndex == 0) {
-	// animation = new TranslateAnimation(offset, one, 0, 0);
-	// } else if (currIndex == 2) {
-	// animation = new TranslateAnimation(two, one, 0, 0);
-	// } else if (currIndex == 3) {
-	// animation = new TranslateAnimation(three, one, 0, 0);
-	// }
-	// break;
-	// case 2:
-	// if (currIndex == 0) {
-	// animation = new TranslateAnimation(offset, two, 0, 0);
-	// } else if (currIndex == 1) {
-	// animation = new TranslateAnimation(one, two, 0, 0);
-	// } else if (currIndex == 3) {
-	// animation = new TranslateAnimation(three, two, 0, 0);
-	// }
-	// break;
-	// case 3:
-	// if (currIndex == 0) {
-	// animation = new TranslateAnimation(offset, three, 0, 0);
-	// } else if (currIndex == 1) {
-	// animation = new TranslateAnimation(one, three, 0, 0);
-	// } else if (currIndex == 2) {
-	// animation = new TranslateAnimation(two, three, 0, 0);
-	// }
-	// break;
-	// }
-	// currIndex = arg0;
-	// animation.setFillAfter(true);// True:图片停在动画结束位置
-	// animation.setDuration(300);
-	// cursor.startAnimation(animation);
-	// }
-	//
-	// @Override
-	// public void onPageScrollStateChanged(int arg0) {
-	//
-	// }
-	//
-	// @Override
-	// public void onPageScrolled(int arg0, float arg1, int arg2) {
-	//
-	// }
-	// }
-	//
-	// /**
-	// * 头标点击监听
-	// */
-	// public class MyOnClickListener implements View.OnClickListener {
-	// private int index = 0;
-	//
-	// public MyOnClickListener(int i) {
-	// index = i;
-	// }
-	//
-	// @Override
-	// public void onClick(View v) {
-	// pager.setCurrentItem(index);
-	// }
-	// };
-
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -283,6 +131,7 @@ public class MainActivity extends MyBaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.i("manager", manager.toString());
 		manager.dispatchResume();
 	}
 }

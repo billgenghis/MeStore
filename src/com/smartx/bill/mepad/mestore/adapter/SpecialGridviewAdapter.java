@@ -41,7 +41,7 @@ public class SpecialGridviewAdapter extends MyBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return specialsInfo.length();
+			return specialsInfo.length();
 	}
 
 	@Override

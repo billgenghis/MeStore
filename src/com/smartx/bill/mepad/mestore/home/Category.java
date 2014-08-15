@@ -1,7 +1,5 @@
 package com.smartx.bill.mepad.mestore.home;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,12 +13,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.CategoryGridviewAdapter;
 import com.smartx.bill.mepad.mestore.category.CategoryDetail;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Category extends MyBaseActivity {
 
@@ -39,26 +38,45 @@ public class Category extends MyBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_category);
-		try {
-			initDatas();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		initGridView();
+		HttpUtil.get(getDataUrl(IOStreamDatas.CATEGORY_DATA), getParams(null, null,
+					null, null), new JsonHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(JSONArray response) {
+				try {
+					initDatas(response);
+					initGridView();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable e, JSONArray errorResponse) {
+			}
+		});
+//		try {
+//			initDatas();
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		initGridView();
 	}
 
-	private void initDatas() throws JSONException {
+	private void initDatas(JSONArray response) throws JSONException{
 		mCategoryGridView01 = (MyGridView) findViewById(R.id.category_gridView01);
 		mCategoryGridView02 = (MyGridView) findViewById(R.id.category_gridView02);
 		mCategoryGridView03 = (MyGridView) findViewById(R.id.category_gridView03);
-		try {
-			jsonArrayCategory = DownLoadDatas.getDatasFromServer(null, null,
-					null, null, IOStreamDatas.CATEGORY_DATA);
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			jsonArrayCategory = downLoadDatas.getDatasFromServer(null, null,
+//					null, null, IOStreamDatas.CATEGORY_DATA);
+//		} catch (IOException | JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		jsonArrayCategory = response;
 		Log.i("category", jsonArrayCategory.toString());
 		jsonArrayCategory01 = seperateCategory("7");
 		jsonArrayCategory02 = seperateCategory("8");

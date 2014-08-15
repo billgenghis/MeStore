@@ -22,9 +22,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="21dp"
             android:src="@drawable/empty_review" />
 
         <View
+            android:id="@+id/vertical_line"
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="@drawable/division_02" />

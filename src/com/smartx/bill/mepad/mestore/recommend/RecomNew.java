@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
@@ -19,6 +20,7 @@ import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class RecomNew extends MyBaseActivity {
 
@@ -30,18 +32,33 @@ public class RecomNew extends MyBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
-		initDatas();
-		initGridView();
+		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null),
+				new JsonHttpResponseHandler() {
+
+					@Override
+					public void onSuccess(JSONArray response) {
+						initDatas(response);
+						initGridView();
+					}
+
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
+//		initDatas();
+//		initGridView();
 	}
 
-	private void initDatas() {
-		try {
-			jsonArrayTop = DownLoadDatas.getDatasFromServer(null, null, IOStreamDatas.POSITION_NEW,
-					null, IOStreamDatas.APP_DATA);
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private void initDatas(JSONArray response) {
+//		try {
+//			jsonArrayTop = downLoadDatas.getDatasFromServer(null, null, IOStreamDatas.POSITION_NEW,
+//					null, IOStreamDatas.APP_DATA);
+//		} catch (IOException | JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		jsonArrayTop = response;
 		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,imageLoader);
 		mRecomGridView = (MyGridView) findViewById(R.id.ranking_gridView);
 	}

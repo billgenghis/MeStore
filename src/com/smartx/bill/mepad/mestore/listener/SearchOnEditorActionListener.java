@@ -21,8 +21,8 @@ public class SearchOnEditorActionListener implements OnEditorActionListener {
 
 	@Override
 	public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-		searchName = arg0.getText().toString();
-		if (searchName.replaceAll(" ", "").replaceAll("　", "").length() > 0) {// 判断是否全为空格
+		searchName = arg0.getText().toString().replaceAll(" ", "").replaceAll("　", "");
+		if (searchName.length() > 0) {// 判断是否全为空格
 			Intent intent = new Intent(mAcitivity, Search.class);
 			intent.putExtra("searchName", searchName);
 			mAcitivity.startActivity(intent);

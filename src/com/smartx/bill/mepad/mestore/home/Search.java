@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
@@ -26,6 +27,7 @@ import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Search extends AbsListViewBaseActivity {
 
@@ -40,24 +42,38 @@ public class Search extends AbsListViewBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_search);
 		searchName = getIntent().getStringExtra("searchName");
-		Log.i("searchName", searchName + "");
-		initDatas();
-		initGridView();
+		myGridView = (MyGridView) findViewById(R.id.search_gridView);
+		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, null, searchName),
+				new JsonHttpResponseHandler() {
+
+					@Override
+					public void onSuccess(JSONArray response) {
+						initDatas(response);
+						initGridView();
+					}
+
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
+		// initDatas();
+		// initGridView();
 		CommonTools.onSearchClick(this);
 	}
 
-	private void initDatas() {
-		 try {
-		 jsonArraySearch = DownLoadDatas.getDatasFromServer(null, null,
-		 null,
-		 searchName, IOStreamDatas.APP_DATA);
-		 } catch (IOException | JSONException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
-		 }
+	private void initDatas(JSONArray response) {
+		// try {
+		// jsonArraySearch = downLoadDatas.getDatasFromServer(null, null,
+		// null,
+		// searchName, IOStreamDatas.APP_DATA);
+		// } catch (IOException | JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		jsonArraySearch = response;
 		mSearchGridviewAdapter = new SearchGridviewAdapter(this,
 				jsonArraySearch, imageLoader);
-		myGridView = (MyGridView) findViewById(R.id.search_gridView);
 		TextView backText = (TextView) findViewById(R.id.common_backhome);
 		ImageView backArray = (ImageView) findViewById(R.id.common_back_array);
 		backText.setOnClickListener(new BackClickListener(this));
@@ -67,8 +83,8 @@ public class Search extends AbsListViewBaseActivity {
 	private void initGridView() {
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mSearchGridviewAdapter);
-//		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-//				true, true));
+		// myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
+		// true, true));
 		myGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
@@ -94,8 +110,7 @@ public class Search extends AbsListViewBaseActivity {
 			// 如果屏幕是竖屏，则显示3列，如果是横屏，则显示4列
 			if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				imageCol = 4;
-				Toast.makeText(Search.this, "现在是横屏", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(Search.this, "现在是横屏", Toast.LENGTH_SHORT).show();
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}

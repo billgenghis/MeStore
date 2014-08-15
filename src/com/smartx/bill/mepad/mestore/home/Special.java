@@ -1,7 +1,5 @@
 package com.smartx.bill.mepad.mestore.home;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,17 +13,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.SpecialGridviewAdapter;
-import com.smartx.bill.mepad.mestore.category.CategoryDetail;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.special.SpecialDetail;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Special extends AbsListViewBaseActivity {
 
-//	private GridView myGridView;
+	// private GridView myGridView;
 	private SpecialGridviewAdapter mSpecialAdapter;
 	private JSONArray jsonArraySpecial;
 
@@ -33,20 +31,34 @@ public class Special extends AbsListViewBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_special);
-		initDatas();
-		initGridView();
+		myGridView = (GridView) findViewById(R.id.special_gridView);
+		HttpUtil.get(getDataUrl(IOStreamDatas.SPECIAL_DATA),
+				getParams(null, null, null, null),
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(JSONArray response) {
+						initDatas(response);
+						initGridView();
+					}
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
+		// initDatas();
+		// initGridView();
 	}
 
-	private void initDatas() {
-		try {
-			jsonArraySpecial = DownLoadDatas.getDatasFromServer(null, null, null,
-					null, IOStreamDatas.SPECIAL_DATA);
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mSpecialAdapter = new SpecialGridviewAdapter(this, jsonArraySpecial,imageLoader);
-		myGridView = (GridView) findViewById(R.id.special_gridView);
+	private void initDatas(JSONArray response) {
+		// try {
+		// jsonArraySpecial = downLoadDatas.getDatasFromServer(null, null, null,
+		// null, IOStreamDatas.SPECIAL_DATA);
+		// } catch (IOException | JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		jsonArraySpecial = response;
+		mSpecialAdapter = new SpecialGridviewAdapter(this, jsonArraySpecial,
+				imageLoader);
 	}
 
 	private void initGridView() {
@@ -61,11 +73,14 @@ public class Special extends AbsListViewBaseActivity {
 				JSONObject mJsonObject;
 				try {
 					mJsonObject = jsonArraySpecial.getJSONObject(position);
-					mBundle.putString("sPicUrl", mJsonObject.getString("s_pic_url"));
+					mBundle.putString("sPicUrl",
+							mJsonObject.getString("s_pic_url"));
 					mBundle.putString("specialId",
 							mJsonObject.getString("special_id"));
-					mBundle.putString("specialTitle", mJsonObject.getString("s_title"));
-					mBundle.putString("specialDescription", mJsonObject.getString("s_description"));
+					mBundle.putString("specialTitle",
+							mJsonObject.getString("s_title"));
+					mBundle.putString("specialDescription",
+							mJsonObject.getString("s_description"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

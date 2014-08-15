@@ -45,7 +45,11 @@ public class SearchGridviewAdapter extends MyBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return appsInfo.length();
+		if (appsInfo.length() % 2 == 1) {
+			return appsInfo.length() + 1;
+		} else {
+			return appsInfo.length();
+		}
 	}
 
 	@Override
@@ -91,17 +95,25 @@ public class SearchGridviewAdapter extends MyBaseAdapter {
 		} else {
 			view = (CommonViewHolder) convertView.getTag();
 		}
-		view.txtViewTitle.setText(rankingCount + "."
-				+ getItemDatas("title", position));
-		view.downloadCount.setText(getItemDatas("downloads", position) + "次下载");
-		view.appScore.setRating(Float
-				.parseFloat(getItemDatas("score", position)));
-		imageLoader.displayImage(getItemDatas("image", position),
-				view.imgViewFlag, options);
-		// imageLoader.displayImage(getItemDatas("image", position),
-		// view.appReview, options);
-		CommonTools.setLayout(position, view);
-		view.appDescription.setHeight(0);
+		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
+			view.mRelativeLayout.setVisibility(View.INVISIBLE);
+			view.imgViewFlag.setVisibility(View.INVISIBLE);
+			view.appReview.setVisibility(View.INVISIBLE);
+			convertView.findViewById(R.id.vertical_line).setVisibility(View.INVISIBLE);
+		} else {
+			view.txtViewTitle.setText(rankingCount + "."
+					+ getItemDatas("title", position));
+			view.downloadCount.setText(getItemDatas("downloads", position)
+					+ "次下载");
+			view.appScore.setRating(Float.parseFloat(getItemDatas("score",
+					position)));
+			imageLoader.displayImage(getItemDatas("image", position),
+					view.imgViewFlag, options);
+			// imageLoader.displayImage(getItemDatas("image", position),
+			// view.appReview, options);
+		}
+			CommonTools.setLayout(position, view);
+			view.appDescription.setHeight(0);
 		return convertView;
 	}
 }

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MeGalleryAdapter;
 import com.smartx.bill.mepad.mestore.adapter.MeGridviewAdapter;
@@ -29,6 +30,7 @@ import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.recommend.Recommendation;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 @SuppressWarnings("deprecation")
 public class Me extends AbsListViewBaseActivity {
@@ -58,26 +60,55 @@ public class Me extends AbsListViewBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (android.os.Build.VERSION.SDK_INT > 9) {
-			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-					.permitAll().build();
-			StrictMode.setThreadPolicy(policy);
-		}
+		// if (android.os.Build.VERSION.SDK_INT > 9) {
+		// StrictMode.ThreadPolicy policy = new
+		// StrictMode.ThreadPolicy.Builder()
+		// .permitAll().build();
+		// StrictMode.setThreadPolicy(policy);
+		// }
 		setContentView(R.layout.home_me);
 		this.savedInstanceState = savedInstanceState;
 		mActivity = this;
 		mContext = this;
-		initdatas();
-		initGridView();
-		setListener();
+		initDatas();
+		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null),
+				new JsonHttpResponseHandler() {
+
+					@Override
+					public void onSuccess(JSONArray response) {
+						initExcellentDatas(response);
+						setListener();
+					}
+
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
+		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null),
+				new JsonHttpResponseHandler() {
+
+					@Override
+					public void onSuccess(JSONArray response) {
+						initNewDatas(response);
+						setListener();
+					}
+
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
+		initSpecialDatas(null);
+		// initdatas();
+		// initGridView();
+		// setListener();
 	}
 
-	private void initdatas() {
+	private void initDatas() {
 		mName = (TextView) findViewById(R.id.me_name);
 		mComIntroduce = (TextView) findViewById(R.id.me_competitve_introduce);
 		mComMore = (TextView) findViewById(R.id.me_competitve_more);
-		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
-		mNewMore = (TextView) findViewById(R.id.me_new_more);
 
 		mHeadPic = (ImageView) findViewById(R.id.me_head_pic);
 		mSetting = (ImageView) findViewById(R.id.me_setting);
@@ -85,39 +116,59 @@ public class Me extends AbsListViewBaseActivity {
 		mAllApps = (TextView) findViewById(R.id.me_all_apps);
 		mySpecialGallery = (MyGalleryView) findViewById(R.id.me_special_gallery);
 
-		try {
-			jsonArrayExcellent = DownLoadDatas.getDatasFromServer(null, null,
-					IOStreamDatas.POSITION_EXCELLENT, null,
-					IOStreamDatas.APP_DATA);
-			jsonArrayNew = DownLoadDatas.getDatasFromServer(null, null,
-					IOStreamDatas.POSITION_NEW, null, IOStreamDatas.APP_DATA);
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent,
-				imageLoader);
+		mName = (TextView) findViewById(R.id.me_name);
+		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
+		mNewMore = (TextView) findViewById(R.id.me_new_more);
+		
 		mCompetitiveGridView = (MyGridView) findViewById(R.id.me_competitive_girdview);
-		myGridView = mCompetitiveGridView;
-		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew, imageLoader);
 		mNewGridView = (MyGridView) findViewById(R.id.me_new_girdview);
-
-		mySpecialGallery.setAdapter(new MeGalleryAdapter(this, null));// 暂时没有数据
+		myGridView = mCompetitiveGridView;
+		setListener();
 	}
 
-	private void initGridView() {
+	private void initExcellentDatas(JSONArray response) {
 
+		jsonArrayExcellent = response;
+		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent,
+				imageLoader);
+		myGridView = mCompetitiveGridView;
 		mCompetitiveGridView.setNumColumns(3);
 		mCompetitiveGridView.setAdapter(mCompetitiveAdapter);
-		mCompetitiveGridView.setFocusable(false);
+		mCompetitiveGridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+						mContext, mActivity, savedInstanceState);
+				qustomDialogBuilder.show();
+			}
+		});
+	}
 
+	private void initNewDatas(JSONArray response) {
+		jsonArrayNew = response;
+		mNewAdapter = new MeGridviewAdapter(this, jsonArrayNew, imageLoader);
 		mNewGridView.setNumColumns(3);
 		mNewGridView.setAdapter(mNewAdapter);
 		mNewGridView.setFocusable(false);
+
+		mNewGridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+						mContext, mActivity, savedInstanceState);
+				qustomDialogBuilder.show();
+			}
+		});
+	}
+
+	private void initSpecialDatas(JSONArray response) {
+		mySpecialGallery.setAdapter(new MeGalleryAdapter(this, null));// 暂时没有数据
 	}
 
 	private void setListener() {
-		setGridViewListener();
+		// setGridViewListener();
 		mComMore.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -138,38 +189,37 @@ public class Me extends AbsListViewBaseActivity {
 				startActivity(intent);
 			}
 		});
-
 	}
 
-	private void setGridViewListener() {
-		mCompetitiveGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
-			}
-		});
-		mNewGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
-			}
-		});
-		mySpecialGallery.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
-			}
-		});
-	}
+	// private void setGridViewListener() {
+	// mCompetitiveGridView.setOnItemClickListener(new OnItemClickListener() {
+	// @Override
+	// public void onItemClick(AdapterView<?> arg0, View arg1,
+	// int position, long arg3) {
+	// MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+	// mContext, mActivity, savedInstanceState);
+	// qustomDialogBuilder.show();
+	// }
+	// });
+	// mNewGridView.setOnItemClickListener(new OnItemClickListener() {
+	// @Override
+	// public void onItemClick(AdapterView<?> arg0, View arg1,
+	// int position, long arg3) {
+	// MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+	// mContext, mActivity, savedInstanceState);
+	// qustomDialogBuilder.show();
+	// }
+	// });
+	// mySpecialGallery.setOnItemClickListener(new OnItemClickListener() {
+	// @Override
+	// public void onItemClick(AdapterView<?> arg0, View arg1,
+	// int position, long arg3) {
+	// MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
+	// mContext, mActivity, savedInstanceState);
+	// qustomDialogBuilder.show();
+	// }
+	// });
+	// }
 
 	@Override
 	protected void onPause() {

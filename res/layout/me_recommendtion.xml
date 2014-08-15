@@ -13,8 +13,8 @@
         android:focusableInTouchMode="true" >
 
         <ImageView
-            style="@style/common_back_array_style"
-            android:id="@+id/common_back_array"/>
+            android:id="@+id/common_back_array"
+            style="@style/common_back_array_style" />
 
         <TextView
             android:id="@+id/common_backhome"
@@ -37,14 +37,14 @@
 
                 <Button
                     android:id="@+id/me_recom_excellent"
-                    android:layout_weight="0.50"
                     style="@style/tab_button_style"
+                    android:layout_weight="0.50"
                     android:text="精品推荐" />
 
                 <Button
                     android:id="@+id/me_recom_new"
-                    android:layout_weight="0.50"
                     style="@style/tab_button_style"
+                    android:layout_weight="0.50"
                     android:text="新品推荐" />
             </LinearLayout>
         </LinearLayout>
@@ -54,6 +54,11 @@
             android:id="@+id/home_search"
             style="@style/search_small_style" />
     </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@drawable/division_01" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/me_recom_viewpage"
