@@ -55,6 +55,8 @@
         <item name="android:maxHeight">12dip</item>
         <item name="android:numStars">5</item>
         <item name="android:rating">0</item>
+        <item name="android:focusable">false</item>
+        <item name="android:isIndicator">true</item>
         <item name="android:progressDrawable">@drawable/my_ratingbar_full</item>
     </style>
 
@@ -142,7 +144,7 @@
 
     <!-- for ranking item view -->
     <style name="ranking_gridview_style">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">0dp</item>
         <item name="android:horizontalSpacing">0dp</item>
@@ -150,7 +152,6 @@
         <item name="android:numColumns">auto_fit</item>
         <item name="android:verticalSpacing">0dp</item>
     </style>
-
     <!--
     <style name="ranking_gridview_items_picture_style">
         <item name="android:layout_width">62dp</item>
@@ -237,7 +238,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingLeft">8dp</item>
-         <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">#A0A1A2</item>
         <item name="android:id">@+id/common_backhome</item>
         <item name="android:textSize">20sp</item>

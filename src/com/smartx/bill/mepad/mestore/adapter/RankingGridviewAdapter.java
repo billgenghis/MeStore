@@ -92,6 +92,7 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		view.downloadCount.setText(getItemDatas("downloads", position) + "次下载");
 		view.appScore.setRating(Float
 				.parseFloat(getItemDatas("score", position)));
+		view.appScore.setFocusable(false);
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
 		CommonTools.setLayout(position, view);

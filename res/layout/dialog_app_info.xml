@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="65.0dip"
+        android:layout_marginLeft="13dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <TextView
+            android:id="@+id/home_me"
+            style="@style/home_textview_style"
+            android:text="@string/home_me" />
+
+        <TextView
+            android:id="@+id/home_ranking"
+            style="@style/home_textview_style"
+            android:text="@string/home_ranking" />
+
+        <TextView
+            android:id="@+id/home_category"
+            style="@style/home_textview_style"
+            android:text="@string/home_category" />
+
+        <TextView
+            android:id="@+id/home_special"
+            style="@style/home_textview_style"
+            android:text="@string/home_special" />
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text=" "
+            android:textColor="#000000"
+            android:textSize="18.0dip" />
+
+        <!--
+        <SearchView
+            android:id="@+id/home_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/home_searchview_style"
+            android:layout_weight="0.1" >
+        </SearchView>
+        -->
+        <!-- 输入的搜索信息 -->
+
+        <EditText
+            android:id="@+id/home_search"
+            style="@style/search_small_style"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.1"
+            android:background="@drawable/search_big"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+    <!--
+         <ImageView
+        android:id="@+id/cursor"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEEEEE"
+        android:scaleType="matrix"
+        android:src="@drawable/roller" />
+    -->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/dialog_viewpage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

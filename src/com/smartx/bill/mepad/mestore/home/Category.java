@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -23,9 +24,9 @@ import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Category extends MyBaseActivity {
 
-	private MyGridView mCategoryGridView01;
-	private MyGridView mCategoryGridView02;
-	private MyGridView mCategoryGridView03;
+	private GridView mCategoryGridView01;
+	private GridView mCategoryGridView02;
+	private GridView mCategoryGridView03;
 	private CategoryGridviewAdapter mCategoryAdapter01;
 	private CategoryGridviewAdapter mCategoryAdapter02;
 	private CategoryGridviewAdapter mCategoryAdapter03;
@@ -39,7 +40,7 @@ public class Category extends MyBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_category);
 		HttpUtil.get(getDataUrl(IOStreamDatas.CATEGORY_DATA), getParams(null, null,
-					null, null), new JsonHttpResponseHandler() {
+					null, null,null), new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray response) {
@@ -66,9 +67,9 @@ public class Category extends MyBaseActivity {
 	}
 
 	private void initDatas(JSONArray response) throws JSONException{
-		mCategoryGridView01 = (MyGridView) findViewById(R.id.category_gridView01);
-		mCategoryGridView02 = (MyGridView) findViewById(R.id.category_gridView02);
-		mCategoryGridView03 = (MyGridView) findViewById(R.id.category_gridView03);
+		mCategoryGridView01 = (GridView) findViewById(R.id.category_gridView01);
+		mCategoryGridView02 = (GridView) findViewById(R.id.category_gridView02);
+		mCategoryGridView03 = (GridView) findViewById(R.id.category_gridView03);
 //		try {
 //			jsonArrayCategory = downLoadDatas.getDatasFromServer(null, null,
 //					null, null, IOStreamDatas.CATEGORY_DATA);
@@ -77,7 +78,6 @@ public class Category extends MyBaseActivity {
 //			e.printStackTrace();
 //		}
 		jsonArrayCategory = response;
-		Log.i("category", jsonArrayCategory.toString());
 		jsonArrayCategory01 = seperateCategory("7");
 		jsonArrayCategory02 = seperateCategory("8");
 		jsonArrayCategory03 = seperateCategory("9");

@@ -44,7 +44,7 @@ public class Search extends AbsListViewBaseActivity {
 		searchName = getIntent().getStringExtra("searchName");
 		myGridView = (MyGridView) findViewById(R.id.search_gridView);
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, searchName),
+				getParams(null, null, null, searchName,null),
 				new JsonHttpResponseHandler() {
 
 					@Override

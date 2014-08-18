@@ -1,15 +1,13 @@
 package com.smartx.bill.mepad.mestore.category;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -17,14 +15,12 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class CategoryNew extends MyBaseActivity {
 
-	private MyGridView mRecomGridView;
+	private GridView mRecomGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
 	private JSONArray jsonArrayTop;
 	private String  classId;
@@ -34,7 +30,7 @@ public class CategoryNew extends MyBaseActivity {
 		setContentView(R.layout.home_ranking);
 		this.classId = getIntent().getStringExtra("classId");
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA), getParams(classId, null, IOStreamDatas.POSITION_NEW,
-				null), new JsonHttpResponseHandler() {
+				null,null), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray response) {
 					initDatas(response);
@@ -59,7 +55,7 @@ public class CategoryNew extends MyBaseActivity {
 //		}
 		jsonArrayTop = response;
 		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,imageLoader);
-		mRecomGridView = (MyGridView) findViewById(R.id.ranking_gridView);
+		mRecomGridView = (GridView) findViewById(R.id.ranking_gridView);
 	}
 
 	private void initGridView() {

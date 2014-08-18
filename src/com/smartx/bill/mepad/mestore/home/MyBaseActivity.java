@@ -46,12 +46,13 @@ public class MyBaseActivity extends Activity {
 		return dataURL;
 	}
 	protected RequestParams getParams(String class_id, String age,
-			String position_id, String keyword){
+			String position_id, String keyword, String special_id){
 		RequestParams params = new RequestParams();
 		params.put("class_id", class_id);
 		params.put("age", age);
 		params.put("position_id", position_id);
 		params.put("keyword", keyword);
+		params.put("special_id", special_id);
 		return params;
 	}
 }

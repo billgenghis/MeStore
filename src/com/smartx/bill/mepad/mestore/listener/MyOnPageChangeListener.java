@@ -27,6 +27,21 @@ public class MyOnPageChangeListener implements OnPageChangeListener {
 
 	@Override
 	public void onPageSelected(int arg0) {
+		setItemColor(arg0);
+		
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+	}
+
+	private void setItemColor(int arg0) {
 		if (whichVP == IOStreamDatas.VIEWPAGER_HOME) {
 			tViews.get(arg0).setTextColor(Color.parseColor("#303030"));
 			for (int i = 0; i < 4; i++) {
@@ -82,15 +97,5 @@ public class MyOnPageChangeListener implements OnPageChangeListener {
 						.setTextColor(Color.parseColor("#ffffff"));
 			}
 		}
-	}
-
-	@Override
-	public void onPageScrollStateChanged(int arg0) {
-
-	}
-
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-
 	}
 }

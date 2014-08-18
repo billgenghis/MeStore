@@ -1,16 +1,12 @@
 package com.smartx.bill.mepad.mestore.home;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,7 +20,6 @@ import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MeGalleryAdapter;
 import com.smartx.bill.mepad.mestore.adapter.MeGridviewAdapter;
 import com.smartx.bill.mepad.mestore.dialog.MyAppInfoDialogBuilder;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
@@ -72,13 +67,12 @@ public class Me extends AbsListViewBaseActivity {
 		mContext = this;
 		initDatas();
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null),
+				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null,null),
 				new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
 						initExcellentDatas(response);
-						setListener();
 					}
 
 					@Override
@@ -86,13 +80,12 @@ public class Me extends AbsListViewBaseActivity {
 					}
 				});
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_NEW, null),
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null,null),
 				new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
 						initNewDatas(response);
-						setListener();
 					}
 
 					@Override
@@ -156,6 +149,8 @@ public class Me extends AbsListViewBaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
+				
+				Toast.makeText(Me.this, "现在是横屏", Toast.LENGTH_SHORT).show();
 				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
 						mContext, mActivity, savedInstanceState);
 				qustomDialogBuilder.show();

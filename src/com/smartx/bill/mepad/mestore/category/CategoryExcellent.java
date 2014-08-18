@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -15,12 +16,11 @@ import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class CategoryExcellent extends MyBaseActivity {
 
-	private MyGridView mRcomGridView;
+	private GridView mRcomGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
 	private JSONArray jsonArrayTop;
 	private String classId;
@@ -31,7 +31,7 @@ public class CategoryExcellent extends MyBaseActivity {
 		setContentView(R.layout.home_ranking);
 		this.classId = getIntent().getStringExtra("classId");
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA), getParams(classId, null,
-			IOStreamDatas.POSITION_EXCELLENT, null), new JsonHttpResponseHandler() {
+			IOStreamDatas.POSITION_EXCELLENT, null,null), new JsonHttpResponseHandler() {
 		@Override
 		public void onSuccess(JSONArray response) {
 				initDatas(response);
@@ -58,7 +58,7 @@ public class CategoryExcellent extends MyBaseActivity {
 		jsonArrayTop = response;
 		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,
 				imageLoader);
-		mRcomGridView = (MyGridView) findViewById(R.id.ranking_gridView);
+		mRcomGridView = (GridView) findViewById(R.id.ranking_gridView);
 	}
 
 	private void initGridView() {

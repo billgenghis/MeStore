@@ -2,154 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:paddingBottom="@dimen/abc_action_bar_icon_vertical_padding"
-        android:paddingTop="@dimen/abc_action_bar_icon_vertical_padding" >
-
-        <ImageView
-            android:id="@+id/dialog_app_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/empty_icon" />
-
-
-        <TextView
-        android:id="@+id/app_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/app_download_count"
-        android:layout_alignTop="@+id/dialog_app_icon"
-        android:ellipsize="marquee"
-        android:text="@string/dialog_app_title"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="18sp" />
-
-    <RatingBar
-        android:id="@+id/app_score"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/app_title"
-        android:layout_toRightOf="@+id/dialog_app_icon"
-        android:numStars="5" />
-
-    <TextView
-        android:id="@+id/app_download_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/app_score"
-        android:layout_toRightOf="@+id/dialog_app_icon"
-        android:ellipsize="marquee"
-        android:text="@string/item_download_count"
-        android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/dialog_app_install_status"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="70dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="21dp"
-            android:background="@drawable/shape"
-            android:text="@string/install_status"
-            android:textColor="@android:color/holo_blue_light" />
-
-    </RelativeLayout>
+    <include layout="@layout/common_appsinfo" />
 
     <View
         android:id="@+id/titleDivider"
         android:layout_width="match_parent"
-        android:layout_height="2dip"
-        android:background="@android:color/background_light"
-        android:visibility="visible" />
-
-    <Gallery
-        android:id="@+id/gallery1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:id="@+id/titleDivider"
-        android:layout_width="match_parent"
-        android:layout_height="2dip"
-        android:background="@android:color/background_light"
-        android:visibility="visible" />
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+        android:layout_height="1dip"
+        android:background="@drawable/division_01" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="40.0dip"
-        >
-
-        <TextView
-            android:id="@+id/dialog_detail_info"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="@string/dialog_detail_info"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18.0dip" />
-
-        <TextView
-            android:id="@+id/dialog_judge_score"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="@string/dialog_judge_score"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18.0dip" />
-
-        <TextView
-            android:id="@+id/dialog_same_developers"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="@string/dialog_same_developers"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18.0dip" />
-
-        <TextView
-            android:id="@+id/dialog_detail_permission"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="@string/dialog_detail_permission"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18.0dip" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/cursor"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#EEEEEE"
-        android:scaleType="matrix"
-        android:src="@drawable/search_big" />
+        android:orientation="vertical" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/dialog_viewpage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="fill_parent"
+            android:background="@drawable/dialog_background1"
+            android:layout_height="wrap_content" >
 
-</LinearLayout>
-    <!-- <TextView
+            <TextView
+                android:id="@+id/dialog_detail_info"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.22"
+                android:gravity="center"
+                android:text="@string/dialog_detail_info"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18.0dip" />
+
+            <TextView
+                android:id="@+id/dialog_judge_score"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.32"
+                android:gravity="center"
+                android:text="@string/dialog_judge_score"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18.0dip" />
+
+            <TextView
+                android:id="@+id/dialog_same_developers"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.17"
+                android:gravity="center"
+                android:text="@string/dialog_same_developers"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18.0dip" />
+
+            <TextView
+                android:id="@+id/dialog_detail_permission"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.21"
+                android:gravity="center"
+                android:text="@string/dialog_detail_permission"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18.0dip" />
+
+        </LinearLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/dialog_viewpage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -218,6 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="8dp"
-        android:text="@string/dialog_app_other_info" /> -->
+        android:text="@string/dialog_app_other_info" />
+    -->
 
 </LinearLayout>

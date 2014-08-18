@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
@@ -21,9 +22,10 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.BackClickListener;
-import com.smartx.bill.mepad.mestore.myview.MyGridView;
+import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
+import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class SpecialDetail extends AbsListViewBaseActivity {
 
@@ -49,15 +51,13 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 		specialId = mBundle.getString("specialId");
 		specialTitle = mBundle.getString("specialTitle");
 		specialDescription = mBundle.getString("specialDescription");
-		initDatas();
-		initGridView();
+		// initDatas();
+		// initGridView();
 
 		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.empty_icon) // resource or
-															// drawable
-				.showImageForEmptyUri(R.drawable.empty_icon) // resource or
-																// drawable
-				.showImageOnFail(R.drawable.empty_icon) // resource or drawable
+				.showImageOnLoading(R.drawable.special02) // resource or drawable
+				.showImageForEmptyUri(R.drawable.special02) // resource or drawable
+				.showImageOnFail(R.drawable.special02) // resource or drawable
 				.resetViewBeforeLoading(false) // default
 				.delayBeforeLoading(1000).cacheInMemory(true) // default
 				.cacheOnDisk(true) // default
@@ -69,26 +69,36 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 				.build();
 
 		CommonTools.onSearchClick(this);
+		initDatas();
+		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, null, null, specialId),
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(JSONArray response) {
+						initDatas(response);
+						initGridView();
+					}
+
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
 	}
 
 	private void initDatas() {
-		// try {
-		// jsonArraySpecial = DownLoadDatas.getDatasFromServer(specialId, null,
-		// null,
-		// null, IOStreamDatas.APP_DATA);
-		// } catch (IOException | JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		jsonArraySpecial = new JSONArray();
+		myGridView = (GridView) findViewById(R.id.special_gridView);
+		specialTitleView = (TextView) findViewById(R.id.special_item_title);
+		specialDescriptionView = (TextView) findViewById(R.id.special_item_description);
+		specialImageView = (ImageView) findViewById(R.id.special_item_pic);
+	}
+
+	private void initDatas(JSONArray response) {
+		jsonArraySpecial = response;
 		mRecomGridviewAdapter = new RecomGridviewAdapter(this,
 				jsonArraySpecial, imageLoader);
-		myGridView = (MyGridView) findViewById(R.id.special_gridView);
-		specialTitleView = (TextView) findViewById(R.id.special_item_title);
 		specialTitleView.setText(specialTitle);
-		specialDescriptionView = (TextView) findViewById(R.id.special_item_description);
 		specialDescriptionView.setText(specialDescription);
-		specialImageView = (ImageView) findViewById(R.id.special_item_pic);
+		imageLoader.displayImage(sPicUrl, specialImageView, options);
 		TextView backText = (TextView) findViewById(R.id.common_backhome);
 		ImageView backArray = (ImageView) findViewById(R.id.common_back_array);
 		backText.setOnClickListener(new BackClickListener(this));

@@ -1,31 +1,26 @@
 package com.smartx.bill.mepad.mestore.category;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
-import com.smartx.bill.mepad.mestore.adapter.RankingGridviewAdapter;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class CategoryRanking extends MyBaseActivity {
 
-	private MyGridView mRcomGridView;
+	private GridView mRakingGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
 	private JSONArray jsonArrayTop;
 	private String classId; 
@@ -36,7 +31,7 @@ public class CategoryRanking extends MyBaseActivity {
 		setContentView(R.layout.home_ranking);
 		this.classId = getIntent().getStringExtra("classId");
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA), getParams(classId, null, null,
-				null), new JsonHttpResponseHandler() {
+				null,null), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray response) {
 					initDatas(response);
@@ -61,14 +56,14 @@ public class CategoryRanking extends MyBaseActivity {
 //		}
 		jsonArrayTop = response;
 		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,imageLoader);
-		mRcomGridView = (MyGridView) findViewById(R.id.ranking_gridView);
+		mRakingGridView = (GridView) findViewById(R.id.ranking_gridView);
 	}
 
 	private void initGridView() {
-		mRcomGridView.setNumColumns(2);
-		mRcomGridView.setAdapter(mRecomGridviewAdapter);
-		mRcomGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));  
-		mRcomGridView.setOnItemClickListener(new OnItemClickListener() {
+		mRakingGridView.setNumColumns(2);
+		mRakingGridView.setAdapter(mRecomGridviewAdapter);
+		mRakingGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));  
+		mRakingGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
@@ -104,8 +99,8 @@ public class CategoryRanking extends MyBaseActivity {
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}
-			mRcomGridView.setNumColumns(imageCol);
-			mRcomGridView.setAdapter(mRecomGridviewAdapter);
+			mRakingGridView.setNumColumns(imageCol);
+			mRakingGridView.setAdapter(mRecomGridviewAdapter);
 			// ia.notifyDataSetChanged();
 		} catch (Exception ex) {
 			ex.printStackTrace();
