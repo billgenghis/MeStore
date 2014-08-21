@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
     <application
         android:name="com.smartx.bill.mepad.mestore.uimgloader.UILApplication"
@@ -55,6 +56,14 @@
         <activity android:name="com.smartx.bill.mepad.mestore.category.CategoryRanking" />
         <activity android:name="com.smartx.bill.mepad.mestore.category.CategoryNew" />
         <activity android:name="com.smartx.bill.mepad.mestore.special.SpecialDetail" />
+        <activity android:name="com.smartx.bill.mepad.mestore.dialog.AppDetailInfo" />
+        <activity android:name="com.smartx.bill.mepad.mestore.dialog.SameDevelpersApp" />
+        <activity android:name="com.smartx.bill.mepad.mestore.dialog.AppScore" />
+        <activity android:name="com.smartx.bill.mepad.mestore.dialog.AppPermission" />
+        <activity
+            android:name="com.smartx.bill.mepad.mestore.dialog.DialogAppInfo"
+            android:theme="@style/activity_dialog" />
+        <activity android:name="com.smartx.bill.mepad.mestore.iostream.DownLoadApk" />
     </application>
 
 </manifest>

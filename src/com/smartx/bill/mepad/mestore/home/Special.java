@@ -1,14 +1,11 @@
 package com.smartx.bill.mepad.mestore.home;
 
-import java.io.ObjectOutputStream.PutField;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +17,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.SpecialGridviewAdapter;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.special.SpecialDetail;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
@@ -36,7 +34,7 @@ public class Special extends AbsListViewBaseActivity {
 		setContentView(R.layout.home_special);
 		myGridView = (GridView) findViewById(R.id.special_gridView);
 		HttpUtil.get(getDataUrl(IOStreamDatas.SPECIAL_DATA),
-				getParams(null, null, null, null,null),
+				getParams(null, null, null, null,null, null),
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray response) {

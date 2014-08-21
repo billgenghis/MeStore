@@ -31,7 +31,7 @@ public class RecomNew extends MyBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_NEW, null,null),
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null,null, null),
 				new JsonHttpResponseHandler() {
 
 					@Override

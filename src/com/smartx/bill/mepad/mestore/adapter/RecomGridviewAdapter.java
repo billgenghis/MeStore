@@ -46,9 +46,11 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return appsInfo.length();
-//		return count;
+		if (appsInfo.length() % 2 == 1) {
+			return appsInfo.length() + 1;
+		} else {
+			return appsInfo.length();
+		}
 	}
 
 	@Override
@@ -69,44 +71,48 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 		return position;
 	}
 
-//	public static class CommonViewHolder {
-//		public ImageView imgViewFlag;
-//		public TextView txtViewTitle;
-//		public TextView downloadCount;
-//		public RatingBar appScore;
-//		public Button appInstall;
-//		public RelativeLayout mRelativeLayout;
-//		public TextView appDescription;
-//	}
+	// public static class CommonViewHolder {
+	// public ImageView imgViewFlag;
+	// public TextView txtViewTitle;
+	// public TextView downloadCount;
+	// public RatingBar appScore;
+	// public Button appInstall;
+	// public RelativeLayout mRelativeLayout;
+	// public TextView appDescription;
+	// }
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		int rankingCount = position + 1;
-		if (position > 9) {
-			position = position % 9;
-		}
-
 		CommonViewHolder view;
 		LayoutInflater inflator = activity.getLayoutInflater();
 
 		if (convertView == null) {
 			view = new CommonViewHolder();
-			convertView = inflator
-					.inflate(R.layout.me_recom_gridview_item, null);
+			convertView = inflator.inflate(R.layout.me_recom_gridview_item,
+					null);
 			CommonTools.setViewById(view, convertView);
 			convertView.setTag(view);
 		} else {
 			view = (CommonViewHolder) convertView.getTag();
 		}
-		view.txtViewTitle.setText(rankingCount + "."
-				+ getItemDatas("title", position));
-		view.downloadCount.setText(getItemDatas("downloads", position) + "次下载");
-		view.appScore.setRating(Float
-				.parseFloat(getItemDatas("score", position)));
-		imageLoader.displayImage(getItemDatas("image", position),
-				view.imgViewFlag, options);
-		view.appDescription.setText(getItemDatas("description", position));
-		CommonTools.setLayout(position,view);
+		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
+			view.mRelativeLayout.setVisibility(View.INVISIBLE);
+			view.imgViewFlag.setVisibility(View.INVISIBLE);
+			convertView.findViewById(R.id.vertical_line).setVisibility(
+					View.INVISIBLE);
+		} else {
+			view.txtViewTitle.setText(rankingCount + "."
+					+ getItemDatas("title", position));
+			view.downloadCount.setText(getItemDatas("downloads", position)
+					+ "次下载");
+			view.appScore.setRating(Float.parseFloat(getItemDatas("score",
+					position)));
+			imageLoader.displayImage(getItemDatas("image", position),
+					view.imgViewFlag, options);
+			view.appDescription.setText(getItemDatas("description", position));
+		}
+		CommonTools.setLayout(position, view);
 		return convertView;
 	}
 }

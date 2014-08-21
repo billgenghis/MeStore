@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.BackClickListener;
+import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
@@ -46,18 +47,12 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.special_detail_info);
-		mBundle = getIntent().getBundleExtra("SpecialInfo");
-		sPicUrl = mBundle.getString("sPicUrl");
-		specialId = mBundle.getString("specialId");
-		specialTitle = mBundle.getString("specialTitle");
-		specialDescription = mBundle.getString("specialDescription");
-		// initDatas();
-		// initGridView();
-
+		initDatas();
+		initCommonDatas(this, this, savedInstanceState);
 		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.special02) // resource or drawable
-				.showImageForEmptyUri(R.drawable.special02) // resource or drawable
-				.showImageOnFail(R.drawable.special02) // resource or drawable
+				.showImageOnLoading(R.drawable.default_special_detail)
+				.showImageForEmptyUri(R.drawable.default_special_detail)
+				.showImageOnFail(R.drawable.default_special_detail)
 				.resetViewBeforeLoading(false) // default
 				.delayBeforeLoading(1000).cacheInMemory(true) // default
 				.cacheOnDisk(true) // default
@@ -71,12 +66,11 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 		CommonTools.onSearchClick(this);
 		initDatas();
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, null, specialId),
+				getParams(null, null, null, null, specialId, null),
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray response) {
 						initDatas(response);
-						initGridView();
 					}
 
 					@Override
@@ -86,7 +80,13 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 	}
 
 	private void initDatas() {
+		mBundle = getIntent().getBundleExtra("SpecialInfo");
+		sPicUrl = mBundle.getString("sPicUrl");
+		specialId = mBundle.getString("specialId");
+		specialTitle = mBundle.getString("specialTitle");
+		specialDescription = mBundle.getString("specialDescription");
 		myGridView = (GridView) findViewById(R.id.special_gridView);
+		myGridView.setOnTouchListener(myGestureListener);
 		specialTitleView = (TextView) findViewById(R.id.special_item_title);
 		specialDescriptionView = (TextView) findViewById(R.id.special_item_description);
 		specialImageView = (ImageView) findViewById(R.id.special_item_pic);
@@ -99,25 +99,31 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 		specialTitleView.setText(specialTitle);
 		specialDescriptionView.setText(specialDescription);
 		imageLoader.displayImage(sPicUrl, specialImageView, options);
-		TextView backText = (TextView) findViewById(R.id.common_backhome);
-		ImageView backArray = (ImageView) findViewById(R.id.common_back_array);
-		backText.setOnClickListener(new BackClickListener(this));
-		backArray.setOnClickListener(new BackClickListener(this));
-		// imageLoader.displayImage(sPicUrl, specialImageView, options);
-	}
-
-	private void initGridView() {
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mRecomGridviewAdapter);
 		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
 				true, true));
-		myGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-			}
-		});
+		myGridView.setOnItemClickListener(new ItemClickListener(mContext,
+				mActivity, savedInstanceState, response));
+
+		TextView backText = (TextView) findViewById(R.id.common_backhome);
+		ImageView backArray = (ImageView) findViewById(R.id.common_back_array);
+		backText.setOnClickListener(new BackClickListener(this));
+		backArray.setOnClickListener(new BackClickListener(this));
 	}
+
+	// private void initGridView() {
+	// ((GridView) myGridView).setNumColumns(2);
+	// myGridView.setAdapter(mRecomGridviewAdapter);
+	// myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
+	// true, true));
+	// myGridView.setOnItemClickListener(new OnItemClickListener() {
+	// @Override
+	// public void onItemClick(AdapterView<?> arg0, View arg1,
+	// int position, long arg3) {
+	// }
+	// });
+	// }
 
 	@Override
 	protected void onPause() {

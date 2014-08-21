@@ -1,13 +1,21 @@
 package com.smartx.bill.mepad.mestore.home;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
+import com.smartx.bill.mepad.mestore.dialog.MyAppInfoDialogBuilder;
+import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 
 public class MyBaseActivity extends Activity {
@@ -16,7 +24,7 @@ public class MyBaseActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
+
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 		return true;
 	}
@@ -34,7 +42,8 @@ public class MyBaseActivity extends Activity {
 			return false;
 		}
 	}
-	protected String getDataUrl(int dataTypes){
+
+	protected String getDataUrl(int dataTypes) {
 		String dataURL = null;
 		if (dataTypes == IOStreamDatas.APP_DATA) {
 			dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
@@ -45,14 +54,17 @@ public class MyBaseActivity extends Activity {
 		}
 		return dataURL;
 	}
+
 	protected RequestParams getParams(String class_id, String age,
-			String position_id, String keyword, String special_id){
+			String position_id, String keyword, String special_id,
+			String developer) {
 		RequestParams params = new RequestParams();
 		params.put("class_id", class_id);
 		params.put("age", age);
 		params.put("position_id", position_id);
 		params.put("keyword", keyword);
 		params.put("special_id", special_id);
+		params.put("developer", developer);
 		return params;
 	}
 }

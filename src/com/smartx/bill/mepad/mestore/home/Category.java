@@ -40,7 +40,7 @@ public class Category extends MyBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_category);
 		HttpUtil.get(getDataUrl(IOStreamDatas.CATEGORY_DATA), getParams(null, null,
-					null, null,null), new JsonHttpResponseHandler() {
+					null, null,null,null), new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONArray response) {

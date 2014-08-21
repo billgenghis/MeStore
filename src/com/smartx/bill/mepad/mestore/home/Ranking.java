@@ -2,47 +2,39 @@ package com.smartx.bill.mepad.mestore.home;
 
 import org.json.JSONArray;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RankingGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
+import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Ranking extends AbsListViewBaseActivity {
 
-	private static final String GridView = null;
 	// private MyGridView mRankingGridView;
 	private RankingGridviewAdapter mRankingAdapter;
 	private JSONArray jsonArrayTop;
-	private Activity mActivity;
-	private Context mContext;
-	private Bundle savedInstanceState;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_ranking);
-		this.savedInstanceState = savedInstanceState;
-		mActivity = this;
-		mContext = this;
+		initCommonDatas(this,this,savedInstanceState);
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, null, null),
+				getParams(null, null, null, null, null, null),
 				new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
 						initDatas(response);
-						initGridView();
 					}
 
 					@Override
@@ -54,37 +46,15 @@ public class Ranking extends AbsListViewBaseActivity {
 	}
 
 	private void initDatas(JSONArray response) {
-		// try {
-		// jsonArrayTop = downLoadDatas.getDatasFromServer(null, null, null,
-		// null, IOStreamDatas.APP_DATA);
-		// } catch (IOException | JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 		jsonArrayTop = response;
 		mRankingAdapter = new RankingGridviewAdapter(this, jsonArrayTop,
 				imageLoader);
 		// mRankingGridView = (MyGridView) findViewById(R.id.ranking_gridView);
 		myGridView = (GridView) findViewById(R.id.ranking_gridView);
-	}
-
-	private void initGridView() {
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mRankingAdapter);
-		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-				true, true));
-//		myGridView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1,
-//					int position, long arg3) {
-//				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-//						mContext, mActivity, savedInstanceState);
-//				qustomDialogBuilder.show();
-//				Toast.makeText(Ranking.this, "现在是横屏", Toast.LENGTH_SHORT)
-//				.show();
-//			}
-//		});
-		myGridView.setOnItemClickListener(new ItemClickListener(mContext, mActivity, savedInstanceState));
+		myGridView.setOnItemClickListener(new ItemClickListener(mContext,
+				mActivity, savedInstanceState, response));
 	}
 
 	@Override

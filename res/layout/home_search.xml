@@ -49,7 +49,7 @@
         android:layout_height="1px"
         android:background="@drawable/division_01" />
 
-    <com.smartx.bill.mepad.mestore.myview.MyGridView
+    <GridView
         android:id="@+id/search_gridView"
         style="@style/ranking_gridview_style" />
 

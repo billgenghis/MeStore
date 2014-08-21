@@ -1,6 +1,7 @@
 package com.smartx.bill.mepad.mestore.home;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +21,8 @@ import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MeGalleryAdapter;
 import com.smartx.bill.mepad.mestore.adapter.MeGridviewAdapter;
 import com.smartx.bill.mepad.mestore.dialog.MyAppInfoDialogBuilder;
+import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
+import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
@@ -44,9 +47,6 @@ public class Me extends AbsListViewBaseActivity {
 	private TextView mNewMore;
 	private ImageView mHeadPic;
 	private ImageView mSetting;
-	private Bundle savedInstanceState;
-	private Activity mActivity;
-	private Context mContext;
 	private JSONArray jsonArrayExcellent;
 	private JSONArray jsonArrayNew;
 
@@ -62,13 +62,12 @@ public class Me extends AbsListViewBaseActivity {
 		// StrictMode.setThreadPolicy(policy);
 		// }
 		setContentView(R.layout.home_me);
-		this.savedInstanceState = savedInstanceState;
-		mActivity = this;
-		mContext = this;
+		initCommonDatas(this,this,savedInstanceState);
 		initDatas();
-		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null,null),
-				new JsonHttpResponseHandler() {
+		HttpUtil.get(
+				getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null,
+						null, null), new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
@@ -80,7 +79,7 @@ public class Me extends AbsListViewBaseActivity {
 					}
 				});
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_NEW, null,null),
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null, null, null),
 				new JsonHttpResponseHandler() {
 
 					@Override
@@ -112,7 +111,7 @@ public class Me extends AbsListViewBaseActivity {
 		mName = (TextView) findViewById(R.id.me_name);
 		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
 		mNewMore = (TextView) findViewById(R.id.me_new_more);
-		
+
 		mCompetitiveGridView = (MyGridView) findViewById(R.id.me_competitive_girdview);
 		mNewGridView = (MyGridView) findViewById(R.id.me_new_girdview);
 		myGridView = mCompetitiveGridView;
@@ -127,15 +126,9 @@ public class Me extends AbsListViewBaseActivity {
 		myGridView = mCompetitiveGridView;
 		mCompetitiveGridView.setNumColumns(3);
 		mCompetitiveGridView.setAdapter(mCompetitiveAdapter);
-		mCompetitiveGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
-			}
-		});
+		mCompetitiveGridView.setOnTouchListener(myGestureListener);
+		mCompetitiveGridView.setOnItemClickListener(new ItemClickListener(
+				mContext, mActivity, savedInstanceState, response));
 	}
 
 	private void initNewDatas(JSONArray response) {
@@ -144,18 +137,9 @@ public class Me extends AbsListViewBaseActivity {
 		mNewGridView.setNumColumns(3);
 		mNewGridView.setAdapter(mNewAdapter);
 		mNewGridView.setFocusable(false);
-
-		mNewGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				
-				Toast.makeText(Me.this, "现在是横屏", Toast.LENGTH_SHORT).show();
-				MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-						mContext, mActivity, savedInstanceState);
-				qustomDialogBuilder.show();
-			}
-		});
+		mNewGridView.setOnTouchListener(myGestureListener);
+		mNewGridView.setOnItemClickListener(new ItemClickListener(mContext,
+				mActivity, savedInstanceState, response));
 	}
 
 	private void initSpecialDatas(JSONArray response) {

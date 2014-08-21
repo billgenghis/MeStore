@@ -17,7 +17,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:scaleType="center"
-            android:src="@drawable/special02" />
+            android:src="@drawable/default_special_detail" />
     </LinearLayout>
 
     <RelativeLayout
@@ -45,6 +45,5 @@
     <TextView
         android:id="@+id/special_item_description"
         style="@style/special_textview_style" />
-/>
 
 </LinearLayout>

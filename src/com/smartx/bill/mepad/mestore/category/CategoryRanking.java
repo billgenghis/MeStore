@@ -31,7 +31,7 @@ public class CategoryRanking extends MyBaseActivity {
 		setContentView(R.layout.home_ranking);
 		this.classId = getIntent().getStringExtra("classId");
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA), getParams(classId, null, null,
-				null,null), new JsonHttpResponseHandler() {
+				null,null, null), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray response) {
 					initDatas(response);

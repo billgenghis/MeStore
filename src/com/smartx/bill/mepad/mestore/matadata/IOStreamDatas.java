@@ -26,6 +26,7 @@ public class IOStreamDatas {
 	public final static int VIEWPAGER_RECOM = 1;
 	public final static int VIEWPAGER_HOME = 2;
 	public final static int VIEWPAGER_CATE_RECOM = 3;
+	public final static int VIEWPAGER_DIALOG = 4;
 
 	// Tabs管理
 	public final static int TAB_EXCELLENT = 1;

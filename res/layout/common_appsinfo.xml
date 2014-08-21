@@ -38,13 +38,24 @@
         android:focusable="false"
         android:background="@drawable/button_install" />
 
+    <!-- <com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/ing_download"
+        android_custom:roundColor="#dbdbdb"
+        android_custom:roundProgressColor="#3aaff5"
+        android_custom:roundWidth="4dip"
+        android_custom:textIsDisplayable="false" /> -->
+
     <TextView
         android:id="@+id/app_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/app_icon"
+        android:layout_marginTop="10dp"
         android:textColor="#a7a7a9"
         android:textSize="14sp" />
 

@@ -100,7 +100,7 @@ public class MeGridviewAdapter extends MyBaseAdapter {
 		// try {
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
-
+		view.imgViewFlag.setDrawingCacheEnabled(true);
 		return convertView;
 	}
 

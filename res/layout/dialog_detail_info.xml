@@ -1,148 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/circular_edge"
     android:orientation="vertical" >
-
-    <include layout="@layout/common_appsinfo" />
-
-    <View
-        android:id="@+id/titleDivider"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="@drawable/division_01" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
 
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="fill_parent"
-            android:background="@drawable/dialog_background1"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/dialog_detail_info"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.22"
-                android:gravity="center"
-                android:text="@string/dialog_detail_info"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18.0dip" />
-
-            <TextView
-                android:id="@+id/dialog_judge_score"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.32"
-                android:gravity="center"
-                android:text="@string/dialog_judge_score"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18.0dip" />
-
-            <TextView
-                android:id="@+id/dialog_same_developers"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.17"
-                android:gravity="center"
-                android:text="@string/dialog_same_developers"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18.0dip" />
-
-            <TextView
-                android:id="@+id/dialog_detail_permission"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="0.21"
-                android:gravity="center"
-                android:text="@string/dialog_detail_permission"
-                android:textColor="@android:color/background_dark"
-                android:textSize="18.0dip" />
-
-        </LinearLayout>
-
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/dialog_viewpage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <include layout="@layout/common_appsinfo" />
     </LinearLayout>
-    <!--
-    <TextView
-        android:id="@+id/textView2"
+
+    <View
+        android:id="@+id/titleDivider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@drawable/division_01" />
+
+    <LinearLayout
+        android:id="@+id/dialog_appinfo_tab"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="功能介绍" />
+        android:background="@drawable/dialog_background1" >
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_app_interview"
-        android:textSize="10dp" />
+        <TextView
+            android:id="@+id/dialog_detail_info"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.22"
+            android:gravity="center"
+            android:text="@string/dialog_detail_info"
+            android:textSize="18.0dip" />
 
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="更新日志" />
+        <TextView
+            android:id="@+id/dialog_judge_score"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.32"
+            android:gravity="center"
+            android:text="@string/dialog_judge_score"
+            android:textSize="18.0dip" />
 
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_app_update_log"
-        android:textSize="10dp" />
+        <TextView
+            android:id="@+id/dialog_same_developers"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.17"
+            android:gravity="center"
+            android:text="@string/dialog_same_developers"
+            android:textSize="18.0dip" />
 
-    <RelativeLayout
+        <TextView
+            android:id="@+id/dialog_detail_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.21"
+            android:gravity="center"
+            android:text="@string/dialog_detail_permission"
+            android:textSize="18.0dip" />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/dialog_viewpage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="26dp"
-            android:text="7人评分"
-            android:textSize="13dp" />
-
-        <Button
-            android:id="@+id/button4"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="32dp"
-            android:textSize="13dp"
-            android:text="相关应用" />
-
-        <Button
-            android:id="@+id/button3"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="13dp"
-            android:text="权限详情(10)" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="8dp"
-        android:text="@string/dialog_app_other_info" />
-    -->
+        android:layout_height="match_parent" />
 
 </LinearLayout>

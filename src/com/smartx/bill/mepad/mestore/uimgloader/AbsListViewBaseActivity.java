@@ -15,14 +15,18 @@
  *******************************************************************************/
 package com.smartx.bill.mepad.mestore.uimgloader;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.AbsListView;
 
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
+import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 
 /**
  * 
@@ -33,16 +37,29 @@ public class AbsListViewBaseActivity extends MyBaseActivity {
 
 	protected static final String STATE_PAUSE_ON_SCROLL = "STATE_PAUSE_ON_SCROLL";
 	protected static final String STATE_PAUSE_ON_FLING = "STATE_PAUSE_ON_FLING";
+	protected MyGestureListener myGestureListener;
 
 	protected AbsListView myGridView;
 
 	protected boolean pauseOnScroll = false;
 	protected boolean pauseOnFling = true;
+	protected Activity mActivity;
+	protected Context mContext;
+	protected Bundle savedInstanceState;
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		pauseOnScroll = savedInstanceState.getBoolean(STATE_PAUSE_ON_SCROLL, false);
-		pauseOnFling = savedInstanceState.getBoolean(STATE_PAUSE_ON_FLING, true);
+		pauseOnScroll = savedInstanceState.getBoolean(STATE_PAUSE_ON_SCROLL,
+				false);
+		pauseOnFling = savedInstanceState
+				.getBoolean(STATE_PAUSE_ON_FLING, true);
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// or implement in activity or component. When your not assigning to a
+		// child component.
+		return myGestureListener.getDetector().onTouchEvent(event);
 	}
 
 	@Override
@@ -52,7 +69,9 @@ public class AbsListViewBaseActivity extends MyBaseActivity {
 	}
 
 	private void applyScrollListener() {
-		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, pauseOnScroll, pauseOnFling));
+		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
+				pauseOnScroll, pauseOnFling));
+		myGridView.setOnTouchListener(myGestureListener);
 	}
 
 	@Override
@@ -76,18 +95,26 @@ public class AbsListViewBaseActivity extends MyBaseActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.item_pause_on_scroll:
-				pauseOnScroll = !pauseOnScroll;
-				item.setChecked(pauseOnScroll);
-				applyScrollListener();
-				return true;
-			case R.id.item_pause_on_fling:
-				pauseOnFling = !pauseOnFling;
-				item.setChecked(pauseOnFling);
-				applyScrollListener();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+		case R.id.item_pause_on_scroll:
+			pauseOnScroll = !pauseOnScroll;
+			item.setChecked(pauseOnScroll);
+			applyScrollListener();
+			return true;
+		case R.id.item_pause_on_fling:
+			pauseOnFling = !pauseOnFling;
+			item.setChecked(pauseOnFling);
+			applyScrollListener();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	protected void initCommonDatas(Activity mActivity, Context mContext,
+			Bundle savedInstanceState) {
+		this.savedInstanceState = savedInstanceState;
+		this.mActivity = mActivity;
+		this.mContext = mContext;
+		myGestureListener = new MyGestureListener(mContext);
 	}
 }
