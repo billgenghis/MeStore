@@ -17,7 +17,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <!-- gridview items for apps style. -->
+    <!-- dialog activity style -->
     <style name="activity_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item> <!-- 边框 -->
         <item name="android:windowNoTitle">true</item> <!-- 无标题 -->
@@ -26,6 +26,16 @@
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>
 
+    <!-- welcome dialog style -->
+    <style name="welcome_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- 背景透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!-- dialog activity animation style -->
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">
         <item name="@android:windowEnterAnimation">@null</item>
         <item name="@android:windowExitAnimation">@null</item>

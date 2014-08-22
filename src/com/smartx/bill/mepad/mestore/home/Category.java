@@ -68,9 +68,9 @@ public class Category extends MyBaseActivity {
 	}
 
 	private void initDatas(JSONArray response) throws JSONException {
-		mCategoryGridView01 = (GridView) findViewById(R.id.category_gridView01);
-		mCategoryGridView02 = (GridView) findViewById(R.id.category_gridView02);
-		mCategoryGridView03 = (GridView) findViewById(R.id.category_gridView03);
+		mCategoryGridView01 = (MyGridView) findViewById(R.id.category_gridView01);
+		mCategoryGridView02 = (MyGridView) findViewById(R.id.category_gridView02);
+		mCategoryGridView03 = (MyGridView) findViewById(R.id.category_gridView03);
 		// try {
 		// jsonArrayCategory = downLoadDatas.getDatasFromServer(null, null,
 		// null, null, IOStreamDatas.CATEGORY_DATA);

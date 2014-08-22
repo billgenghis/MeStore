@@ -1,28 +1,31 @@
 package com.smartx.bill.mepad.mestore.home;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import android.app.Activity;
-import android.content.Context;
+import org.json.JSONArray;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.MeGalleryAdapter;
 import com.smartx.bill.mepad.mestore.adapter.MeGridviewAdapter;
-import com.smartx.bill.mepad.mestore.dialog.MyAppInfoDialogBuilder;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
-import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
@@ -49,21 +52,18 @@ public class Me extends AbsListViewBaseActivity {
 	private ImageView mSetting;
 	private JSONArray jsonArrayExcellent;
 	private JSONArray jsonArrayNew;
+	private ProgressDialog dialog;
 
 	// DisplayImageOptions options;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// if (android.os.Build.VERSION.SDK_INT > 9) {
-		// StrictMode.ThreadPolicy policy = new
-		// StrictMode.ThreadPolicy.Builder()
-		// .permitAll().build();
-		// StrictMode.setThreadPolicy(policy);
-		// }
 		setContentView(R.layout.home_me);
-		initCommonDatas(this,this,savedInstanceState);
+		initCommonDatas(this, this, savedInstanceState);
+		setDialog();
 		initDatas();
+
 		HttpUtil.get(
 				getDataUrl(IOStreamDatas.APP_DATA),
 				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null,
@@ -72,15 +72,24 @@ public class Me extends AbsListViewBaseActivity {
 					@Override
 					public void onSuccess(JSONArray response) {
 						initExcellentDatas(response);
+						findViewById(id.home_me).setVisibility(View.VISIBLE);
+						ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();   
+						Runnable runner = new Runnable() {    
+				            public void run() {    
+				                dialog.dismiss();    
+				            }    
+				        };    
+				        executor.schedule(runner,2000, TimeUnit.MILLISECONDS);  
 					}
 
 					@Override
 					public void onFailure(Throwable e, JSONArray errorResponse) {
 					}
 				});
-		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_NEW, null, null, null),
-				new JsonHttpResponseHandler() {
+		HttpUtil.get(
+				getDataUrl(IOStreamDatas.APP_DATA),
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null, null,
+						null), new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
@@ -92,9 +101,6 @@ public class Me extends AbsListViewBaseActivity {
 					}
 				});
 		initSpecialDatas(null);
-		// initdatas();
-		// initGridView();
-		// setListener();
 	}
 
 	private void initDatas() {
@@ -170,35 +176,24 @@ public class Me extends AbsListViewBaseActivity {
 		});
 	}
 
-	// private void setGridViewListener() {
-	// mCompetitiveGridView.setOnItemClickListener(new OnItemClickListener() {
-	// @Override
-	// public void onItemClick(AdapterView<?> arg0, View arg1,
-	// int position, long arg3) {
-	// MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-	// mContext, mActivity, savedInstanceState);
-	// qustomDialogBuilder.show();
-	// }
-	// });
-	// mNewGridView.setOnItemClickListener(new OnItemClickListener() {
-	// @Override
-	// public void onItemClick(AdapterView<?> arg0, View arg1,
-	// int position, long arg3) {
-	// MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-	// mContext, mActivity, savedInstanceState);
-	// qustomDialogBuilder.show();
-	// }
-	// });
-	// mySpecialGallery.setOnItemClickListener(new OnItemClickListener() {
-	// @Override
-	// public void onItemClick(AdapterView<?> arg0, View arg1,
-	// int position, long arg3) {
-	// MyAppInfoDialogBuilder qustomDialogBuilder = new MyAppInfoDialogBuilder(
-	// mContext, mActivity, savedInstanceState);
-	// qustomDialogBuilder.show();
-	// }
-	// });
-	// }
+	private void setDialog() {
+		dialog = new ProgressDialog(this,R.style.welcome_dialog);
+		dialog.setCancelable(false);
+		dialog.show();
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View v = inflater.inflate(R.layout.wlecome_dialog, null);// 得到加载view
+		LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 加载布局
+		// main.xml中的ImageView
+		ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
+		TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 提示文字
+		// 加载动画
+		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this,
+				R.anim.loading_animation);
+		// 使用ImageView显示动画
+		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
+		// tipTextView.setText(msg);// 设置加载信息
+		dialog.setContentView(layout);
+	}
 
 	@Override
 	protected void onPause() {

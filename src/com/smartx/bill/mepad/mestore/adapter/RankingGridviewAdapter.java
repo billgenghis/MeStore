@@ -23,7 +23,8 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
 	private JSONArray appsInfo;
 	private ImageLoader imageLoader;
-	private int count = 30;// 模拟数据时使用
+
+	// private int count = 30;// 模拟数据时使用
 
 	// }
 	public RankingGridviewAdapter(Activity activity, JSONArray appsInfo,
@@ -47,7 +48,7 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return count;
+		return appsInfo.length();
 	}
 
 	@Override
@@ -71,9 +72,6 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		int rankingCount = position + 1;
-		if (position > 8) {
-			position = position % 8;
-		}
 
 		CommonViewHolder view;
 		LayoutInflater inflator = activity.getLayoutInflater();
@@ -95,7 +93,8 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		view.appScore.setFocusable(false);
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
-		setInstallClick(activity, view, getItemDatas("download_url", position), getItemDatas("title", position));
+		setInstallClick(activity, view, getItemDatas("download_url", position),
+				getItemDatas("title", position));
 		CommonTools.setLayout(position, view);
 		view.appDescription.setVisibility(TextView.GONE);
 		return convertView;

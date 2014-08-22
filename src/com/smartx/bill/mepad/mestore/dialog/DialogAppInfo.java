@@ -31,6 +31,7 @@ import cn.trinea.android.common.util.DownloadManagerPro;
 import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
@@ -105,6 +106,7 @@ public class DialogAppInfo extends MyBaseActivity {
 		appScore = (RatingBar) findViewById(R.id.app_score);
 		downloadCount = (TextView) findViewById(R.id.app_download_count);
 		appInstall = (Button) findViewById(R.id.app_install);
+		findViewById(id.app_description).setVisibility(View.GONE);
 
 		txtViewTitle.setText(appInfo.getString("title"));
 		downloadCount.setText(appInfo.getString("downloads") + "次下载");

@@ -20,7 +20,7 @@
             style="@style/category_guide_style"
             android:text="学习生活" />
 
-        <GridView
+        <com.smartx.bill.mepad.mestore.myview.MyGridView
             android:id="@+id/category_gridView01"
             style="@style/category_gridview_style" />
 
@@ -31,7 +31,7 @@
             style="@style/category_guide_style"
             android:text="游戏娱乐" />
 
-        <GridView
+        <com.smartx.bill.mepad.mestore.myview.MyGridView
             android:id="@+id/category_gridView02"
             style="@style/category_gridview_style" />
 
@@ -42,7 +42,7 @@
             style="@style/category_guide_style"
             android:text="应用工具" />
 
-        <GridView
+        <com.smartx.bill.mepad.mestore.myview.MyGridView
             android:id="@+id/category_gridView03"
             style="@style/category_gridview_style" />
     </LinearLayout>
