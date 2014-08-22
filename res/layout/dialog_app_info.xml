@@ -3,20 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
-    android:scrollbars="vertical" >
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="25dp"
+    android:paddingBottom="10dp"
+    android:scrollbars="none" >
 
     <LinearLayout
         android:id="@+id/dialog_app_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="26dp" >
+        android:orientation="vertical" >
 
         <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:fadeScrollbars="true"
-            android:fillViewport="true" >
+            android:fillViewport="true"
+            android:scrollbars="none" >
 
             <LinearLayout
                 android:id="@+id/liear"

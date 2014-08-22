@@ -41,10 +41,11 @@ public class Search extends AbsListViewBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_search);
+		initCommonDatas(this, this, savedInstanceState);
 		searchName = getIntent().getStringExtra("searchName");
 		myGridView = (GridView) findViewById(R.id.search_gridView);
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, searchName,null, null),
+				getParams(null, null, null, searchName, null, null),
 				new JsonHttpResponseHandler() {
 
 					@Override
@@ -63,14 +64,6 @@ public class Search extends AbsListViewBaseActivity {
 	}
 
 	private void initDatas(JSONArray response) {
-		// try {
-		// jsonArraySearch = downLoadDatas.getDatasFromServer(null, null,
-		// null,
-		// searchName, IOStreamDatas.APP_DATA);
-		// } catch (IOException | JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 		jsonArraySearch = response;
 		mSearchGridviewAdapter = new SearchGridviewAdapter(this,
 				jsonArraySearch, imageLoader);
@@ -83,8 +76,7 @@ public class Search extends AbsListViewBaseActivity {
 	private void initGridView() {
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mSearchGridviewAdapter);
-		// myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-		// true, true));
+		myGridView.setOnTouchListener(myGestureListener);
 		myGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,

@@ -34,7 +34,7 @@ import com.smartx.bill.mepad.mestore.R;
  */
 public class DownLoadApk extends Activity {
 
-	public static final String DOWNLOAD_FOLDER_NAME = "Trinea";
+	public static final String DOWNLOAD_FOLDER_NAME = "MeAppStore";
 	public static final String DOWNLOAD_FILE_NAME = "MeiLiShuo.apk";
 
 	public static final String APK_URL = "http://img.meilishuo.net/css/images/AndroidShare/Meilishuo_3.6.1_10006.apk";

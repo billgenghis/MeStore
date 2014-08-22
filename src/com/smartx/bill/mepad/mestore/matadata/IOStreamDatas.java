@@ -3,6 +3,7 @@ package com.smartx.bill.mepad.mestore.matadata;
 public class IOStreamDatas {
 
 	// 数据接口管理
+	public final static String SERVER_IP = "http://10.10.10.3";
 	public final static String SERVER_URL = "http://10.10.10.3/project/app/cms/";
 	public final static String APPSINFO_URL = "index.php?s=/IOStream/AppsInfo/index.html";
 	public final static String CATEGORY_URL = "index.php?s=/IOStream/Category/index.html";
@@ -18,6 +19,11 @@ public class IOStreamDatas {
 	public final static int CATEGORY_DATA = 2;
 	public final static int SPECIAL_DATA = 3;
 
+	// 分类大类ID管理
+	public final static String CATEGORY_STUDY = "7";
+	public final static String CATEGORY_GAME = "8";
+	public final static String CATEGORY_TOOLS = "9";
+
 	// 分类类型管理
 	public final static String CATEGORY_TYPE = "0";
 	public final static String CATEGORY_APP_TYPE = "1";
@@ -32,4 +38,8 @@ public class IOStreamDatas {
 	public final static int TAB_EXCELLENT = 1;
 	public final static int TAB_NEW = 2;
 	public final static int TAB_RANKING = 3;
+
+	// DownLoad Information
+	public static final String DOWNLOAD_FOLDER_NAME = "MeAppStore";
+	public static final String KEY_NAME_DOWNLOAD_ID = "downloadId";
 }

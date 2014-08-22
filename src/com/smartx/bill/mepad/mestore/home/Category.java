@@ -39,54 +39,55 @@ public class Category extends MyBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_category);
-		HttpUtil.get(getDataUrl(IOStreamDatas.CATEGORY_DATA), getParams(null, null,
-					null, null,null,null), new JsonHttpResponseHandler() {
+		HttpUtil.get(getDataUrl(IOStreamDatas.CATEGORY_DATA),
+				getParams(null, null, null, null, null, null),
+				new JsonHttpResponseHandler() {
 
-			@Override
-			public void onSuccess(JSONArray response) {
-				try {
-					initDatas(response);
-					initGridView();
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+					@Override
+					public void onSuccess(JSONArray response) {
+						try {
+							initDatas(response);
+							initGridView();
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 
-			@Override
-			public void onFailure(Throwable e, JSONArray errorResponse) {
-			}
-		});
-//		try {
-//			initDatas();
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		initGridView();
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
+		// try {
+		// initDatas();
+		// } catch (JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// initGridView();
 	}
 
-	private void initDatas(JSONArray response) throws JSONException{
+	private void initDatas(JSONArray response) throws JSONException {
 		mCategoryGridView01 = (GridView) findViewById(R.id.category_gridView01);
 		mCategoryGridView02 = (GridView) findViewById(R.id.category_gridView02);
 		mCategoryGridView03 = (GridView) findViewById(R.id.category_gridView03);
-//		try {
-//			jsonArrayCategory = downLoadDatas.getDatasFromServer(null, null,
-//					null, null, IOStreamDatas.CATEGORY_DATA);
-//		} catch (IOException | JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try {
+		// jsonArrayCategory = downLoadDatas.getDatasFromServer(null, null,
+		// null, null, IOStreamDatas.CATEGORY_DATA);
+		// } catch (IOException | JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		jsonArrayCategory = response;
-		jsonArrayCategory01 = seperateCategory("7");
-		jsonArrayCategory02 = seperateCategory("8");
-		jsonArrayCategory03 = seperateCategory("9");
+		jsonArrayCategory01 = seperateCategory(IOStreamDatas.CATEGORY_STUDY);
+		jsonArrayCategory02 = seperateCategory(IOStreamDatas.CATEGORY_GAME);
+		jsonArrayCategory03 = seperateCategory(IOStreamDatas.CATEGORY_TOOLS);
 		mCategoryAdapter01 = new CategoryGridviewAdapter(this,
-				jsonArrayCategory01, "7", imageLoader);
+				jsonArrayCategory01, imageLoader);
 		mCategoryAdapter02 = new CategoryGridviewAdapter(this,
-				jsonArrayCategory02, "8", imageLoader);
+				jsonArrayCategory02, imageLoader);
 		mCategoryAdapter03 = new CategoryGridviewAdapter(this,
-				jsonArrayCategory03, "9", imageLoader);
+				jsonArrayCategory03, imageLoader);
 	}
 
 	private void initGridView() {

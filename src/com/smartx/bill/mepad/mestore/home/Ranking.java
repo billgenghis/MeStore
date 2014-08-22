@@ -11,9 +11,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RankingGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
-import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
 

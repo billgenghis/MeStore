@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,24 +23,8 @@ public class CategoryGridviewAdapter extends MyBaseAdapter {
 
 	// }
 	public CategoryGridviewAdapter(Activity activity, JSONArray categorysInfo,
-			String myType,ImageLoader imageLoader) throws JSONException {
+			ImageLoader imageLoader) throws JSONException {
 		super();
-//		for (int i = 0; i < categorysInfo.length(); i++) {
-//			categoryInfo = categorysInfo.getJSONObject(i);
-//			if (categoryInfo.get("class_id").equals(myType)) {
-//				i++;
-//				for (int m = i; m < categorysInfo.length(); m++) {
-//					categoryInfo = categorysInfo.getJSONObject(m);
-//					if (categoryInfo.get("type").equals(
-//							IOStreamDatas.CATEGORY_APP_TYPE)) {
-//						this.categorysInfo.put(categoryInfo);
-//					} else {
-//						i = m;
-//						break;
-//					}
-//				}
-//			}
-//		}
 		this.categorysInfo = categorysInfo;
 		this.imageLoader = imageLoader;
 		this.activity = activity;
@@ -103,7 +88,9 @@ public class CategoryGridviewAdapter extends MyBaseAdapter {
 			view = (CategoryViewHolder) convertView.getTag();
 		}
 		view.txtViewTitle.setText(getItemDatas("name", position));
-//		imageLoader.displayImage(getItemDatas("image", position), view.imgViewFlag, options);
+		Log.i("url", getImageUrl(getItemDatas("image", position)));
+		imageLoader.displayImage(getImageUrl(getItemDatas("image", position)),
+				view.imgViewFlag, options);
 		return convertView;
 	}
 

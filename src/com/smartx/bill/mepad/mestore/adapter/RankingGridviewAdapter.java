@@ -95,6 +95,7 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		view.appScore.setFocusable(false);
 		imageLoader.displayImage(getItemDatas("image", position),
 				view.imgViewFlag, options);
+		setInstallClick(activity, view, getItemDatas("download_url", position), getItemDatas("title", position));
 		CommonTools.setLayout(position, view);
 		view.appDescription.setVisibility(TextView.GONE);
 		return convertView;

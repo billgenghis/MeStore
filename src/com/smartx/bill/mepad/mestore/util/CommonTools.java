@@ -1,21 +1,29 @@
 package com.smartx.bill.mepad.mestore.util;
 
+import java.io.File;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.net.Uri;
+import android.os.Environment;
 import android.text.Html;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.listener.SearchOnEditorActionListener;
+import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 
 public class CommonTools {
 
@@ -60,13 +68,6 @@ public class CommonTools {
 			view.mRelativeLayout.setPadding(60, 50, 40, 50);
 		}
 	}
-
-	// public static float getTextWidth(TextView view) {
-	// Paint textPaint = new Paint();
-	// textPaint.setTextSize(view.getTextSize());
-	// float titleWidth = textPaint.measureText(view.getText().toString());
-	// return titleWidth/3;
-	// }
 
 	public static void setViewById(CommonViewHolder view, View convertView) {
 		view.txtViewTitle = (TextView) convertView.findViewById(R.id.app_title);

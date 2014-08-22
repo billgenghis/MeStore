@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +98,7 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 			view = (CommonViewHolder) convertView.getTag();
 		}
 		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
+			Log.i("position", position + "  " +  getCount());
 			view.mRelativeLayout.setVisibility(View.INVISIBLE);
 			view.imgViewFlag.setVisibility(View.INVISIBLE);
 			convertView.findViewById(R.id.vertical_line).setVisibility(
@@ -111,6 +113,7 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 			imageLoader.displayImage(getItemDatas("image", position),
 					view.imgViewFlag, options);
 			view.appDescription.setText(getItemDatas("description", position));
+			setInstallClick(activity, view, getItemDatas("download_url", position), getItemDatas("title", position));
 		}
 		CommonTools.setLayout(position, view);
 		return convertView;

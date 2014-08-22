@@ -99,7 +99,8 @@ public class SearchGridviewAdapter extends MyBaseAdapter {
 			view.mRelativeLayout.setVisibility(View.INVISIBLE);
 			view.imgViewFlag.setVisibility(View.INVISIBLE);
 			view.appReview.setVisibility(View.INVISIBLE);
-			convertView.findViewById(R.id.vertical_line).setVisibility(View.INVISIBLE);
+			convertView.findViewById(R.id.vertical_line).setVisibility(
+					View.INVISIBLE);
 		} else {
 			view.txtViewTitle.setText(rankingCount + "."
 					+ getItemDatas("title", position));
@@ -111,9 +112,12 @@ public class SearchGridviewAdapter extends MyBaseAdapter {
 					view.imgViewFlag, options);
 			// imageLoader.displayImage(getItemDatas("image", position),
 			// view.appReview, options);
+			setInstallClick(activity, view,
+					getItemDatas("download_url", position),
+					getItemDatas("title", position));
 		}
-			CommonTools.setLayout(position, view);
-			view.appDescription.setHeight(0);
+		CommonTools.setLayout(position, view);
+		view.appDescription.setHeight(0);
 		return convertView;
 	}
 }

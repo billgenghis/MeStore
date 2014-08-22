@@ -1,19 +1,25 @@
 package com.smartx.bill.mepad.mestore.dialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.DownloadManager;
 import android.app.LocalActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
@@ -21,12 +27,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import cn.trinea.android.common.util.DownloadManagerPro;
+import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
-import com.smartx.bill.mepad.mestore.iostream.DownLoadApk;
-import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
@@ -43,7 +49,13 @@ public class DialogAppInfo extends MyBaseActivity {
 	private RatingBar appScore;
 	private Button appInstall;
 	private Bitmap mBitmap;
+	private Context mContext;
 	List<TextView> tViews;
+
+	private String downloadUrl;
+	private String appName;
+	private DownloadManager downloadManager;
+	private long downloadId = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +65,7 @@ public class DialogAppInfo extends MyBaseActivity {
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
 		this.mBitmap = getIntent().getParcelableExtra("mBitmap");
+		mContext = this;
 		WindowManager m = getWindowManager();
 		Display d = m.getDefaultDisplay(); // 为获取屏幕宽、高
 		LayoutParams p = getWindow().getAttributes();
@@ -63,6 +76,8 @@ public class DialogAppInfo extends MyBaseActivity {
 		try {
 			this.appInfo = new JSONObject(getIntent().getStringExtra(
 					"jsonObject"));
+			downloadUrl = appInfo.getString("download_url");
+			appName = appInfo.getString("title");
 			initdatas();
 			initPagerViewer();
 			initTextView();
@@ -98,6 +113,39 @@ public class DialogAppInfo extends MyBaseActivity {
 		imgViewFlag.setDrawingCacheEnabled(false);
 		appScore.setFocusable(false);
 
+		downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+		appInstall.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				File folder = Environment
+						.getExternalStoragePublicDirectory(IOStreamDatas.DOWNLOAD_FOLDER_NAME);
+				if (!folder.exists() || !folder.isDirectory()) {
+					folder.mkdirs();
+				}
+
+				DownloadManager.Request request = new DownloadManager.Request(
+						Uri.parse(downloadUrl));
+				request.setDestinationInExternalPublicDir(IOStreamDatas.DOWNLOAD_FOLDER_NAME,
+						appName);
+				request.setTitle(appName);
+				request.setDescription(appName + "downloading");
+				request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+				request.setVisibleInDownloadsUi(false);
+				// request.allowScanningByMediaScanner();
+				// request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+				// request.setShowRunningNotification(false);
+				// request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
+				request.setMimeType("application/vnd.android.package-archive");
+				downloadId = downloadManager.enqueue(request);
+				/** save download id to preferences **/
+				PreferencesUtils.putLong(mContext, IOStreamDatas.KEY_NAME_DOWNLOAD_ID,
+						downloadId);
+
+			}
+		});
+
 		findViewById(R.id.dialog_appinfo_tab).setVisibility(View.GONE);
 		t1.setVisibility(View.GONE);
 		t2.setVisibility(View.GONE);
@@ -130,12 +178,12 @@ public class DialogAppInfo extends MyBaseActivity {
 	 */
 	private void initPagerViewer() throws JSONException {
 		final ArrayList<View> dialogList = new ArrayList<View>();
-		// Intent intent = new Intent(this, AppDetailInfo.class);
-		// intent.putExtra("appInfo", appInfo.toString());
-		// dialogList.add(getView("AppDetailInfo", intent));
+		Intent intent = new Intent(this, AppDetailInfo.class);
+		intent.putExtra("appInfo", appInfo.toString());
+		dialogList.add(getView("AppDetailInfo", intent));
 
-		Intent intent2 = new Intent(this, DownLoadApk.class);
-		dialogList.add(getView("DownLoadApk", intent2));
+		// Intent intent2 = new Intent(this, DownLoadApk.class);
+		// dialogList.add(getView("DownLoadApk", intent2));
 		//
 		// Intent intent3 = new Intent(this, SameDevelpersApp.class);
 		// intent3.putExtra("developer", appInfo.getString("developer"));
@@ -164,20 +212,17 @@ public class DialogAppInfo extends MyBaseActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.i("logonPause", "out");
 		manager.dispatchPause(true);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i("logonResume", "out");
 		manager.dispatchResume();
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Log.i("logonDestroy", "out");
 	}
 }
