@@ -112,7 +112,7 @@ public class DialogAppInfo extends MyBaseActivity {
 		imgViewFlag.setImageBitmap(mBitmap);
 		imgViewFlag.setDrawingCacheEnabled(false);
 		appScore.setFocusable(false);
-		appInstall.setOnClickListener(new InstallClickListener(this, null,
+		appInstall.setOnClickListener(new InstallClickListener(this,appInstall,appOpen,appDownload,
 				downloadUrl, appName));
 		appOpen.setVisibility(View.INVISIBLE);
 		appDownload.setVisibility(View.INVISIBLE);

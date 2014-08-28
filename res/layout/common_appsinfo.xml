@@ -37,7 +37,7 @@
         android:layout_marginTop="18dp"
         android:background="@drawable/button_install"
         android:focusable="false"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/app_open"
@@ -57,8 +57,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:layout_marginTop="18dp"
-        android:background="@drawable/ing_install"
-        android:visibility="invisible"
+        android:background="@drawable/ing_connect"
         android_custom:roundColor="#dbdbdb"
         android_custom:roundProgressColor="#3aaff5"
         android_custom:roundWidth="4dip"

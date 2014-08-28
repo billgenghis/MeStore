@@ -17,10 +17,15 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import cn.trinea.android.common.util.DownloadManagerPro;
 import cn.trinea.android.common.util.PreferencesUtils;
 
+import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
 /**
@@ -42,9 +47,26 @@ public class InstallClickListener implements OnClickListener {
 	private CompleteReceiver completeReceiver;
 	private DownloadManager.Request request;
 	private File folder;
+	private CommonViewHolder mView;
+	private Button appInstall;
+	private Button appOpen;
+	private MyRoundProgressBar appDownload;
 
-	public InstallClickListener(Activity activity, CommonViewHolder view,
-			String downloadUrl, String appName) {
+//	public InstallClickListener(Activity activity, CommonViewHolder view,
+//			String downloadUrl, String appName) {
+//		mActivity = activity;
+//		handler = new MyHandler();
+//		downloadManager = (DownloadManager) mActivity
+//				.getSystemService(mActivity.DOWNLOAD_SERVICE);
+//		downloadManagerPro = new DownloadManagerPro(downloadManager);
+//		this.downloadUrl = downloadUrl;
+//		this.appName = appName;
+//		this.mView = view;
+//	}
+
+	public InstallClickListener(Activity activity, Button appInstall,
+			Button appOpen, MyRoundProgressBar appDownload, String downloadUrl,
+			String appName) {
 		mActivity = activity;
 		handler = new MyHandler();
 		downloadManager = (DownloadManager) mActivity
@@ -52,6 +74,9 @@ public class InstallClickListener implements OnClickListener {
 		downloadManagerPro = new DownloadManagerPro(downloadManager);
 		this.downloadUrl = downloadUrl;
 		this.appName = appName;
+		this.appInstall = appInstall;
+		this.appOpen = appOpen;
+		this.appDownload = appDownload;
 	}
 
 	@Override
@@ -106,13 +131,13 @@ public class InstallClickListener implements OnClickListener {
 
 	}
 
-	/** 
-	* @ClassName: CompleteReceiver 
-	* @Description: TODO(这里用一句话描述这个类的作用) 
-	* @author coney Geng
-	* @date 2014年8月28日 下午7:40:46 
-	*  
-	*/
+	/**
+	 * @ClassName: CompleteReceiver
+	 * @Description: TODO(这里用一句话描述这个类的作用)
+	 * @author coney Geng
+	 * @date 2014年8月28日 下午7:40:46
+	 * 
+	 */
 	class CompleteReceiver extends BroadcastReceiver {
 
 		@Override
@@ -124,6 +149,9 @@ public class InstallClickListener implements OnClickListener {
 			long completeDownloadId = intent.getLongExtra(
 					DownloadManager.EXTRA_DOWNLOAD_ID, -1);
 			if (completeDownloadId == downloadId) {
+				appInstall.setVisibility(View.INVISIBLE);
+				appDownload.setVisibility(View.INVISIBLE);
+				appOpen.setVisibility(View.VISIBLE);
 			}
 
 			mActivity.unregisterReceiver(completeReceiver);
@@ -150,18 +178,30 @@ public class InstallClickListener implements OnClickListener {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			Log.i("message", msg.toString());
 			switch (msg.what) {
 			case 0:
 				int status = (Integer) msg.obj;
 				if (isDownloading(status)) {
+					appInstall.setVisibility(View.INVISIBLE);
+					appDownload.setVisibility(View.VISIBLE);
+					appOpen.setVisibility(View.INVISIBLE);
 					if (msg.arg2 < 0) {
-						
+//						Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(mActivity,
+//								R.anim.loading_animation);
+//						// 使用ImageView显示动画
+//						appDownload
+//								.setBackgroundResource(R.drawable.ing_connect);
+//						appDownload.startAnimation(hyperspaceJumpAnimation);
 					} else {
-						
+						appDownload
+								.setBackgroundResource(R.drawable.ing_download);
+						appDownload.setProgress(getNotiPercent(msg.arg1,
+								msg.arg2));
 					}
 				} else {
-					
+//					appInstall.setVisibility(View.VISIBLE);
+//					appDownload.setVisibility(View.INVISIBLE);
+//					appOpen.setVisibility(View.INVISIBLE);
 					break;
 				}
 			}
@@ -194,7 +234,7 @@ public class InstallClickListener implements OnClickListener {
 			}
 		}
 
-		public String getNotiPercent(long progress, long max) {
+		public int getNotiPercent(long progress, long max) {
 			int rate = 0;
 			if (progress <= 0 || max <= 0) {
 				rate = 0;
@@ -203,7 +243,8 @@ public class InstallClickListener implements OnClickListener {
 			} else {
 				rate = (int) ((double) progress / max * 100);
 			}
-			return new StringBuilder(16).append(rate).append("%").toString();
+//			return new StringBuilder(16).append(rate).append("%").toString();
+			return rate;
 		}
 
 		public boolean isDownloading(int downloadManagerStatus) {

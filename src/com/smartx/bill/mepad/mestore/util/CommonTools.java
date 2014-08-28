@@ -55,8 +55,8 @@ public class CommonTools {
 		public RelativeLayout mRelativeLayout;
 		public ImageView appReview;
 		public TextView appDescription;
-		private Button appOpen;
-		private MyRoundProgressBar appDownload;
+		public Button appOpen;
+		public MyRoundProgressBar appDownload;
 	}
 
 	public static void setLayout(int position, CommonViewHolder view) {
