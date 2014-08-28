@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- application global elements -->
     <string name="app_name">Me商店</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+   <!-- application common elements -->
+    <string name="be_back">返回</string>
     <!-- app status -->
     <string name="install_status">安装</string>
     <!-- home elements -->
@@ -23,31 +25,17 @@
     <string name="dialog_same_developers">开发者应用</string>
     <string name="dialog_detail_permission">权限详情</string>
     <string name="alert_image_content_description">Alert Image</string>
-    <string name="dialog_app_interview">        		违章查询助手是开车出行必备工具，由汽车之家移动团队精心打造，
-        		免费绿色无广告，操作简单，方便您随时随地查询自己的车辆违章情况。\n 
-			功能介绍\n 
-			【最稳定】专业团队进行数据维护，第一时间解决各种问题 \n
-			【最安全】支持新浪微博、腾讯账号和汽车之家账号同步您的车辆信息在云端，信息永不丢失，多重体系保护您的信息安全 \n
-			【最及时】目前覆盖全国300多个城市，并在持续增加，我们会第一时间把对接稳定的城市发布到城市列表中，
-			无需重下客户端便可使用最新服务</string>
-    <string name="dialog_app_update_log">        		1.新版界面全新升级，不变的简洁和流畅\n 
-       	 	4.优化了诸多细节，修复了一些bug</string>
-    <string name="dialog_app_other_info">        		开发商:XX公司\n 
-        		更新时间:2014年6月28日 \n
-        		版本号:1.01 </string>
+    <string name="dialog_app_interview"></string>
+    <string name="dialog_app_update_log">1.新版界面全新升级，不变的简洁和流畅\n 2.优化了诸多细节，修复了一些bug</string>
+    <string name="dialog_app_other_info"></string>
     <string name="title_activity_category">Category</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    
-    <!--for menus  -->
+
+    <!-- for menus -->
     <string name="menu_item_clear_memory_cache">Clear memory cache</string>
     <string name="menu_item_clear_disc_cache">Clear disc cache</string>
     <string name="menu_item_pause_on_scroll">Pause on scroll</string>
     <string name="menu_item_pause_on_fling">Pause on fling</string>
-    
-    
-     <string name="app_status_download">click to download</string>
+    <string name="app_status_download">click to download</string>
     <string name="app_status_downloaded">downloaded, click to download again</string>
     <string name="app_status_download_fail">download fail, click to download again</string>
     <string name="progress_tip">download tip:</string>
@@ -57,10 +45,5 @@
     <string name="app_status_pending">download Peding</string>
     <string name="app_status_pause">Pause</string>
     <string name="app_status_downloading">downloading</string>
-    <string name="tip_download_file">file will be saved to sdcard, the path is: </string>
-    
-    
-    
+
 </resources>
-
-

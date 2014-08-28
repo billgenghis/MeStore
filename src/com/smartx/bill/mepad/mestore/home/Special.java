@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,29 +35,21 @@ public class Special extends AbsListViewBaseActivity {
 		setContentView(R.layout.home_special);
 		myGridView = (GridView) findViewById(R.id.special_gridView);
 		HttpUtil.get(getDataUrl(IOStreamDatas.SPECIAL_DATA),
-				getParams(null, null, null, null,null, null),
+				getParams(null, null, null, null, null, null, null),
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray response) {
 						initDatas(response);
 						initGridView();
 					}
+
 					@Override
 					public void onFailure(Throwable e, JSONArray errorResponse) {
 					}
 				});
-		// initDatas();
-		// initGridView();
 	}
 
 	private void initDatas(JSONArray response) {
-		// try {
-		// jsonArraySpecial = downLoadDatas.getDatasFromServer(null, null, null,
-		// null, IOStreamDatas.SPECIAL_DATA);
-		// } catch (IOException | JSONException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
 		jsonArraySpecial = response;
 		mSpecialAdapter = new SpecialGridviewAdapter(this, jsonArraySpecial,
 				imageLoader);
@@ -74,8 +67,7 @@ public class Special extends AbsListViewBaseActivity {
 				JSONObject mJsonObject;
 				try {
 					mJsonObject = jsonArraySpecial.getJSONObject(position);
-					mBundle.putString("sPicUrl",
-							mJsonObject.getString("s_pic_url"));
+					mBundle.putString("image", mJsonObject.getString("image"));
 					mBundle.putString("specialId",
 							mJsonObject.getString("special_id"));
 					mBundle.putString("specialTitle",
@@ -109,8 +101,8 @@ public class Special extends AbsListViewBaseActivity {
 			// 如果屏幕是竖屏，则显示3列，如果是横屏，则显示4列
 			if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				imageCol = 1;
-				Toast.makeText(Special.this, "现在是横屏" + imageCol, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(Special.this, "现在是横屏" + imageCol,
+						Toast.LENGTH_SHORT).show();
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 1;
 			}

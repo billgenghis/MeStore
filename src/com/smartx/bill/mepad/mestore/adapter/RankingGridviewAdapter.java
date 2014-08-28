@@ -8,10 +8,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -47,8 +44,11 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return appsInfo.length();
+//		if (appsInfo.length() % 2 == 1) {
+//			return appsInfo.length() + 1;
+//		} else {
+			return appsInfo.length();
+//		}
 	}
 
 	@Override
@@ -85,16 +85,29 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		} else {
 			view = (CommonViewHolder) convertView.getTag();
 		}
-		view.txtViewTitle.setText(rankingCount + "."
-				+ getItemDatas("title", position));
-		view.downloadCount.setText(getItemDatas("downloads", position) + "次下载");
-		view.appScore.setRating(Float
-				.parseFloat(getItemDatas("score", position)));
-		view.appScore.setFocusable(false);
-		imageLoader.displayImage(getItemDatas("image", position),
-				view.imgViewFlag, options);
-		setInstallClick(activity, view, getItemDatas("download_url", position),
-				getItemDatas("title", position));
+//		if (position == getCount() - 1 && appsInfo.length() == getCount() - 1) {
+//			if (parent.getChildAt(position) != null) {
+//				parent.getChildAt(position).findViewById(R.id.relative_item)
+//						.setVisibility(View.INVISIBLE);
+//				parent.getChildAt(position).findViewById(R.id.app_icon)
+//						.setVisibility(View.INVISIBLE);
+//				parent.getChildAt(position).findViewById(R.id.vertical_line)
+//						.setVisibility(View.INVISIBLE);
+//			}
+//		} else {
+			view.txtViewTitle.setText(rankingCount + "."
+					+ getItemDatas("title", position));
+			view.downloadCount.setText(getItemDatas("downloads", position)
+					+ "次下载");
+			view.appScore.setRating(Float.parseFloat(getItemDatas("score",
+					position)));
+			view.appScore.setFocusable(false);
+			imageLoader.displayImage(getItemDatas("image", position),
+					view.imgViewFlag, options);
+			setInstallClick(activity, view,
+					getItemDatas("download_url", position),
+					getItemDatas("title", position));
+//		}
 		CommonTools.setLayout(position, view);
 		view.appDescription.setVisibility(TextView.GONE);
 		return convertView;

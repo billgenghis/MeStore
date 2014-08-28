@@ -1,22 +1,18 @@
 package com.smartx.bill.mepad.mestore.home;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
-import com.smartx.bill.mepad.mestore.dialog.MyAppInfoDialogBuilder;
-import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 
 public class MyBaseActivity extends Activity {
@@ -58,7 +54,7 @@ public class MyBaseActivity extends Activity {
 
 	protected RequestParams getParams(String class_id, String age,
 			String position_id, String keyword, String special_id,
-			String developer) {
+			String developer, String page) {
 		RequestParams params = new RequestParams();
 		params.put("class_id", class_id);
 		params.put("age", age);
@@ -66,6 +62,19 @@ public class MyBaseActivity extends Activity {
 		params.put("keyword", keyword);
 		params.put("special_id", special_id);
 		params.put("developer", developer);
+		params.put("page", page);
+		return params;
+	}
+
+	protected List<NameValuePair> getParams(String class_id, String age,
+			String position_id, String keyword, String special_id, String page) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("class_id", class_id));
+		params.add(new BasicNameValuePair("age", age));
+		params.add(new BasicNameValuePair("position_id", position_id));
+		params.add(new BasicNameValuePair("special_id", special_id));
+		params.add(new BasicNameValuePair("keyword", keyword));
+		params.add(new BasicNameValuePair("page", page));
 		return params;
 	}
 }

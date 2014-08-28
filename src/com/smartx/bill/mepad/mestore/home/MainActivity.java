@@ -3,37 +3,25 @@ package com.smartx.bill.mepad.mestore.home;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-
 import android.app.LocalActivityManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.listener.SearchOnEditorActionListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
+@SuppressWarnings("deprecation")
 public class MainActivity extends MyBaseActivity {
 
 	Context context = null;
@@ -41,11 +29,6 @@ public class MainActivity extends MyBaseActivity {
 	ViewPager pager = null;
 	TextView t1, t2, t3, t4;
 	List<TextView> tViews;
-
-	// private int offset = 0;// 动画图片偏移量
-	// private int currIndex = 0;// 当前页卡编号
-	// private int bmpW;// 动画图片宽度
-	// private ImageView cursor;// 动画图片
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,20 +42,20 @@ public class MainActivity extends MyBaseActivity {
 		initPagerViewer();
 		initTextView();
 		EditText searchText;
-		searchText = (EditText)findViewById(R.id.home_search);
-		searchText.setOnEditorActionListener(new SearchOnEditorActionListener(this));
+		searchText = (EditText) findViewById(R.id.home_search);
+		searchText.setOnEditorActionListener(new SearchOnEditorActionListener(
+				this));
 	}
 
 	private void initdatas() {
 		pager = (ViewPager) findViewById(R.id.viewpage);
-		// cursor = (ImageView) findViewById(R.id.cursor);
 		tViews = new ArrayList<TextView>();
 		t1 = (TextView) findViewById(R.id.home_me);
 		t2 = (TextView) findViewById(R.id.home_ranking);
 		t3 = (TextView) findViewById(R.id.home_category);
 		t4 = (TextView) findViewById(R.id.home_special);
 		t1.setTextColor(Color.parseColor("#303030"));
-		
+
 		tViews.add(t1);
 		tViews.add(t2);
 		tViews.add(t3);

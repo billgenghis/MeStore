@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -24,9 +23,9 @@ import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Category extends MyBaseActivity {
 
-	private GridView mCategoryGridView01;
-	private GridView mCategoryGridView02;
-	private GridView mCategoryGridView03;
+	private MyGridView mCategoryGridView01;
+	private MyGridView mCategoryGridView02;
+	private MyGridView mCategoryGridView03;
 	private CategoryGridviewAdapter mCategoryAdapter01;
 	private CategoryGridviewAdapter mCategoryAdapter02;
 	private CategoryGridviewAdapter mCategoryAdapter03;
@@ -40,7 +39,7 @@ public class Category extends MyBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_category);
 		HttpUtil.get(getDataUrl(IOStreamDatas.CATEGORY_DATA),
-				getParams(null, null, null, null, null, null),
+				getParams(null, null, null, null, null, null, null),
 				new JsonHttpResponseHandler() {
 
 					@Override

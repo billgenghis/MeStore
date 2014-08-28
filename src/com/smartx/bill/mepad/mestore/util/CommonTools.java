@@ -1,29 +1,25 @@
 package com.smartx.bill.mepad.mestore.util;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
-import android.app.DownloadManager;
-import android.net.Uri;
-import android.os.Environment;
 import android.text.Html;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.listener.SearchOnEditorActionListener;
-import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
 
 public class CommonTools {
 
@@ -59,6 +55,8 @@ public class CommonTools {
 		public RelativeLayout mRelativeLayout;
 		public ImageView appReview;
 		public TextView appDescription;
+		private Button appOpen;
+		private MyRoundProgressBar appDownload;
 	}
 
 	public static void setLayout(int position, CommonViewHolder view) {
@@ -82,12 +80,25 @@ public class CommonTools {
 				.findViewById(R.id.relative_item);
 		view.appDescription = (TextView) convertView
 				.findViewById(R.id.app_description);
+		view.appOpen = (Button) convertView.findViewById(R.id.app_open);
+		view.appDownload = (MyRoundProgressBar) convertView.findViewById(R.id.app_download);
 	}
 
 	public static String getHtmlText(String content) {
 		Document doc = Jsoup.parse(Html.fromHtml(content).toString());
-		doc.body().getElementsByAttribute("src").remove();
+		doc.body().getElementsByAttribute("src").remove();// delete text by
+															// attribute src
 		return Html.fromHtml(doc.body().toString()).toString();
+	}
+
+	public static ArrayList<String> getHtmlImage(String content) {
+		ArrayList<String> imagesList = new ArrayList<String>();
+		Document doc = Jsoup.parse(Html.fromHtml(content).toString());
+		Elements imagesElements = doc.body().getElementsByAttribute("src");
+		for (int i = 0; i < imagesElements.size(); i++) {
+			imagesList.add(imagesElements.get(i).attr("src"));
+		}
+		return imagesList;
 	}
 
 	public static String getImageText(String content) {

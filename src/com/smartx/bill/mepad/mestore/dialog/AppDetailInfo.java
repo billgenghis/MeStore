@@ -1,11 +1,13 @@
 package com.smartx.bill.mepad.mestore.dialog;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.media.audiofx.LoudnessEnhancer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils.TruncateAt;
@@ -17,9 +19,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
-import com.smartx.bill.mepad.mestore.adapter.HorizontalGridViewAdapter;
+import com.smartx.bill.mepad.mestore.adapter.DialogHorizontalGridViewAdapter;
+import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.matadata.LayoutResourcesDatas;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
@@ -27,7 +29,7 @@ import com.smartx.bill.mepad.mestore.util.CommonTools;
 public class AppDetailInfo extends AbsListViewBaseActivity {
 
 	// private MyGridView mRankingGridView;
-	private JSONArray jsonArrayImage;
+	private ArrayList<String> imageList;
 	private TextView appDescription;
 	private TextView appDeveloper;
 	private TextView appUpdateTime;
@@ -54,7 +56,7 @@ public class AppDetailInfo extends AbsListViewBaseActivity {
 	}
 
 	private void initDatas() throws NumberFormatException, JSONException {
-		myGridView = (GridView) findViewById(R.id.dishtype);
+		myGridView = (GridView) findViewById(R.id.dialog_app_review);
 		appDescription = (TextView) findViewById(R.id.app_description);
 		descriShowAll = (ImageView) findViewById(R.id.dialog_app_show_all);
 		appDeveloper = (TextView) findViewById(R.id.dialog_app_developer);
@@ -65,6 +67,7 @@ public class AppDetailInfo extends AbsListViewBaseActivity {
 		appDescription.setText(CommonTools.getHtmlText(appInfo
 				.getString("content")));
 		appDeveloper.setText("开发者:" + appInfo.getString("developer"));
+		imageList = CommonTools.getHtmlImage(appInfo.getString("content")) ;
 		long time = Long.parseLong(appInfo.getString("update_time") + "000");// PHP转化到java需要补后三位
 		Date date = new Date(time);
 		appUpdateTime.setText("更新于:" + date.toString());
@@ -73,17 +76,18 @@ public class AppDetailInfo extends AbsListViewBaseActivity {
 
 	private void initGridView() {
 		ViewGroup.LayoutParams params = myGridView.getLayoutParams();
-		// int dishtypes = jsonArrayImage.length();
-		int dishtypes = 5;
+		 int dishtypes = imageList.size();
+		 if(dishtypes == 0){
+			 dishtypes = 5;
+		 }
 
 		params.width = LayoutResourcesDatas.APP_REVIEWIMAGE_WIDTH * dishtypes;
+		params.height = LayoutResourcesDatas.APP_DIALOG_REVIEW_HEIGHT;
 		myGridView.setLayoutParams(params);
 		// 设置列数为得到的list长度
 		((GridView) myGridView).setNumColumns(dishtypes);
-		myGridView.setAdapter(new HorizontalGridViewAdapter(mActivity,
-				jsonArrayImage, imageLoader));
-		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-				true, true));
+		myGridView.setAdapter(new DialogHorizontalGridViewAdapter(mActivity,
+				imageList, imageLoader));
 	}
 
 	@Override
@@ -95,7 +99,6 @@ public class AppDetailInfo extends AbsListViewBaseActivity {
 		@Override
 		protected void onPostExecute(final Void result) {
 			super.onPostExecute(result);
-			Log.i("lines", appDescription.getLineCount() + "");
 			if (appDescription.getLineCount() >= LayoutResourcesDatas.APP_DESCRIPATION_LINES) {
 				appDescription.setEllipsize(TruncateAt.END);
 				appDescription

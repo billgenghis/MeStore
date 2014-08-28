@@ -1,18 +1,11 @@
 package com.smartx.bill.mepad.mestore.adapter;
 
-import java.io.File;
-
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
-import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -30,6 +23,38 @@ public class MyBaseAdapter extends BaseAdapter {
 			.showImageForEmptyUri(R.drawable.default_app_icon) // resource or
 																// drawable
 			.showImageOnFail(R.drawable.default_app_icon) // resource or
+															// drawable
+			.resetViewBeforeLoading(false) // default
+			.delayBeforeLoading(1000).cacheInMemory(true) // default
+			.cacheOnDisk(true) // default
+			.considerExifParams(false) // default
+			.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2) // default
+			.bitmapConfig(Bitmap.Config.ARGB_8888) // default
+			.displayer(new SimpleBitmapDisplayer()) // default
+			.handler(new Handler()) // default
+			.build();
+	protected DisplayImageOptions meSpecialOptions = new DisplayImageOptions.Builder()
+			.showImageOnLoading(R.drawable.default_me_special) // resource or
+																// drawable
+			.showImageForEmptyUri(R.drawable.default_me_special) // resource or
+																	// drawable
+			.showImageOnFail(R.drawable.default_me_special) // resource or
+															// drawable
+			.resetViewBeforeLoading(false) // default
+			.delayBeforeLoading(1000).cacheInMemory(true) // default
+			.cacheOnDisk(true) // default
+			.considerExifParams(false) // default
+			.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2) // default
+			.bitmapConfig(Bitmap.Config.ARGB_8888) // default
+			.displayer(new SimpleBitmapDisplayer()) // default
+			.handler(new Handler()) // default
+			.build();
+	protected DisplayImageOptions appDialogOptions = new DisplayImageOptions.Builder()
+			.showImageOnLoading(R.drawable.default_app_review) // resource or
+																// drawable
+			.showImageForEmptyUri(R.drawable.default_app_review) // resource or
+																	// drawable
+			.showImageOnFail(R.drawable.default_app_review) // resource or
 															// drawable
 			.resetViewBeforeLoading(false) // default
 			.delayBeforeLoading(1000).cacheInMemory(true) // default
@@ -67,8 +92,11 @@ public class MyBaseAdapter extends BaseAdapter {
 
 	protected void setInstallClick(Activity activity, CommonViewHolder view,
 			String downloadUrl, String appTitle) {
-		view.appInstall.setOnClickListener(new InstallClickListener(activity, view, downloadUrl, appTitle));
+		view.appInstall.setOnClickListener(new InstallClickListener(activity,
+				view, downloadUrl, appTitle));
+		
 	}
+
 	protected String getImageUrl(String url) {
 		return IOStreamDatas.SERVER_IP + url;
 	}

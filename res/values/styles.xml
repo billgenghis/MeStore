@@ -126,7 +126,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:horizontalSpacing">29dp</item>
         <item name="android:layout_marginRight">35dp</item>
-        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
         <item name="android:numColumns">auto_fit</item>
         <item name="android:listSelector">#00000000</item>
         <item name="android:verticalSpacing">10dp</item>
@@ -172,13 +172,15 @@
     </style>
 
     <!-- for ranking item view -->
-    <style name="ranking_gridview_style">
+    <style name="common_gridview_style">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_margin">0dp</item>
         <item name="android:horizontalSpacing">0dp</item>
         <item name="android:listSelector">#00000000</item>
         <item name="android:numColumns">auto_fit</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
         <item name="android:verticalSpacing">0dp</item>
     </style>
     <!--
@@ -210,6 +212,7 @@
         <item name="android:verticalSpacing">8dp</item>
         <item name="android:listSelector">#00000000</item>
         <item name="android:numColumns">auto_fit</item>
+        <item name="android:overScrollMode">never</item>
         <item name="android:horizontalSpacing">16dp</item>
     </style>
 

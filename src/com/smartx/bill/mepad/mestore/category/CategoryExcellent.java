@@ -10,79 +10,84 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
-import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
+import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.util.HttpUtil;
+import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 
-public class CategoryExcellent extends MyBaseActivity {
+public class CategoryExcellent extends AbsListViewBaseActivity {
 
-	private GridView mRcomGridView;
 	private RecomGridviewAdapter mRecomGridviewAdapter;
-	private JSONArray jsonArrayTop;
 	private String classId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_ranking);
+		setContentView(R.layout.common_gridview);
 		this.classId = getIntent().getStringExtra("classId");
-		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA), getParams(classId, null,
-			IOStreamDatas.POSITION_EXCELLENT, null,null, null), new JsonHttpResponseHandler() {
-		@Override
-		public void onSuccess(JSONArray response) {
-				initDatas(response);
-				initGridView();
-		}
-
-		@Override
-		public void onFailure(Throwable e, JSONArray errorResponse) {
-		}
-	});
-//		initDatas();
-//		initGridView();
+		initCommonDatas(this, this, savedInstanceState);
+		initDatas();
 	}
 
-	private void initDatas(JSONArray response) {
-//		try {
-//			jsonArrayTop = downLoadDatas.getDatasFromServer(classId, null,
-//					IOStreamDatas.POSITION_EXCELLENT, null,
-//					IOStreamDatas.APP_DATA);
-//		} catch (IOException | JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		jsonArrayTop = response;
-		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,
-				imageLoader);
-		mRcomGridView = (GridView) findViewById(R.id.ranking_gridView);
+	private void initDatas() {
+		initPullRefreshGridView();
+		mGridViewJSON = new JSONArray();
+		mPullRefreshGridView
+				.setOnRefreshListener(new OnRefreshListener2<GridView>() {
+
+					@Override
+					public void onPullDownToRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+					}
+
+					@Override
+					public void onPullUpToRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+						new GetDataTask(
+								mGridViewJSON,
+								mRecomGridviewAdapter,
+								mPullRefreshGridView,
+								getParams(
+										classId,
+										null,
+										IOStreamDatas.POSITION_EXCELLENT,
+										null,
+										null,
+										String.valueOf(IOStreamDatas.categoryExcellentPages)),
+								IOStreamDatas.CATEGORY_EXCELLENT_GRIDVIEW)
+								.execute();
+					}
+
+				});
+		// 数据初始化
+		initGridView();
+		IOStreamDatas.categoryExcellentPages = 0;
+		new GetDataTask(mGridViewJSON, mRecomGridviewAdapter,
+				mPullRefreshGridView, getParams(classId, null,
+						IOStreamDatas.POSITION_EXCELLENT, null, null,
+						String.valueOf(IOStreamDatas.categoryExcellentPages)),
+				IOStreamDatas.CATEGORY_EXCELLENT_GRIDVIEW).execute();
 	}
 
 	private void initGridView() {
-		mRcomGridView.setNumColumns(2);
-		mRcomGridView.setAdapter(mRecomGridviewAdapter);
-		mRcomGridView.setOnScrollListener(new PauseOnScrollListener(
-				imageLoader, true, true));
-		mRcomGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-			}
-		});
+		mRecomGridviewAdapter = new RecomGridviewAdapter(this, mGridViewJSON,
+				imageLoader);
+		((GridView) myGridView).setNumColumns(2);
+		myGridView.setAdapter(mRecomGridviewAdapter);
+		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
+				true, true));
+		myGridView.setOnItemClickListener(new ItemClickListener(mContext,
+				mActivity, savedInstanceState, mGridViewJSON));
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
 	}
 
 	/**
@@ -102,8 +107,8 @@ public class CategoryExcellent extends MyBaseActivity {
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}
-			mRcomGridView.setNumColumns(imageCol);
-			mRcomGridView.setAdapter(mRecomGridviewAdapter);
+			((GridView) myGridView).setNumColumns(imageCol);
+			myGridView.setAdapter(mRecomGridviewAdapter);
 			// ia.notifyDataSetChanged();
 		} catch (Exception ex) {
 			ex.printStackTrace();

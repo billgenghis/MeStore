@@ -5,35 +5,37 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.R.id;
-import com.smartx.bill.mepad.mestore.adapter.MeGalleryAdapter;
+import com.smartx.bill.mepad.mestore.adapter.MeHorizontalGridViewAdapter;
 import com.smartx.bill.mepad.mestore.adapter.MeGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.matadata.LayoutResourcesDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGalleryView;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.recommend.Recommendation;
+import com.smartx.bill.mepad.mestore.special.SpecialDetail;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
-@SuppressWarnings("deprecation")
 public class Me extends AbsListViewBaseActivity {
 
 	private MeGridviewAdapter mCompetitiveAdapter;
@@ -52,7 +54,7 @@ public class Me extends AbsListViewBaseActivity {
 	private ImageView mSetting;
 	private JSONArray jsonArrayExcellent;
 	private JSONArray jsonArrayNew;
-	private ProgressDialog dialog;
+	private JSONArray jsonArraySpecial;
 
 	// DisplayImageOptions options;
 
@@ -61,25 +63,28 @@ public class Me extends AbsListViewBaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_me);
 		initCommonDatas(this, this, savedInstanceState);
-		setDialog();
 		initDatas();
 
 		HttpUtil.get(
 				getDataUrl(IOStreamDatas.APP_DATA),
 				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null,
-						null, null), new JsonHttpResponseHandler() {
+						null, null, null), new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
 						initExcellentDatas(response);
-						findViewById(id.home_me).setVisibility(View.VISIBLE);
-						ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();   
-						Runnable runner = new Runnable() {    
-				            public void run() {    
-				                dialog.dismiss();    
-				            }    
-				        };    
-				        executor.schedule(runner,2000, TimeUnit.MILLISECONDS);  
+						findViewById(id.me_scrollView).setVisibility(
+								View.VISIBLE);
+						ScheduledExecutorService executor = Executors
+								.newSingleThreadScheduledExecutor();
+						Runnable runner = new Runnable() {
+							public void run() {
+								dialog.dismiss();
+							}
+						};
+						executor.schedule(runner,
+								LayoutResourcesDatas.DELAY_TIME,
+								TimeUnit.MILLISECONDS);
 					}
 
 					@Override
@@ -89,7 +94,7 @@ public class Me extends AbsListViewBaseActivity {
 		HttpUtil.get(
 				getDataUrl(IOStreamDatas.APP_DATA),
 				getParams(null, null, IOStreamDatas.POSITION_NEW, null, null,
-						null), new JsonHttpResponseHandler() {
+						null, null), new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
@@ -100,7 +105,18 @@ public class Me extends AbsListViewBaseActivity {
 					public void onFailure(Throwable e, JSONArray errorResponse) {
 					}
 				});
-		initSpecialDatas(null);
+		HttpUtil.get(getDataUrl(IOStreamDatas.SPECIAL_DATA),
+				getParams(null, null, null, null, null, null, null),
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(JSONArray response) {
+						initSpecialDatas(response);
+					}
+
+					@Override
+					public void onFailure(Throwable e, JSONArray errorResponse) {
+					}
+				});
 	}
 
 	private void initDatas() {
@@ -112,7 +128,6 @@ public class Me extends AbsListViewBaseActivity {
 		mSetting = (ImageView) findViewById(R.id.me_setting);
 		mUpdateApps = (TextView) findViewById(R.id.me_update_apps);
 		mAllApps = (TextView) findViewById(R.id.me_all_apps);
-		mySpecialGallery = (MyGalleryView) findViewById(R.id.me_special_gallery);
 
 		mName = (TextView) findViewById(R.id.me_name);
 		mNewIntroduce = (TextView) findViewById(R.id.me_new_introduce);
@@ -120,7 +135,7 @@ public class Me extends AbsListViewBaseActivity {
 
 		mCompetitiveGridView = (MyGridView) findViewById(R.id.me_competitive_girdview);
 		mNewGridView = (MyGridView) findViewById(R.id.me_new_girdview);
-		myGridView = mCompetitiveGridView;
+		myGridView = (GridView) findViewById(R.id.me_special);
 		setListener();
 	}
 
@@ -129,7 +144,6 @@ public class Me extends AbsListViewBaseActivity {
 		jsonArrayExcellent = response;
 		mCompetitiveAdapter = new MeGridviewAdapter(this, jsonArrayExcellent,
 				imageLoader);
-		myGridView = mCompetitiveGridView;
 		mCompetitiveGridView.setNumColumns(3);
 		mCompetitiveGridView.setAdapter(mCompetitiveAdapter);
 		mCompetitiveGridView.setOnTouchListener(myGestureListener);
@@ -149,7 +163,40 @@ public class Me extends AbsListViewBaseActivity {
 	}
 
 	private void initSpecialDatas(JSONArray response) {
-		mySpecialGallery.setAdapter(new MeGalleryAdapter(this, null));// 暂时没有数据
+		ViewGroup.LayoutParams params = myGridView.getLayoutParams();
+		jsonArraySpecial = response;
+		int dishtypes = jsonArraySpecial.length();
+
+		params.width = LayoutResourcesDatas.ME_REVIEWIMAGE_WIDTH * dishtypes;
+		myGridView.setLayoutParams(params);
+		// 设置列数为得到的list长度
+		((GridView) myGridView).setNumColumns(dishtypes);
+		myGridView.setAdapter(new MeHorizontalGridViewAdapter(mActivity,
+				jsonArraySpecial, imageLoader));
+		myGridView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Intent intent = new Intent(Me.this, SpecialDetail.class);
+				Bundle mBundle = new Bundle();
+				JSONObject mJsonObject;
+				try {
+					mJsonObject = jsonArraySpecial.getJSONObject(position);
+					mBundle.putString("image", mJsonObject.getString("image"));
+					mBundle.putString("specialId",
+							mJsonObject.getString("special_id"));
+					mBundle.putString("specialTitle",
+							mJsonObject.getString("s_title"));
+					mBundle.putString("specialDescription",
+							mJsonObject.getString("s_description"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtra("SpecialInfo", mBundle);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void setListener() {
@@ -174,25 +221,6 @@ public class Me extends AbsListViewBaseActivity {
 				startActivity(intent);
 			}
 		});
-	}
-
-	private void setDialog() {
-		dialog = new ProgressDialog(this,R.style.welcome_dialog);
-		dialog.setCancelable(false);
-		dialog.show();
-		LayoutInflater inflater = LayoutInflater.from(this);
-		View v = inflater.inflate(R.layout.wlecome_dialog, null);// 得到加载view
-		LinearLayout layout = (LinearLayout) v.findViewById(R.id.dialog_view);// 加载布局
-		// main.xml中的ImageView
-		ImageView spaceshipImage = (ImageView) v.findViewById(R.id.img);
-		TextView tipTextView = (TextView) v.findViewById(R.id.tipTextView);// 提示文字
-		// 加载动画
-		Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this,
-				R.anim.loading_animation);
-		// 使用ImageView显示动画
-		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
-		// tipTextView.setText(msg);// 设置加载信息
-		dialog.setContentView(layout);
 	}
 
 	@Override

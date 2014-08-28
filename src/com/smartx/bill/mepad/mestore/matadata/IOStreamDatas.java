@@ -3,8 +3,8 @@ package com.smartx.bill.mepad.mestore.matadata;
 public class IOStreamDatas {
 
 	// 数据接口管理
-	public final static String SERVER_IP = "http://10.10.10.3";
-	public final static String SERVER_URL = "http://10.10.10.3/project/app/cms/";
+	public final static String SERVER_IP = "http://manage.mepad.smartx.com.cn/";
+	public final static String SERVER_URL = "http://manage.mepad.smartx.com.cn/";
 	public final static String APPSINFO_URL = "index.php?s=/IOStream/AppsInfo/index.html";
 	public final static String CATEGORY_URL = "index.php?s=/IOStream/Category/index.html";
 	public final static String SPECIAL_URL = "index.php?s=/IOStream/Special/index.html";
@@ -42,4 +42,20 @@ public class IOStreamDatas {
 	// DownLoad Information
 	public static final String DOWNLOAD_FOLDER_NAME = "MeAppStore";
 	public static final String KEY_NAME_DOWNLOAD_ID = "downloadId";
+
+	// 下拉刷新的页数管理，初始值为0，即抓取0~20的数据
+	public static int rankingPages = 0;
+	public static int meExcellentPages = 0;
+	public static int meNewPages = 0;
+	public static int categoryExcellentPages = 0;
+	public static int categoryNewPages = 0;
+	public static int categoryRankingPages = 0;
+
+	// 下拉刷新的页数管理，初始值为0，即抓取0~20的数据
+	public final static int RANKING_GRIDVIEW = 0;
+	public final static int ME_EXCELLENT_GRIDVIEW = 1;
+	public final static int ME_NEW_GRIDVIEW = 2;
+	public final static int CATEGORY_EXCELLENT_GRIDVIEW = 3;
+	public final static int CATEGORY_NEW_GRIDVIEW = 4;
+	public final static int CATEGORY_RANKING_GRIDVIEW = 5;
 }

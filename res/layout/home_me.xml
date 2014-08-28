@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.smartx.bill.mepad.mestore.myview.MyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/home_me"
-    android:visibility="invisible"
+    android:id="@+id/me_scrollView"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
-    android:scrollbars="vertical" >
+    android:scrollbars="none"
+    android:overScrollMode="never"
+    android:visibility="invisible" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -48,8 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="20dp"
                     android:layout_marginRight="34dp"
+                    android:layout_marginTop="20dp"
                     android:layout_toLeftOf="@+id/textView1"
                     android:scaleType="centerInside"
                     android:src="@drawable/home_setting" />
@@ -65,14 +66,13 @@
                     android:text="Sandy"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
-
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:baselineAligned="false" 
+                android:baselineAligned="false"
                 android:orientation="horizontal" >
 
                 <RelativeLayout
@@ -117,8 +117,7 @@
             android:layout_weight="0.20"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                style="@style/mepage_relative_layout_style">
+            <RelativeLayout style="@style/mepage_relative_layout_style" >
 
                 <TextView
                     android:id="@+id/me_competitve_introduce"
@@ -154,20 +153,39 @@
             android:layout_weight="0.1"
             android:orientation="vertical" >
 
-            <com.smartx.bill.mepad.mestore.myview.MyGalleryView
-                android:id="@+id/me_special_gallery"
+            <HorizontalScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:layout_marginLeft="28dp"
-                android:layout_marginRight="25dp"
-                android:spacing="18dp" />
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                 android:overScrollMode="never"
+                android:scrollbars="none" >
+
+                <LinearLayout
+                    android:id="@+id/liear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <GridView
+                        android:id="@+id/me_special"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginLeft="28dp"
+                        android:horizontalSpacing="18dp"
+                        android:listSelector="#00000000"
+                        android:numColumns="auto_fit"
+                        android:verticalSpacing="0dp" >
+                    </GridView>
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:layout_marginLeft="28dp"
             android:layout_marginBottom="0dp"
+            android:layout_marginLeft="28dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/division_02" />
@@ -178,8 +196,7 @@
             android:layout_weight="0.20"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                style="@style/mepage_relative_layout_style">
+            <RelativeLayout style="@style/mepage_relative_layout_style" >
 
                 <TextView
                     android:id="@+id/me_new_introduce"
@@ -197,8 +214,8 @@
 
             <com.smartx.bill.mepad.mestore.myview.MyGridView
                 android:id="@+id/me_new_girdview"
-                android:layout_marginBottom="30dp"
-                style="@style/me_gridview_style" />
+                style="@style/me_gridview_style"
+                android:layout_marginBottom="30dp" />
         </LinearLayout>
     </LinearLayout>
 

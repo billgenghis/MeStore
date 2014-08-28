@@ -27,10 +27,8 @@ import cn.trinea.android.common.util.PreferencesUtils;
 import com.smartx.bill.mepad.mestore.R;
 
 /**
- * DownloadManagerDemo
- * 
- * @author <a href="http://www.trinea.cn/android/android-downloadmanager/"
- *         target="_blank">Trinea</a> 2013-5-9
+ * 暂时没有用到
+ * @author bill
  */
 public class DownLoadApk extends Activity {
 
@@ -42,7 +40,6 @@ public class DownLoadApk extends Activity {
 
 	private Button downloadButton;
 	private ProgressBar downloadProgress;
-	private TextView downloadTip;
 	private TextView downloadSize;
 	private TextView downloadPrecent;
 	private Button downloadCancel;
@@ -57,9 +54,6 @@ public class DownLoadApk extends Activity {
 	private CompleteReceiver completeReceiver;
 	private Context context;
 
-	// public DownLoadApk(String APK_URL, String DOWNLOAD_FILE_NAME) {
-	//
-	// }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,11 +116,6 @@ public class DownLoadApk extends Activity {
 		downloadButton = (Button) findViewById(R.id.download_button);
 		downloadCancel = (Button) findViewById(R.id.download_cancel);
 		downloadProgress = (ProgressBar) findViewById(R.id.download_progress);
-		downloadTip = (TextView) findViewById(R.id.download_tip);
-		downloadTip
-				.setText(getString(R.string.tip_download_file)
-						+ Environment
-								.getExternalStoragePublicDirectory(DOWNLOAD_FOLDER_NAME));
 		downloadSize = (TextView) findViewById(R.id.download_size);
 		downloadPrecent = (TextView) findViewById(R.id.download_precent);
 	}

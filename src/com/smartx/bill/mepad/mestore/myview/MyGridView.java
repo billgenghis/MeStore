@@ -2,10 +2,11 @@ package com.smartx.bill.mepad.mestore.myview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.GridView;
 
 /**
- * @Type: MyGridView 
+ * @Type: MyGridView  cancel Scroll
  */
 public class MyGridView extends GridView {
 
@@ -28,5 +29,12 @@ public class MyGridView extends GridView {
 				MeasureSpec.AT_MOST);
 		super.onMeasure(widthMeasureSpec, expandSpec);
 	}
-
+//	@Override
+//	public boolean dispatchTouchEvent(MotionEvent ev) {  
+//	    if(ev.getAction() == MotionEvent.ACTION_MOVE)  
+//	    {  
+//	        return true;  
+//	    }  
+//	    return super.dispatchTouchEvent(ev);  
+//	}  
 }

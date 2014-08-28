@@ -10,7 +10,7 @@
         android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/welcome_loading" />
+        android:src="@drawable/loading_welcome" />
 
     <TextView
         android:id="@+id/tipTextView"

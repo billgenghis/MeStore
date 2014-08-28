@@ -47,11 +47,11 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-		if (appsInfo.length() % 2 == 1) {
-			return appsInfo.length() + 1;
-		} else {
+//		if (appsInfo.length() % 2 == 1) {
+//			return appsInfo.length() + 1;
+//		} else {
 			return appsInfo.length();
-		}
+//		}
 	}
 
 	@Override
@@ -97,13 +97,12 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 		} else {
 			view = (CommonViewHolder) convertView.getTag();
 		}
-		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
-			Log.i("position", position + "  " +  getCount());
-			view.mRelativeLayout.setVisibility(View.INVISIBLE);
-			view.imgViewFlag.setVisibility(View.INVISIBLE);
-			convertView.findViewById(R.id.vertical_line).setVisibility(
-					View.INVISIBLE);
-		} else {
+//		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
+//			view.mRelativeLayout.setVisibility(View.INVISIBLE);
+//			view.imgViewFlag.setVisibility(View.INVISIBLE);
+//			convertView.findViewById(R.id.vertical_line).setVisibility(
+//					View.INVISIBLE);
+//		} else {
 			view.txtViewTitle.setText(rankingCount + "."
 					+ getItemDatas("title", position));
 			view.downloadCount.setText(getItemDatas("downloads", position)
@@ -114,7 +113,7 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 					view.imgViewFlag, options);
 			view.appDescription.setText(getItemDatas("description", position));
 			setInstallClick(activity, view, getItemDatas("download_url", position), getItemDatas("title", position));
-		}
+//		}
 		CommonTools.setLayout(position, view);
 		return convertView;
 	}

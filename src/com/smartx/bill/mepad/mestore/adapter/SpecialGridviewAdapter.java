@@ -1,5 +1,7 @@
 package com.smartx.bill.mepad.mestore.adapter;
 
+import java.sql.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,8 +114,12 @@ public class SpecialGridviewAdapter extends MyBaseAdapter {
 		}
 		view.txtViewTitle.setText(getItemDatas("s_title", position));
 		view.txtViewDscription.setText(getItemDatas("s_description", position));
-		// imageLoader.displayImage(getItemDatas("image", position),
-		// view.imgViewFlag, options);
+		imageLoader.displayImage(getImageUrl(getItemDatas("image", position)),
+				view.imgViewFlag, options);
+		long time = Long.parseLong(getItemDatas("update_time", position)
+				+ "000");// PHP转化到java需要补后三位
+		Date date = new Date(time);
+		view.txtViewTime.setText(date.toString());
 		return convertView;
 	}
 }

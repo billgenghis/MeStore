@@ -21,6 +21,7 @@ import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 
+@SuppressWarnings("deprecation")
 public class CategoryDetail extends Activity {
 	private Context context = null;
 	private LocalActivityManager manager = null;

@@ -1,6 +1,5 @@
 package com.smartx.bill.mepad.mestore.dialog;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +11,10 @@ import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
@@ -27,17 +22,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import cn.trinea.android.common.util.DownloadManagerPro;
-import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
+import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
 
+@SuppressWarnings("deprecation")
 public class DialogAppInfo extends MyBaseActivity {
 
 	TextView t1, t2, t3, t4;
@@ -49,14 +45,14 @@ public class DialogAppInfo extends MyBaseActivity {
 	private TextView downloadCount;
 	private RatingBar appScore;
 	private Button appInstall;
+	private Button appOpen;
+	private MyRoundProgressBar appDownload;
 	private Bitmap mBitmap;
 	private Context mContext;
 	List<TextView> tViews;
 
 	private String downloadUrl;
 	private String appName;
-	private DownloadManager downloadManager;
-	private long downloadId = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +102,8 @@ public class DialogAppInfo extends MyBaseActivity {
 		appScore = (RatingBar) findViewById(R.id.app_score);
 		downloadCount = (TextView) findViewById(R.id.app_download_count);
 		appInstall = (Button) findViewById(R.id.app_install);
+		appOpen = (Button) findViewById(R.id.app_open);
+		appDownload = (MyRoundProgressBar) findViewById(R.id.app_download);
 		findViewById(id.app_description).setVisibility(View.GONE);
 
 		txtViewTitle.setText(appInfo.getString("title"));
@@ -114,40 +112,11 @@ public class DialogAppInfo extends MyBaseActivity {
 		imgViewFlag.setImageBitmap(mBitmap);
 		imgViewFlag.setDrawingCacheEnabled(false);
 		appScore.setFocusable(false);
-
-		downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-		appInstall.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				File folder = Environment
-						.getExternalStoragePublicDirectory(IOStreamDatas.DOWNLOAD_FOLDER_NAME);
-				if (!folder.exists() || !folder.isDirectory()) {
-					folder.mkdirs();
-				}
-
-				DownloadManager.Request request = new DownloadManager.Request(
-						Uri.parse(downloadUrl));
-				request.setDestinationInExternalPublicDir(IOStreamDatas.DOWNLOAD_FOLDER_NAME,
-						appName);
-				request.setTitle(appName);
-				request.setDescription(appName + "downloading");
-				request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-				request.setVisibleInDownloadsUi(false);
-				// request.allowScanningByMediaScanner();
-				// request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-				// request.setShowRunningNotification(false);
-				// request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
-				request.setMimeType("application/vnd.android.package-archive");
-				downloadId = downloadManager.enqueue(request);
-				/** save download id to preferences **/
-				PreferencesUtils.putLong(mContext, IOStreamDatas.KEY_NAME_DOWNLOAD_ID,
-						downloadId);
-
-			}
-		});
-
+		appInstall.setOnClickListener(new InstallClickListener(this, null,
+				downloadUrl, appName));
+		appOpen.setVisibility(View.INVISIBLE);
+		appDownload.setVisibility(View.INVISIBLE);
+		
 		findViewById(R.id.dialog_appinfo_tab).setVisibility(View.GONE);
 		t1.setVisibility(View.GONE);
 		t2.setVisibility(View.GONE);

@@ -1,6 +1,10 @@
 package com.smartx.bill.mepad.mestore.adapter;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -11,35 +15,37 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
 
-public class HorizontalGridViewAdapter extends MyBaseAdapter {
+public class DialogHorizontalGridViewAdapter extends MyBaseAdapter {
 
 	private Activity activity;
-	private JSONArray specialsInfo;
+	private ArrayList<String> imagesInfo;
 	private ImageLoader imageLoader;
-	private String[] imageLocation;
 
-	private int[] images = { R.drawable.special_01, R.drawable.special_02,
-			R.drawable.special_03, R.drawable.special_04 };// 数据源
-
-	public HorizontalGridViewAdapter(Activity activity, JSONArray specialsInfo,
-			ImageLoader imageLoader) {
+	public DialogHorizontalGridViewAdapter(Activity activity,
+			ArrayList<String> imagesInfo, ImageLoader imageLoader) {
 		super();
-		this.specialsInfo = specialsInfo;
+		this.imagesInfo = imagesInfo;
 		this.activity = activity;
 		this.imageLoader = imageLoader;
-		imageLocation = new String[5];
+		if(imagesInfo.size() == 0){
+			imagesInfo.add("test");
+			imagesInfo.add("test");
+			imagesInfo.add("test");
+			imagesInfo.add("test");
+			imagesInfo.add("test");
+		}
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return images.length + 1;
+		return imagesInfo.size();
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public String getItem(int position) {
 		// TODO Auto-generated method stub
-		return images[position];
+		return imagesInfo.get(position);
 	}
 
 	@Override
@@ -68,7 +74,8 @@ public class HorizontalGridViewAdapter extends MyBaseAdapter {
 		} else {
 			view = (HorizonViewHolder) convertView.getTag();
 		}
-		// view.imgViewFlag.setImageResource(images[position]);
+		imageLoader.displayImage(getImageUrl(getItem(position)),
+				view.imgViewFlag, appDialogOptions);
 		return convertView;
 	}
 }

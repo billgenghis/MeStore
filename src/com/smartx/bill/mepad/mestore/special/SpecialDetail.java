@@ -1,5 +1,9 @@
 package com.smartx.bill.mepad.mestore.special;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import org.json.JSONArray;
 
 import android.content.res.Configuration;
@@ -18,12 +22,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.BackClickListener;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.matadata.LayoutResourcesDatas;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.HttpUtil;
@@ -37,6 +43,7 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 	private String sPicUrl;
 	private String specialTitle;
 	private String specialId;
+	private Bitmap mBitmap;
 	private TextView specialTitleView;
 	private ImageView specialImageView;
 	protected DisplayImageOptions options;
@@ -66,11 +73,23 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 		CommonTools.onSearchClick(this);
 		initDatas();
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, null, specialId, null),
+				getParams(null, null, null, null, specialId, null, sPicUrl),
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray response) {
 						initDatas(response);
+						if (dialog != null) {
+							ScheduledExecutorService executor = Executors
+									.newSingleThreadScheduledExecutor();
+							Runnable runner = new Runnable() {
+								public void run() {
+									dialog.dismiss();
+								}
+							};
+							executor.schedule(runner,
+									LayoutResourcesDatas.DELAY_TIME,
+									TimeUnit.MILLISECONDS);
+						}
 					}
 
 					@Override
@@ -81,7 +100,7 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 
 	private void initDatas() {
 		mBundle = getIntent().getBundleExtra("SpecialInfo");
-		sPicUrl = mBundle.getString("sPicUrl");
+		sPicUrl = mBundle.getString("image");
 		specialId = mBundle.getString("specialId");
 		specialTitle = mBundle.getString("specialTitle");
 		specialDescription = mBundle.getString("specialDescription");
@@ -98,11 +117,10 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 				jsonArraySpecial, imageLoader);
 		specialTitleView.setText(specialTitle);
 		specialDescriptionView.setText(specialDescription);
-		imageLoader.displayImage(sPicUrl, specialImageView, options);
+		imageLoader.displayImage(IOStreamDatas.SERVER_IP + sPicUrl,
+				specialImageView, options);
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mRecomGridviewAdapter);
-		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-				true, true));
 		myGridView.setOnItemClickListener(new ItemClickListener(mContext,
 				mActivity, savedInstanceState, response));
 
@@ -111,19 +129,6 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 		backText.setOnClickListener(new BackClickListener(this));
 		backArray.setOnClickListener(new BackClickListener(this));
 	}
-
-	// private void initGridView() {
-	// ((GridView) myGridView).setNumColumns(2);
-	// myGridView.setAdapter(mRecomGridviewAdapter);
-	// myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-	// true, true));
-	// myGridView.setOnItemClickListener(new OnItemClickListener() {
-	// @Override
-	// public void onItemClick(AdapterView<?> arg0, View arg1,
-	// int position, long arg3) {
-	// }
-	// });
-	// }
 
 	@Override
 	protected void onPause() {

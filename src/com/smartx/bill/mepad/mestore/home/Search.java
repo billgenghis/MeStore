@@ -1,6 +1,9 @@
 package com.smartx.bill.mepad.mestore.home;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +27,7 @@ import com.smartx.bill.mepad.mestore.adapter.SearchGridviewAdapter;
 import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.listener.BackClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.matadata.LayoutResourcesDatas;
 import com.smartx.bill.mepad.mestore.myview.MyGridView;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
@@ -45,13 +49,24 @@ public class Search extends AbsListViewBaseActivity {
 		searchName = getIntent().getStringExtra("searchName");
 		myGridView = (GridView) findViewById(R.id.search_gridView);
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, searchName, null, null),
+				getParams(null, null, null, searchName, null, null, null),
 				new JsonHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(JSONArray response) {
 						initDatas(response);
 						initGridView();
+						if (dialog != null) {
+							ScheduledExecutorService executor = Executors
+									.newSingleThreadScheduledExecutor();
+							Runnable runner = new Runnable() {
+								public void run() {
+									dialog.dismiss();
+								}
+							};
+							executor.schedule(runner, LayoutResourcesDatas.DELAY_TIME,
+									TimeUnit.MILLISECONDS);
+						}
 					}
 
 					@Override

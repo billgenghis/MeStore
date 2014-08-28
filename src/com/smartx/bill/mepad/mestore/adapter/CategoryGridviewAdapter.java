@@ -20,8 +20,15 @@ public class CategoryGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
 	private JSONArray categorysInfo;
 	private ImageLoader imageLoader;
+	private int[] studyImages = { R.drawable.study, R.drawable.story,
+			R.drawable.manga, R.drawable.social, R.drawable.instrument,
+			R.drawable.news, R.drawable.dance, R.drawable.sport };
+	private int[] gameImages = { R.drawable.game1, R.drawable.game2,
+			R.drawable.game3, R.drawable.game4, R.drawable.game5,
+			R.drawable.game6, R.drawable.game7, R.drawable.game8,
+			R.drawable.game9, R.drawable.game10, R.drawable.game11 };
+	private int[] toolsImages = { R.drawable.system, R.drawable.tools };
 
-	// }
 	public CategoryGridviewAdapter(Activity activity, JSONArray categorysInfo,
 			ImageLoader imageLoader) throws JSONException {
 		super();
@@ -88,9 +95,16 @@ public class CategoryGridviewAdapter extends MyBaseAdapter {
 			view = (CategoryViewHolder) convertView.getTag();
 		}
 		view.txtViewTitle.setText(getItemDatas("name", position));
-		Log.i("url", getImageUrl(getItemDatas("image", position)));
+		if(getCount() == 8){
+			view.imgViewFlag.setImageResource(studyImages[position]);
+		}else if(getCount() == 11){
+			view.imgViewFlag.setImageResource(gameImages[position]);
+		}else if(getCount() == 2){
+			view.imgViewFlag.setImageResource(toolsImages[position]);
+		}else{
 		imageLoader.displayImage(getImageUrl(getItemDatas("image", position)),
 				view.imgViewFlag, options);
+		}
 		return convertView;
 	}
 

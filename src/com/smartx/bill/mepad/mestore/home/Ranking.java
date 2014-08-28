@@ -4,55 +4,74 @@ import org.json.JSONArray;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RankingGridviewAdapter;
+import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
-import com.smartx.bill.mepad.mestore.util.HttpUtil;
 
 public class Ranking extends AbsListViewBaseActivity {
 
 	// private MyGridView mRankingGridView;
 	private RankingGridviewAdapter mRankingAdapter;
-	private JSONArray jsonArrayTop;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_ranking);
-		initCommonDatas(this,this,savedInstanceState);
-		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, null, null, null),
-				new JsonHttpResponseHandler() {
-
-					@Override
-					public void onSuccess(JSONArray response) {
-						initDatas(response);
-					}
-
-					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
-					}
-				});
-		// initDatas();
-		// initGridView();
+		setContentView(R.layout.common_gridview);
+		initCommonDatas(this, this, savedInstanceState);
+		initDatas();
 	}
 
-	private void initDatas(JSONArray response) {
-		jsonArrayTop = response;
-		mRankingAdapter = new RankingGridviewAdapter(this, jsonArrayTop,
+	private void initDatas() {
+		initPullRefreshGridView();
+		mGridViewJSON = new JSONArray();
+		mPullRefreshGridView
+				.setOnRefreshListener(new OnRefreshListener2<GridView>() {
+
+					@Override
+					public void onPullDownToRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+					}
+
+					@Override
+					public void onPullUpToRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+						new GetDataTask(mGridViewJSON, mRankingAdapter,
+								mPullRefreshGridView,
+								getParams(null, null, null, null, null, String
+										.valueOf(IOStreamDatas.rankingPages)),
+								IOStreamDatas.RANKING_GRIDVIEW).execute();
+					}
+
+				});
+		// 数据初始化
+		initGridView();
+	}
+
+	private void initGridView() {
+		mRankingAdapter = new RankingGridviewAdapter(this, mGridViewJSON,
 				imageLoader);
-		// mRankingGridView = (MyGridView) findViewById(R.id.ranking_gridView);
-		myGridView = (GridView) findViewById(R.id.ranking_gridView);
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mRankingAdapter);
+		IOStreamDatas.rankingPages = 0;
+		new GetDataTask(mGridViewJSON, mRankingAdapter, mPullRefreshGridView,
+				getParams(null, null, null, null, null,
+						String.valueOf(IOStreamDatas.rankingPages)),
+				IOStreamDatas.RANKING_GRIDVIEW).execute();
 		myGridView.setOnItemClickListener(new ItemClickListener(mContext,
-				mActivity, savedInstanceState, response));
+				mActivity, savedInstanceState, mGridViewJSON));
 	}
 
 	@Override

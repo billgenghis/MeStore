@@ -3,7 +3,6 @@ package com.smartx.bill.mepad.mestore.recommend;
 import org.json.JSONArray;
 
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,78 +10,81 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.adapter.RecomGridviewAdapter;
-import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
+import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.myview.MyGridView;
-import com.smartx.bill.mepad.mestore.util.HttpUtil;
+import com.smartx.bill.mepad.mestore.uimgloader.AbsListViewBaseActivity;
 
-public class RecomNew extends MyBaseActivity {
+public class RecomNew extends AbsListViewBaseActivity {
 
-	private GridView mRecomGridView;
-	private RecomGridviewAdapter mRecomGridviewAdapter;
-	private JSONArray jsonArrayTop;
+	private RecomGridviewAdapter myGridViewAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_ranking);
-		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, IOStreamDatas.POSITION_NEW, null,null, null),
-				new JsonHttpResponseHandler() {
-
-					@Override
-					public void onSuccess(JSONArray response) {
-						initDatas(response);
-						initGridView();
-					}
-
-					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
-					}
-				});
-//		initDatas();
-//		initGridView();
-		
+		setContentView(R.layout.common_gridview);
+		initCommonDatas(this, this, savedInstanceState);
+		initDatas();
 	}
 
-	private void initDatas(JSONArray response) {
-//		try {
-//			jsonArrayTop = downLoadDatas.getDatasFromServer(null, null, IOStreamDatas.POSITION_NEW,
-//					null, IOStreamDatas.APP_DATA);
-//		} catch (IOException | JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		jsonArrayTop = response;
-		mRecomGridviewAdapter = new RecomGridviewAdapter(this, jsonArrayTop,imageLoader);
-		mRecomGridView = (GridView) findViewById(R.id.ranking_gridView);
+	private void initDatas() {
+		initPullRefreshGridView();
+		mGridViewJSON = new JSONArray();
+		mPullRefreshGridView
+				.setOnRefreshListener(new OnRefreshListener2<GridView>() {
+
+					@Override
+					public void onPullDownToRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+					}
+
+					@Override
+					public void onPullUpToRefresh(
+							PullToRefreshBase<GridView> refreshView) {
+						new GetDataTask(
+								mGridViewJSON,
+								myGridViewAdapter,
+								mPullRefreshGridView,
+								getParams(
+										null,
+										null,
+										IOStreamDatas.POSITION_NEW,
+										null,
+										null,
+										String.valueOf(IOStreamDatas.meNewPages)),
+								IOStreamDatas.ME_NEW_GRIDVIEW).execute();
+					}
+
+				});
+		// 数据初始化
+		initGridView();
+		IOStreamDatas.meNewPages = 0;
+		new GetDataTask(mGridViewJSON, myGridViewAdapter, mPullRefreshGridView,
+				getParams(null, null, IOStreamDatas.POSITION_NEW, null, null,
+						String.valueOf(IOStreamDatas.meNewPages)),
+				IOStreamDatas.ME_NEW_GRIDVIEW).execute();
 	}
 
 	private void initGridView() {
-		mRecomGridView.setNumColumns(2);
-		mRecomGridView.setAdapter(mRecomGridviewAdapter);
-		mRecomGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader, true, true));  
-		mRecomGridView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-			}
-		});
+		myGridViewAdapter = new RecomGridviewAdapter(this, mGridViewJSON,
+				imageLoader);
+		((GridView) myGridView).setNumColumns(2);
+		myGridView.setAdapter(myGridViewAdapter);
+		myGridView.setOnScrollListener(new PauseOnScrollListener(imageLoader,
+				true, true));
+		myGridView.setOnItemClickListener(new ItemClickListener(mContext,
+				mActivity, savedInstanceState, mGridViewJSON));
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
 	}
 
 	/**
@@ -102,8 +104,8 @@ public class RecomNew extends MyBaseActivity {
 			} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				imageCol = 3;
 			}
-			mRecomGridView.setNumColumns(imageCol);
-			mRecomGridView.setAdapter(mRecomGridviewAdapter);
+			((GridView) myGridView).setNumColumns(imageCol);
+			myGridView.setAdapter(myGridViewAdapter);
 			// ia.notifyDataSetChanged();
 		} catch (Exception ex) {
 			ex.printStackTrace();

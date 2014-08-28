@@ -11,16 +11,22 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <include layout="@layout/common_appsinfo" />
 
         <View
+            android:id="@+id/vertical_line"
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="@drawable/division_02" />
     </LinearLayout>
+    
+    <View
+        android:layout_width="1px"
+        android:layout_height="fill_parent"
+        android:background="@drawable/division_02" />
 
 </LinearLayout>

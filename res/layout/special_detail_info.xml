@@ -21,7 +21,7 @@
             style="@style/common_backhome_textview_style"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/common_back_array"
-            android:text="@string/home_special" />
+            android:text="@string/be_back" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -74,6 +74,6 @@
 
     <GridView
         android:id="@+id/special_gridView"
-        style="@style/ranking_gridview_style" />
+        style="@style/common_gridview_style" />
 
 </LinearLayout>

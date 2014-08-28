@@ -25,14 +25,14 @@ public class SameDevelpersApp extends AbsListViewBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_ranking);
+		setContentView(R.layout.common_gridview);
 		this.savedInstanceState = savedInstanceState;
 		mActivity = this;
 		mContext = this;
 		developer = getIntent().getStringExtra("developer");
 		Log.i("developer", developer);
 		HttpUtil.get(getDataUrl(IOStreamDatas.APP_DATA),
-				getParams(null, null, null, null, null, developer),
+				getParams(null, null, null, null, null, developer, null),
 				new JsonHttpResponseHandler() {
 
 					@Override
@@ -54,7 +54,7 @@ public class SameDevelpersApp extends AbsListViewBaseActivity {
 		mDialogAdapter = new DialogSameDeveAdapter(this, jsonArrayApp,
 				imageLoader);
 		// mRankingGridView = (MyGridView) findViewById(R.id.ranking_gridView);
-		myGridView = (GridView) findViewById(R.id.ranking_gridView);
+		myGridView = (GridView) findViewById(R.id.common_gridView);
 
 		((GridView) myGridView).setNumColumns(2);
 		myGridView.setAdapter(mDialogAdapter);

@@ -28,12 +28,6 @@ public class MyOnPageChangeListener implements OnPageChangeListener {
 		this.mActivity = mActivity;
 	}
 
-//	public MyOnPageChangeListener(View mDialogView, List<TextView> tViews,
-//			int whichVP) {
-//		this.tViews = tViews;
-//		this.whichVP = whichVP;
-//		this.mDialogView = mDialogView;
-//	}
 
 	@Override
 	public void onPageSelected(int arg0) {
