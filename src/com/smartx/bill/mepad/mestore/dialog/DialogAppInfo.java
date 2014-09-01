@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
@@ -24,10 +25,15 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.trinea.android.common.util.DownloadManagerPro;
+import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
 import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
+import com.smartx.bill.mepad.mestore.application.MyApplication;
+import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
 import com.smartx.bill.mepad.mestore.broadcast.MySynchroBroadcast;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
@@ -36,6 +42,7 @@ import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
+import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
@@ -50,9 +57,9 @@ public class DialogAppInfo extends MyBaseActivity {
 	private Bitmap mBitmap;
 	private Context mContext;
 	private List<TextView> tViews;
-	private MySynchroBroadcast syschroReceiver;
 	private String downloadUrl;
 	private String appName;
+	private MySynchroBroadcast syschroReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +71,26 @@ public class DialogAppInfo extends MyBaseActivity {
 		this.mBitmap = getIntent().getParcelableExtra("mBitmap");
 		mContext = this;
 		setLayout();
-
 		try {
 			this.appInfo = new JSONObject(getIntent().getStringExtra(
 					"jsonObject"));
 			downloadUrl = appInfo.getString("download_url");
 			appName = appInfo.getString("title");
 			initdatas();
+			initInstallStatus();
 			initPagerViewer();
 			initTextView();
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
 	}
+
+	/** 
+	* @Title: setBrodacast 
+	* @Description: 注册广播
+	* @return void    返回类型 
+	* @throws 
+	*/
 
 	private void setLayout() {
 		// TODO Auto-generated method stub
@@ -112,10 +126,9 @@ public class DialogAppInfo extends MyBaseActivity {
 		view.imgViewFlag.setImageBitmap(mBitmap);
 		view.imgViewFlag.setDrawingCacheEnabled(false);
 		view.appScore.setFocusable(false);
-		
+
 		view.appInstall.setOnClickListener(new InstallClickListener(this, view,
 				downloadUrl, appName));
-		
 		view.appOpen.setVisibility(View.INVISIBLE);
 		view.appDownload.setVisibility(View.INVISIBLE);
 
@@ -170,7 +183,31 @@ public class DialogAppInfo extends MyBaseActivity {
 		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,
 				IOStreamDatas.VIEWPAGER_DIALOG));
 	}
-
+	
+	/** 
+	* @Title: aa 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws 
+	*/
+	private void initInstallStatus(){
+		long downloadId = PreferencesUtils.getLong(this, appName,
+				0);
+		RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(view, this);
+		MyApplication installApplication = (MyApplication)getApplication();
+		DownloadManager downloadManager = installApplication.getDownloadManager();
+		DownloadManagerPro downloadManagerPro = new DownloadManagerPro(downloadManager);
+		DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
+				handler, downloadManagerPro, downloadId);
+		getContentResolver().registerContentObserver(
+				DownloadManagerPro.CONTENT_URI, true, downloadObserver);
+		DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
+				downloadId, this, downloadObserver, view);
+		registerReceiver(completeReceiver, new IntentFilter(
+				DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+	}
+	
 	/**
 	 * 通过activity获取视图
 	 * 
@@ -193,7 +230,10 @@ public class DialogAppInfo extends MyBaseActivity {
 		super.onResume();
 		manager.dispatchResume();
 	}
-
+	public void onStop(){
+        //取消广播接收器
+        super.onStop();
+    }
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

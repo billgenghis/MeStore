@@ -49,21 +49,20 @@ public class ItemClickListener implements OnItemClickListener {
 			Intent intent = new Intent(mContext, DialogAppInfo.class);
 			intent.putExtra("jsonObject", jsonObject.toString());
 			intent.putExtra("mBitmap", mBitmap);
-
-			CommonViewHolder view = new CommonViewHolder();
-			CommonTools.setViewById(view, arg1);
-			MySynchroBroadcast syschroReceiver = new MySynchroBroadcast(
-					mActivity, view,jsonObject.getString("title"));
-			String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE
-					+ jsonObject.getString("title");
-			mActivity.registerReceiver(syschroReceiver, new IntentFilter(
-					broadcastFilter));
-
 			mActivity.startActivity(intent);
+			setBrodacast(arg1,jsonObject.get("title").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	private void setBrodacast(View convertView,String appName) {
+		CommonViewHolder view = new CommonViewHolder();
+		CommonTools.setViewById(view, convertView);
+		MySynchroBroadcast syschroReceiver = new MySynchroBroadcast(mActivity, view,
+				appName);
+		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE + appName;
+		mActivity.registerReceiver(syschroReceiver, new IntentFilter(broadcastFilter));
 	}
 
 }

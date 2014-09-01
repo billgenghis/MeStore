@@ -4,13 +4,10 @@ import java.io.File;
 import java.text.DecimalFormat;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.IntentSender.SendIntentException;
-import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Environment;
 import android.view.View;
@@ -19,7 +16,9 @@ import cn.trinea.android.common.util.DownloadManagerPro;
 import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
+import com.smartx.bill.mepad.mestore.application.MyApplication;
 import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
+import com.smartx.bill.mepad.mestore.broadcast.MySynchroBroadcast;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
@@ -50,6 +49,9 @@ public class InstallClickListener implements OnClickListener {
 		handler = new RefreshDownloadUIHandler(view, mActivity);
 		downloadManager = (DownloadManager) mActivity
 				.getSystemService(mActivity.DOWNLOAD_SERVICE);
+		MyApplication installApplication = (MyApplication) mActivity
+				.getApplication();
+		installApplication.setDownloadManager(downloadManager);
 		downloadManagerPro = new DownloadManagerPro(downloadManager);
 		this.downloadUrl = downloadUrl;
 		this.appName = appName;
@@ -58,10 +60,10 @@ public class InstallClickListener implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
+		initDatas();
 		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE + appName;
 		Intent intent = new Intent(broadcastFilter);
 		mActivity.sendBroadcast(intent);
-		initDatas();
 	}
 
 	private void initDatas() {

@@ -6,6 +6,7 @@ import cn.trinea.android.common.util.DownloadManagerPro;
 import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
+import com.smartx.bill.mepad.mestore.application.MyApplication;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
@@ -31,17 +32,17 @@ public class MySynchroBroadcast extends BroadcastReceiver {
 		mActivity = activity;
 		this.appName = appName;
 		handler = new RefreshDownloadUIHandler(view, mActivity);
-		downloadManager = this.downloadManager;
+		MyApplication installApplication = (MyApplication)mActivity.getApplication();
+		downloadManager = installApplication.getDownloadManager();
 		downloadManagerPro = new DownloadManagerPro(downloadManager);
-		downloadId = PreferencesUtils.getLong(mActivity, appName,
-				0);
-		Log.i("downloadId", downloadId + " ");
 		this.mView = view;
 	}
 
 	@Override
 	public void onReceive(Context arg0, Intent arg1) {
-		// appInstall.performClick();
+		downloadId = PreferencesUtils.getLong(mActivity, appName,
+				0);
+		Log.i("downloadId", downloadId + " ");
 		DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
 				handler, downloadManagerPro, downloadId);
 		mActivity.getContentResolver().registerContentObserver(

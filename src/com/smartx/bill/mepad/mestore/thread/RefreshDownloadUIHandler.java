@@ -31,6 +31,7 @@ public class RefreshDownloadUIHandler extends Handler {
 	@Override
 	public void handleMessage(Message msg) {
 		super.handleMessage(msg);
+		Log.i("string", msg + "");
 		switch (msg.what) {
 		case 0:
 			int downloadManagerStatus = (Integer) msg.obj;
@@ -73,6 +74,11 @@ public class RefreshDownloadUIHandler extends Handler {
 				mView.appDownloadConnect.clearAnimation();
 				mView.appDownload.setVisibility(View.INVISIBLE);
 				// mView.appDownloadConnect.setVisibility(View.INVISIBLE);
+//			} else {
+//				mView.appInstall.setVisibility(View.VISIBLE);
+//				mView.appOpen.setVisibility(View.INVISIBLE);
+//				mView.appDownloadConnect.clearAnimation();
+//				mView.appDownload.setVisibility(View.INVISIBLE);
 			}
 		}
 	}

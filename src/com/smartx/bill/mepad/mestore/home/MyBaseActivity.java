@@ -7,17 +7,41 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.uimgloader.Constants.Config;
 
 public class MyBaseActivity extends Activity {
 
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
+
+	public void initImageLoader(Context context) {
+		// This configuration tuning is custom. You can tune every option, you
+		// may tune some of them,
+		// or you can create default configuration by
+		// ImageLoaderConfiguration.createDefault(this);
+		// method.
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+				context).threadPriority(Thread.NORM_PRIORITY - 2)
+				.denyCacheImageMultipleSizesInMemory()
+				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+				.tasksProcessingOrder(QueueProcessingType.LIFO)
+				// .writeDebugLogs() // Remove for release app
+				.build();
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
