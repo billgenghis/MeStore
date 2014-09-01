@@ -7,14 +7,21 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.R.id;
+import com.smartx.bill.mepad.mestore.broadcast.MySynchroBroadcast;
 import com.smartx.bill.mepad.mestore.dialog.DialogAppInfo;
+import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
+import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
 public class ItemClickListener implements OnItemClickListener {
 
@@ -42,22 +49,17 @@ public class ItemClickListener implements OnItemClickListener {
 			Intent intent = new Intent(mContext, DialogAppInfo.class);
 			intent.putExtra("jsonObject", jsonObject.toString());
 			intent.putExtra("mBitmap", mBitmap);
-			mActivity.startActivity(intent);
 
-//			 MyAppInfoDialogBuilder qustomDialogBuilder = new
-//			 MyAppInfoDialogBuilder(
-//			 mContext, mActivity, savedInstanceState, jsonObject,
-//			 mBitmap);
-//			 qustomDialogBuilder.show();
-//			
-//			 WindowManager m = mActivity.getWindowManager();
-//			 Display d = m.getDefaultDisplay(); // 为获取屏幕宽、高
-//			 LayoutParams p = qustomDialogBuilder.getWindow().getAttributes();
-//			 // 获取对话框当前的参数值
-//			 p.height = (int) (d.getHeight() * 0.6); // 高度设置为屏幕的0.6
-//			 p.width = (int) (d.getWidth() * 0.95); // 宽度设置为屏幕的0.95
-//			 qustomDialogBuilder.setCancelable(true);
-//			 qustomDialogBuilder.getWindow().setAttributes(p); // 设置生效
+			CommonViewHolder view = new CommonViewHolder();
+			CommonTools.setViewById(view, arg1);
+			MySynchroBroadcast syschroReceiver = new MySynchroBroadcast(
+					mActivity, view,jsonObject.getString("title"));
+			String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE
+					+ jsonObject.getString("title");
+			mActivity.registerReceiver(syschroReceiver, new IntentFilter(
+					broadcastFilter));
+
+			mActivity.startActivity(intent);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

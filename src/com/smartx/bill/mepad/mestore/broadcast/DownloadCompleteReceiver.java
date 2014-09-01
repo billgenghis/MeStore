@@ -1,41 +1,53 @@
 package com.smartx.bill.mepad.mestore.broadcast;
 
-import java.io.File;
+import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
+import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
-import cn.trinea.android.common.util.DownloadManagerPro;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import cn.trinea.android.common.util.DownloadManagerPro;
 
-class DownloadCompleteReceiver extends BroadcastReceiver {
+public class DownloadCompleteReceiver extends BroadcastReceiver {
 	private long downloadId;
 	private DownloadManagerPro downloadManagerPro;
 	private Activity mActivity;
-	private DownloadCompleteReceiver completeReceiver;
-	public DownloadCompleteReceiver(long downloadId, Activity mActivity,DownloadCompleteReceiver completeReceiver){
+	private CommonViewHolder mView;
+	private DownloadChangeObserver downloadObserver;
+
+	public DownloadCompleteReceiver(long downloadId, Activity mActivity,
+			DownloadChangeObserver downloadObserver, CommonViewHolder mView) {
 		this.downloadId = downloadId;
-		downloadManagerPro = new DownloadManagerPro((DownloadManager) mActivity.getSystemService(mActivity.DOWNLOAD_SERVICE));
+		downloadManagerPro = new DownloadManagerPro(
+				(DownloadManager) mActivity
+						.getSystemService(mActivity.DOWNLOAD_SERVICE));
 		this.mActivity = mActivity;
-		this.completeReceiver = completeReceiver;
+		this.downloadObserver = downloadObserver;
+		this.mView = mView;
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		/**
-		 * get the id of download which have download success, if the id is
-		 * my id and it's status is successful, then install it
+		 * get the id of download which have download success, if the id is my
+		 * id and it's status is successful, then install it
 		 **/
 		long completeDownloadId = intent.getLongExtra(
 				DownloadManager.EXTRA_DOWNLOAD_ID, -1);
 		if (completeDownloadId == downloadId) {
 			// if download successful, install apk
 			if (downloadManagerPro.getStatusById(downloadId) == DownloadManager.STATUS_SUCCESSFUL) {
-				
+				mView.appInstall.setVisibility(View.INVISIBLE);
+				mView.appDownload.setVisibility(View.INVISIBLE);
+				mView.appOpen.setVisibility(View.VISIBLE);
+				mActivity.unregisterReceiver(this);
+				mActivity.getContentResolver().unregisterContentObserver(
+						downloadObserver);
 			}
 		}
-		mActivity.unregisterReceiver(completeReceiver);
 	}
 };

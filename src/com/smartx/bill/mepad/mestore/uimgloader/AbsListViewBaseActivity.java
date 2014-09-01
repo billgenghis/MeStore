@@ -50,6 +50,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.iostream.DownLoadDatas;
 import com.smartx.bill.mepad.mestore.listener.MyGestureListener;
@@ -193,7 +194,9 @@ public class AbsListViewBaseActivity extends MyBaseActivity {
 
 		@Override
 		protected void onPostExecute(JSONArray result) {
-			if (mResponse.length() == 0) {
+			if (mResponse == null) {
+				cancelDialog(false);
+			}else if (mResponse.length() == 0) {
 				Toast.makeText(AbsListViewBaseActivity.this, "已经到底了!",
 						Toast.LENGTH_SHORT).show();
 				mPullRefreshGridView.setMode(Mode.DISABLED);
@@ -230,15 +233,7 @@ public class AbsListViewBaseActivity extends MyBaseActivity {
 				}
 			}
 			if (dialog != null) {
-				ScheduledExecutorService executor = Executors
-						.newSingleThreadScheduledExecutor();
-				Runnable runner = new Runnable() {
-					public void run() {
-						dialog.dismiss();
-					}
-				};
-				executor.schedule(runner, LayoutResourcesDatas.DELAY_TIME,
-						TimeUnit.MILLISECONDS);
+				cancelDialog(true);
 			}
 			super.onPostExecute(result);
 		}
@@ -261,5 +256,24 @@ public class AbsListViewBaseActivity extends MyBaseActivity {
 		spaceshipImage.startAnimation(hyperspaceJumpAnimation);
 		// tipTextView.setText(msg);// 设置加载信息
 		dialog.setContentView(layout);
+	}
+	protected void cancelDialog(boolean status){
+		if(status){
+			findViewById(id.me_topView).setVisibility(
+					View.VISIBLE);
+		}else if(!status){
+			findViewById(id.me_topView).setVisibility(
+					View.INVISIBLE);
+		}
+		ScheduledExecutorService executor = Executors
+				.newSingleThreadScheduledExecutor();
+		Runnable runner = new Runnable() {
+			public void run() {
+				dialog.dismiss();
+			}
+		};
+		executor.schedule(runner,
+				LayoutResourcesDatas.DELAY_TIME,
+				TimeUnit.MILLISECONDS);
 	}
 }

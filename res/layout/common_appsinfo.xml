@@ -37,7 +37,7 @@
         android:layout_marginTop="18dp"
         android:background="@drawable/button_install"
         android:focusable="false"
-        android:visibility="invisible" />
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/app_open"
@@ -49,18 +49,30 @@
         android:focusable="false"
         android:visibility="invisible" />
 
-    <com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar
-        xmlns:android_custom="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/app_download"
-        android:layout_width="31dp"
-        android:layout_height="31dp"
+    <ImageView
+        android:id="@+id/app_download_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:layout_marginTop="18dp"
         android:background="@drawable/ing_connect"
-        android_custom:roundColor="#dbdbdb"
+        android:visibility="invisible" />
+    
+
+    <com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar
+        xmlns:android_custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_download"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/ing_download"
+        android:visibility="invisible"
+        android_custom:roundColor="#dadada"
         android_custom:roundProgressColor="#3aaff5"
-        android_custom:roundWidth="4dip"
+        android_custom:roundWidth="3dip"
         android_custom:textIsDisplayable="false" />
 
     <TextView

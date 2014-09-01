@@ -4,6 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 
 import android.content.res.Configuration;
@@ -76,7 +77,7 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 				getParams(null, null, null, null, specialId, null, sPicUrl),
 				new JsonHttpResponseHandler() {
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,JSONArray response) {
 						initDatas(response);
 						if (dialog != null) {
 							ScheduledExecutorService executor = Executors
@@ -93,7 +94,7 @@ public class SpecialDetail extends AbsListViewBaseActivity {
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,Throwable e, JSONArray errorResponse) {
 					}
 				});
 	}

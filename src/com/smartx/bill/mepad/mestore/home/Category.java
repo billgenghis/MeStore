@@ -1,5 +1,6 @@
 package com.smartx.bill.mepad.mestore.home;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.CategoryGridviewAdapter;
 import com.smartx.bill.mepad.mestore.category.CategoryDetail;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
@@ -43,8 +45,10 @@ public class Category extends MyBaseActivity {
 				new JsonHttpResponseHandler() {
 
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,JSONArray response) {
 						try {
+							findViewById(id.me_topView).setVisibility(
+									View.VISIBLE);
 							initDatas(response);
 							initGridView();
 						} catch (JSONException e) {
@@ -54,7 +58,9 @@ public class Category extends MyBaseActivity {
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,Throwable e, JSONObject errorResponse) {
+						findViewById(id.me_topView).setVisibility(
+								View.INVISIBLE);
 					}
 				});
 		// try {

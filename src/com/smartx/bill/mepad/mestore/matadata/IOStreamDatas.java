@@ -41,7 +41,6 @@ public class IOStreamDatas {
 
 	// DownLoad Information
 	public static final String DOWNLOAD_FOLDER_NAME = "MeAppStore";
-	public static final String KEY_NAME_DOWNLOAD_ID = "downloadId";
 
 	// 下拉刷新的页数管理，初始值为0，即抓取0~20的数据
 	public static int rankingPages = 0;

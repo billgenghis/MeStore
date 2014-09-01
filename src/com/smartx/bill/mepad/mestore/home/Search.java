@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -53,7 +54,7 @@ public class Search extends AbsListViewBaseActivity {
 				new JsonHttpResponseHandler() {
 
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,JSONArray response) {
 						initDatas(response);
 						initGridView();
 						if (dialog != null) {
@@ -70,7 +71,7 @@ public class Search extends AbsListViewBaseActivity {
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,Throwable e, JSONArray errorResponse) {
 					}
 				});
 		// initDatas();

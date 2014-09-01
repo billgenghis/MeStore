@@ -28,39 +28,40 @@ public class DownLoadDatas {
 
 	JSONArray jsonArray;
 	Boolean flag;
-//	public RequestParams getDatasFromServer(String class_id, String age,
-//			String position_id, String keyword, int dataTypes)
-//			throws ClientProtocolException, IOException, JSONException {
-//		String dataURL = null;
-//		if (dataTypes == IOStreamDatas.APP_DATA) {
-//			dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
-//		} else if (dataTypes == IOStreamDatas.CATEGORY_DATA) {
-//			dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.CATEGORY_URL;
-//		} else if (dataTypes == IOStreamDatas.SPECIAL_DATA) {
-//			dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.SPECIAL_URL;
-//		}
-//		RequestParams params = new RequestParams();
-//		params.put("class_id", class_id);
-//		params.put("age", age);
-//		params.put("position_id", position_id);
-//		params.put("keyword", keyword);
-//		HttpUtil.get(dataURL, params, new JsonHttpResponseHandler() {
-//
-//			@Override
-//			public void onSuccess(JSONArray timeline) {
-//				// Pull out the first event on the public timeline
-//				jsonArray = timeline;
-//				flag = true;
-//				Log.i("jsonArrayin", jsonArray + "");
-//				// Do something with the response
-//			}
-//
-//			@Override
-//			public void onFailure(Throwable e, JSONArray errorResponse) {
-//			}
-//		});
-//			return jsonArray;
-//	}
+
+	// public RequestParams getDatasFromServer(String class_id, String age,
+	// String position_id, String keyword, int dataTypes)
+	// throws ClientProtocolException, IOException, JSONException {
+	// String dataURL = null;
+	// if (dataTypes == IOStreamDatas.APP_DATA) {
+	// dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.APPSINFO_URL;
+	// } else if (dataTypes == IOStreamDatas.CATEGORY_DATA) {
+	// dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.CATEGORY_URL;
+	// } else if (dataTypes == IOStreamDatas.SPECIAL_DATA) {
+	// dataURL = IOStreamDatas.SERVER_URL + IOStreamDatas.SPECIAL_URL;
+	// }
+	// RequestParams params = new RequestParams();
+	// params.put("class_id", class_id);
+	// params.put("age", age);
+	// params.put("position_id", position_id);
+	// params.put("keyword", keyword);
+	// HttpUtil.get(dataURL, params, new JsonHttpResponseHandler() {
+	//
+	// @Override
+	// public void onSuccess(JSONArray timeline) {
+	// // Pull out the first event on the public timeline
+	// jsonArray = timeline;
+	// flag = true;
+	// Log.i("jsonArrayin", jsonArray + "");
+	// // Do something with the response
+	// }
+	//
+	// @Override
+	// public void onFailure(Throwable e, JSONArray errorResponse) {
+	// }
+	// });
+	// return jsonArray;
+	// }
 
 	/**
 	 * 利用Volley获取JSON数据
@@ -90,31 +91,32 @@ public class DownLoadDatas {
 	/*
 	 * get appsinfo from server
 	 */
-	 public static JSONArray getDatasFromServer(String dataURL, List<NameValuePair> params)
-	 throws ClientProtocolException, IOException, JSONException {
-	 UrlEncodedFormEntity entity;
-	 HttpClient httpclient = new DefaultHttpClient();
-	 httpclient.getParams().setParameter(
-	 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-	 StringBuilder builder = new StringBuilder();
-	
-	 entity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
-	 HttpPost postRequest = new HttpPost(dataURL);
-	 postRequest.setEntity(entity);
-	 HttpResponse response = httpclient.execute(postRequest);
-	 HttpEntity resEntity = response.getEntity();
-	 if (resEntity != null) {
-	 BufferedReader reader = new BufferedReader(new InputStreamReader(
-	 resEntity.getContent()));
-	 for (String s = reader.readLine(); s != null; s = reader.readLine()) {
-	 builder.append(s);
-	 }
-	 JSONArray jsonArray = new JSONArray(builder.toString());
-	 httpclient.getConnectionManager().shutdown();
-	 return jsonArray;
-	 }
-	 return null;
-	 }
+	public static JSONArray getDatasFromServer(String dataURL,
+			List<NameValuePair> params) throws ClientProtocolException,
+			IOException, JSONException {
+		UrlEncodedFormEntity entity;
+		HttpClient httpclient = new DefaultHttpClient();
+		httpclient.getParams().setParameter(
+				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		StringBuilder builder = new StringBuilder();
+
+		entity = new UrlEncodedFormEntity(params, HTTP.UTF_8);
+		HttpPost postRequest = new HttpPost(dataURL);
+		postRequest.setEntity(entity);
+		HttpResponse response = httpclient.execute(postRequest);
+		HttpEntity resEntity = response.getEntity();
+		if (resEntity != null) {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					resEntity.getContent()));
+			for (String s = reader.readLine(); s != null; s = reader.readLine()) {
+				builder.append(s);
+			}
+			JSONArray jsonArray = new JSONArray(builder.toString());
+			httpclient.getConnectionManager().shutdown();
+			return jsonArray;
+		}
+		return null;
+	}
 
 	// public static Bitmap getImageFromServer(String image)
 	// throws ClientProtocolException, IOException, JSONException {

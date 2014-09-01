@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.smartx.bill.mepad.mestore.uimgloader;
+package com.smartx.bill.mepad.mestore.application;
 
 import android.annotation.TargetApi;
 import android.app.Application;

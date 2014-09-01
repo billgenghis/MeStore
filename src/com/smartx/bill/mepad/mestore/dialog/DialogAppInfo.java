@@ -10,6 +10,7 @@ import android.app.DownloadManager;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -21,17 +22,22 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
+import com.smartx.bill.mepad.mestore.broadcast.MySynchroBroadcast;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
+import com.smartx.bill.mepad.mestore.util.CommonTools;
+import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
 @SuppressWarnings("deprecation")
 public class DialogAppInfo extends MyBaseActivity {
@@ -40,17 +46,11 @@ public class DialogAppInfo extends MyBaseActivity {
 	LocalActivityManager manager = null;
 	ViewPager pager = null;
 	private JSONObject appInfo;
-	private ImageView imgViewFlag;
-	private TextView txtViewTitle;
-	private TextView downloadCount;
-	private RatingBar appScore;
-	private Button appInstall;
-	private Button appOpen;
-	private MyRoundProgressBar appDownload;
+	private CommonViewHolder view;
 	private Bitmap mBitmap;
 	private Context mContext;
-	List<TextView> tViews;
-
+	private List<TextView> tViews;
+	private MySynchroBroadcast syschroReceiver;
 	private String downloadUrl;
 	private String appName;
 
@@ -63,13 +63,8 @@ public class DialogAppInfo extends MyBaseActivity {
 		manager.dispatchCreate(savedInstanceState);
 		this.mBitmap = getIntent().getParcelableExtra("mBitmap");
 		mContext = this;
-		WindowManager m = getWindowManager();
-		Display d = m.getDefaultDisplay(); // 为获取屏幕宽、高
-		LayoutParams p = getWindow().getAttributes();
-		// 获取对话框当前的参数值
-		p.height = (int) (d.getHeight() * 0.54); // 高度设置为屏幕的0.54
-		p.width = (int) (d.getWidth() * 0.90); // 宽度设置为屏幕的0.9
-		getWindow().setAttributes(p); // 设置生效
+		setLayout();
+
 		try {
 			this.appInfo = new JSONObject(getIntent().getStringExtra(
 					"jsonObject"));
@@ -81,6 +76,16 @@ public class DialogAppInfo extends MyBaseActivity {
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	private void setLayout() {
+		// TODO Auto-generated method stub
+		WindowManager m = getWindowManager();
+		Display d = m.getDefaultDisplay(); // 为获取屏幕宽、高
+		LayoutParams p = getWindow().getAttributes();
+		p.height = (int) (d.getHeight() * 0.54); // 高度设置为屏幕的0.54
+		p.width = (int) (d.getWidth() * 0.90); // 宽度设置为屏幕的0.9
+		getWindow().setAttributes(p); // 设置生效
 	}
 
 	/**
@@ -97,26 +102,23 @@ public class DialogAppInfo extends MyBaseActivity {
 		t2 = (TextView) findViewById(R.id.dialog_judge_score);
 		t3 = (TextView) findViewById(R.id.dialog_same_developers);
 		t4 = (TextView) findViewById(R.id.dialog_detail_permission);
-		txtViewTitle = (TextView) findViewById(R.id.app_title);
-		imgViewFlag = (ImageView) findViewById(R.id.app_icon);
-		appScore = (RatingBar) findViewById(R.id.app_score);
-		downloadCount = (TextView) findViewById(R.id.app_download_count);
-		appInstall = (Button) findViewById(R.id.app_install);
-		appOpen = (Button) findViewById(R.id.app_open);
-		appDownload = (MyRoundProgressBar) findViewById(R.id.app_download);
-		findViewById(id.app_description).setVisibility(View.GONE);
+		view = new CommonViewHolder();
+		CommonTools.setViewById(view, getWindow().getDecorView());
 
-		txtViewTitle.setText(appInfo.getString("title"));
-		downloadCount.setText(appInfo.getString("downloads") + "次下载");
-		appScore.setRating(Float.parseFloat(appInfo.getString("score")));
-		imgViewFlag.setImageBitmap(mBitmap);
-		imgViewFlag.setDrawingCacheEnabled(false);
-		appScore.setFocusable(false);
-		appInstall.setOnClickListener(new InstallClickListener(this,appInstall,appOpen,appDownload,
-				downloadUrl, appName));
-		appOpen.setVisibility(View.INVISIBLE);
-		appDownload.setVisibility(View.INVISIBLE);
+		view.appDescription.setVisibility(View.GONE);
+		view.txtViewTitle.setText(appInfo.getString("title"));
+		view.downloadCount.setText(appInfo.getString("downloads") + "次下载");
+		view.appScore.setRating(Float.parseFloat(appInfo.getString("score")));
+		view.imgViewFlag.setImageBitmap(mBitmap);
+		view.imgViewFlag.setDrawingCacheEnabled(false);
+		view.appScore.setFocusable(false);
 		
+		view.appInstall.setOnClickListener(new InstallClickListener(this, view,
+				downloadUrl, appName));
+		
+		view.appOpen.setVisibility(View.INVISIBLE);
+		view.appDownload.setVisibility(View.INVISIBLE);
+
 		findViewById(R.id.dialog_appinfo_tab).setVisibility(View.GONE);
 		t1.setVisibility(View.GONE);
 		t2.setVisibility(View.GONE);

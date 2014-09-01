@@ -21,7 +21,6 @@
     <style name="activity_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item> <!-- 边框 -->
         <item name="android:windowNoTitle">true</item> <!-- 无标题 -->
-        <item name="android:background">@drawable/circular_edge</item> <!-- dialog背景样式 -->
         <item name="android:windowBackground">@android:color/transparent</item> <!-- 背景透明 -->
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>

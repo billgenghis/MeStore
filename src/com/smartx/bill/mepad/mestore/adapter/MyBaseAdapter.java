@@ -93,8 +93,8 @@ public class MyBaseAdapter extends BaseAdapter {
 	protected void setInstallClick(Activity activity, CommonViewHolder view,
 			String downloadUrl, String appTitle) {
 		view.appInstall.setOnClickListener(new InstallClickListener(activity,
-				view.appInstall,view.appOpen,view.appDownload, downloadUrl, appTitle));
-		
+				view, downloadUrl, appTitle));
+
 	}
 
 	protected String getImageUrl(String url) {

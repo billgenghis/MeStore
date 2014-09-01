@@ -1,5 +1,6 @@
 package com.smartx.bill.mepad.mestore.home;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,18 +34,23 @@ public class Special extends AbsListViewBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_special);
+		initCommonDatas(this, this, savedInstanceState);
 		myGridView = (GridView) findViewById(R.id.special_gridView);
 		HttpUtil.get(getDataUrl(IOStreamDatas.SPECIAL_DATA),
 				getParams(null, null, null, null, null, null, null),
 				new JsonHttpResponseHandler() {
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONArray response) {
 						initDatas(response);
 						initGridView();
+						cancelDialog(true);
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,
+							Throwable e, JSONObject errorResponse) {
+						cancelDialog(false);
 					}
 				});
 	}
@@ -59,6 +65,7 @@ public class Special extends AbsListViewBaseActivity {
 		((GridView) myGridView).setNumColumns(1);
 		myGridView.setAdapter(mSpecialAdapter);
 		myGridView.setOnItemClickListener(new OnItemClickListener() {
+
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {

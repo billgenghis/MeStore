@@ -1,6 +1,10 @@
 package com.smartx.bill.mepad.mestore.welcome;
 
 /**
+ * 
+ * 目前还没用到
+ * 
+ * 
  * 进度对话框代理方法类，需要由用户实现execute、executeSuccess、executeFailure三个方法。 execute方法由子线程异步执行，不允许更新主线程UI；executeSuccess、executeFailure两方法由主线程执行，可以更新主线程UI
  * 
  * @see LoadingDialog

@@ -4,6 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,8 +26,8 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.R.id;
-import com.smartx.bill.mepad.mestore.adapter.MeHorizontalGridViewAdapter;
 import com.smartx.bill.mepad.mestore.adapter.MeGridviewAdapter;
+import com.smartx.bill.mepad.mestore.adapter.MeHorizontalGridViewAdapter;
 import com.smartx.bill.mepad.mestore.listener.ItemClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.matadata.LayoutResourcesDatas;
@@ -64,31 +66,28 @@ public class Me extends AbsListViewBaseActivity {
 		setContentView(R.layout.home_me);
 		initCommonDatas(this, this, savedInstanceState);
 		initDatas();
+		downloadDatas();
+	}
 
+	private void downloadDatas() {
 		HttpUtil.get(
 				getDataUrl(IOStreamDatas.APP_DATA),
 				getParams(null, null, IOStreamDatas.POSITION_EXCELLENT, null,
 						null, null, null), new JsonHttpResponseHandler() {
 
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONArray response) {
 						initExcellentDatas(response);
-						findViewById(id.me_scrollView).setVisibility(
-								View.VISIBLE);
-						ScheduledExecutorService executor = Executors
-								.newSingleThreadScheduledExecutor();
-						Runnable runner = new Runnable() {
-							public void run() {
-								dialog.dismiss();
-							}
-						};
-						executor.schedule(runner,
-								LayoutResourcesDatas.DELAY_TIME,
-								TimeUnit.MILLISECONDS);
+						cancelDialog(true);
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,
+							Throwable e, JSONObject errorResponse) {
+						Toast.makeText(Me.this, "数据下载失败，请检查网络连接后重启!",
+								Toast.LENGTH_SHORT).show();
+						cancelDialog(false);
 					}
 				});
 		HttpUtil.get(
@@ -97,24 +96,28 @@ public class Me extends AbsListViewBaseActivity {
 						null, null), new JsonHttpResponseHandler() {
 
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONArray response) {
 						initNewDatas(response);
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,
+							Throwable e, JSONArray errorResponse) {
 					}
 				});
 		HttpUtil.get(getDataUrl(IOStreamDatas.SPECIAL_DATA),
 				getParams(null, null, null, null, null, null, null),
 				new JsonHttpResponseHandler() {
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONArray response) {
 						initSpecialDatas(response);
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,
+							Throwable e, JSONArray errorResponse) {
 					}
 				});
 	}

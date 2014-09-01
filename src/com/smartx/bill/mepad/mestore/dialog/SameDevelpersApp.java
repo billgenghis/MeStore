@@ -1,5 +1,6 @@
 package com.smartx.bill.mepad.mestore.dialog;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 
 import android.os.Bundle;
@@ -36,12 +37,12 @@ public class SameDevelpersApp extends AbsListViewBaseActivity {
 				new JsonHttpResponseHandler() {
 
 					@Override
-					public void onSuccess(JSONArray response) {
+					public void onSuccess(int statusCode, Header[] headers,JSONArray response) {
 						initDatas(response);
 					}
 
 					@Override
-					public void onFailure(Throwable e, JSONArray errorResponse) {
+					public void onFailure(int statusCode, Header[] headers,Throwable e, JSONArray errorResponse) {
 					}
 				});
 		// initDatas();

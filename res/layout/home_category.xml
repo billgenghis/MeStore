@@ -4,6 +4,8 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:overScrollMode="never"
+    android:id="@+id/me_topView"
+    android:visibility="invisible"
     android:scrollbars="none" >
 
     <LinearLayout

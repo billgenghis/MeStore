@@ -57,6 +57,7 @@ public class CommonTools {
 		public TextView appDescription;
 		public Button appOpen;
 		public MyRoundProgressBar appDownload;
+		public ImageView appDownloadConnect;
 	}
 
 	public static void setLayout(int position, CommonViewHolder view) {
@@ -82,6 +83,7 @@ public class CommonTools {
 				.findViewById(R.id.app_description);
 		view.appOpen = (Button) convertView.findViewById(R.id.app_open);
 		view.appDownload = (MyRoundProgressBar) convertView.findViewById(R.id.app_download);
+		view.appDownloadConnect = (ImageView)convertView.findViewById(R.id.app_download_connect);
 	}
 
 	public static String getHtmlText(String content) {

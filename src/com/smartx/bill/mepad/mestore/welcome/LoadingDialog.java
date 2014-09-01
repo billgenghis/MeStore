@@ -9,6 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 
 /**
+ * 
+ * 目前还没用到
+ * 
+ * 
  * 封装Thread和Handler，用户可以方便的调用进度对话框，<b>并异步执行代码</b>，在代码执行完成后，进行主线程UI的更新。 该类需配合
  * {@link LoadingDialogExecute}代理类使用。
  * 
