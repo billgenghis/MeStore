@@ -22,29 +22,36 @@ import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 public class RefreshDownloadUIHandler extends Handler {
 	private CommonViewHolder mView;
 	private Activity mActivity;
+	private boolean animationFlag;
 
 	public RefreshDownloadUIHandler(CommonViewHolder mView, Activity mActivity) {
 		this.mView = mView;
 		this.mActivity = mActivity;
+		animationFlag = false;
 	}
 
 	@Override
 	public void handleMessage(Message msg) {
 		super.handleMessage(msg);
-		Log.i("string", msg + "");
 		switch (msg.what) {
 		case 0:
 			int downloadManagerStatus = (Integer) msg.obj;
 			Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(
 					mActivity, R.anim.loading_animation);
 			if (downloadManagerStatus == DownloadManager.STATUS_RUNNING) {
+				Log.i("downloadManagerStatus", "STATUS_RUNNING");
+				mView.appDownload
+						.setBackgroundResource(R.drawable.ing_download);
 				mView.appInstall.setVisibility(View.INVISIBLE);
 				mView.appOpen.setVisibility(View.INVISIBLE);
 				if (msg.arg2 < 0) {
 					mView.appDownload.setVisibility(View.INVISIBLE);
 					mView.appDownloadConnect.setVisibility(View.VISIBLE);
+					if(!animationFlag){
 					mView.appDownloadConnect
 							.startAnimation(hyperspaceJumpAnimation);
+					animationFlag = true;
+					}
 				} else {
 					mView.appDownloadConnect.clearAnimation();
 					mView.appDownloadConnect.setVisibility(View.INVISIBLE);
@@ -55,12 +62,13 @@ public class RefreshDownloadUIHandler extends Handler {
 							msg.arg2));
 				}
 			} else if (downloadManagerStatus == DownloadManager.STATUS_PAUSED) {
+				Log.i("downloadManagerStatus", "STATUS_PAUSED");
 				mView.appDownloadConnect.clearAnimation();
 				mView.appDownloadConnect.setVisibility(View.INVISIBLE);
-				mView.appDownload
-						.setBackgroundResource(R.drawable.ing_download);
+				mView.appDownload.setBackgroundResource(R.drawable.ing_pause);
 				break;
 			} else if (downloadManagerStatus == DownloadManager.STATUS_PENDING) {
+				Log.i("downloadManagerStatus", "STATUS_PENDING");
 				mView.appInstall.setVisibility(View.INVISIBLE);
 				mView.appOpen.setVisibility(View.INVISIBLE);
 				mView.appDownload.setVisibility(View.INVISIBLE);
@@ -69,16 +77,17 @@ public class RefreshDownloadUIHandler extends Handler {
 				// .startAnimation(hyperspaceJumpAnimation);
 				break;
 			} else if (downloadManagerStatus == DownloadManager.STATUS_FAILED) {
+				Log.i("downloadManagerStatus", "STATUS_FAILED");
 				mView.appInstall.setVisibility(View.VISIBLE);
 				mView.appOpen.setVisibility(View.INVISIBLE);
 				mView.appDownloadConnect.clearAnimation();
 				mView.appDownload.setVisibility(View.INVISIBLE);
 				// mView.appDownloadConnect.setVisibility(View.INVISIBLE);
-//			} else {
-//				mView.appInstall.setVisibility(View.VISIBLE);
-//				mView.appOpen.setVisibility(View.INVISIBLE);
-//				mView.appDownloadConnect.clearAnimation();
-//				mView.appDownload.setVisibility(View.INVISIBLE);
+				// } else {
+				// mView.appInstall.setVisibility(View.VISIBLE);
+				// mView.appOpen.setVisibility(View.INVISIBLE);
+				// mView.appDownloadConnect.clearAnimation();
+				// mView.appDownload.setVisibility(View.INVISIBLE);
 			}
 		}
 	}

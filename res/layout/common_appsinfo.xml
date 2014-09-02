@@ -70,11 +70,27 @@
         android:layout_marginTop="18dp"
         android:background="@drawable/ing_download"
         android:visibility="invisible"
+        android:clickable="true"
         android_custom:roundColor="#dadada"
         android_custom:roundProgressColor="#3aaff5"
         android_custom:roundWidth="3dip"
         android_custom:textIsDisplayable="false" />
 
+    <!--  <com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar
+        xmlns:android_custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_download_pause"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/ing_download"
+        android:visibility="invisible"
+        android_custom:roundColor="#dadada"
+        android_custom:roundProgressColor="#3aaff5"
+        android_custom:roundWidth="3dip"
+        android_custom:textIsDisplayable="false" /> -->
+     
     <TextView
         android:id="@+id/app_description"
         android:layout_width="wrap_content"

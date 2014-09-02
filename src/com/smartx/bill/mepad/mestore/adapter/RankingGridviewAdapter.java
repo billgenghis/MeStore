@@ -44,11 +44,11 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-//		if (appsInfo.length() % 2 == 1) {
-//			return appsInfo.length() + 1;
-//		} else {
+		if (appsInfo.length() % 2 == 1) {
+			return appsInfo.length() + 1;
+		} else {
 			return appsInfo.length();
-//		}
+		}
 	}
 
 	@Override
@@ -85,16 +85,17 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 		} else {
 			view = (CommonViewHolder) convertView.getTag();
 		}
-//		if (position == getCount() - 1 && appsInfo.length() == getCount() - 1) {
-//			if (parent.getChildAt(position) != null) {
-//				parent.getChildAt(position).findViewById(R.id.relative_item)
-//						.setVisibility(View.INVISIBLE);
-//				parent.getChildAt(position).findViewById(R.id.app_icon)
-//						.setVisibility(View.INVISIBLE);
-//				parent.getChildAt(position).findViewById(R.id.vertical_line)
-//						.setVisibility(View.INVISIBLE);
-//			}
-//		} else {
+		if (position == getCount() - 1 && appsInfo.length() == getCount() - 1) {
+			view.mRelativeLayout.setVisibility(View.INVISIBLE);
+			view.imgViewFlag.setVisibility(View.INVISIBLE);
+			view.verticalLine.setVisibility(View.INVISIBLE);
+		} else {
+			view.mRelativeLayout.setVisibility(View.VISIBLE);
+			view.imgViewFlag.setVisibility(View.VISIBLE);
+			view.verticalLine.setVisibility(View.VISIBLE);
+			view.appInstall.setVisibility(View.VISIBLE);
+			view.appOpen.setVisibility(View.INVISIBLE);
+
 			view.txtViewTitle.setText(rankingCount + "."
 					+ getItemDatas("title", position));
 			view.downloadCount.setText(getItemDatas("downloads", position)
@@ -106,8 +107,9 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 					view.imgViewFlag, options);
 			setInstallClick(activity, view,
 					getItemDatas("download_url", position),
-					getItemDatas("title", position));
-//		}
+					getItemDatas("title", position),
+					getItemDatas("package_name", position));
+		}
 		CommonTools.setLayout(position, view);
 		view.appDescription.setVisibility(TextView.GONE);
 		return convertView;

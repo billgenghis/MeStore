@@ -3,8 +3,10 @@ package com.smartx.bill.mepad.mestore.matadata;
 public class IOStreamDatas {
 
 	// 数据接口管理
-	public final static String SERVER_IP = "http://manage.mepad.smartx.com.cn/";
-	public final static String SERVER_URL = "http://manage.mepad.smartx.com.cn/";
+//	public final static String SERVER_IP = "http://manage.mepad.smartx.com.cn/";
+//	public final static String SERVER_URL = "http://manage.mepad.smartx.com.cn/";
+	public final static String SERVER_IP = "http://10.10.10.3/";
+	public final static String SERVER_URL = "http://10.10.10.3/project/app/cms/";
 	public final static String APPSINFO_URL = "index.php?s=/IOStream/AppsInfo/index.html";
 	public final static String CATEGORY_URL = "index.php?s=/IOStream/Category/index.html";
 	public final static String SPECIAL_URL = "index.php?s=/IOStream/Special/index.html";

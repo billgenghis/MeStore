@@ -25,7 +25,6 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 	private Activity activity;
 	private JSONArray appsInfo;
 	private ImageLoader imageLoader;
-	private int count = 30;// 模拟数据时使用
 
 	public RecomGridviewAdapter(Activity activity, JSONArray appsInfo,
 			ImageLoader imageLoader) {
@@ -47,11 +46,11 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 
 	@Override
 	public int getCount() {
-//		if (appsInfo.length() % 2 == 1) {
-//			return appsInfo.length() + 1;
-//		} else {
+		if (appsInfo.length() % 2 == 1) {
+			return appsInfo.length() + 1;
+		} else {
 			return appsInfo.length();
-//		}
+		}
 	}
 
 	@Override
@@ -97,12 +96,17 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 		} else {
 			view = (CommonViewHolder) convertView.getTag();
 		}
-//		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
-//			view.mRelativeLayout.setVisibility(View.INVISIBLE);
-//			view.imgViewFlag.setVisibility(View.INVISIBLE);
-//			convertView.findViewById(R.id.vertical_line).setVisibility(
-//					View.INVISIBLE);
-//		} else {
+		if (position == getCount() - 1 && appsInfo.length() < getCount()) {
+			view.mRelativeLayout.setVisibility(View.INVISIBLE);
+			view.imgViewFlag.setVisibility(View.INVISIBLE);
+			view.verticalLine.setVisibility(View.INVISIBLE);
+		} else {
+			view.mRelativeLayout.setVisibility(View.VISIBLE);
+			view.imgViewFlag.setVisibility(View.VISIBLE);
+			view.verticalLine.setVisibility(View.VISIBLE);
+			view.appInstall.setVisibility(View.VISIBLE);
+			view.appOpen.setVisibility(View.INVISIBLE);
+
 			view.txtViewTitle.setText(rankingCount + "."
 					+ getItemDatas("title", position));
 			view.downloadCount.setText(getItemDatas("downloads", position)
@@ -112,8 +116,11 @@ public class RecomGridviewAdapter extends MyBaseAdapter {
 			imageLoader.displayImage(getItemDatas("image", position),
 					view.imgViewFlag, options);
 			view.appDescription.setText(getItemDatas("description", position));
-			setInstallClick(activity, view, getItemDatas("download_url", position), getItemDatas("title", position));
-//		}
+			setInstallClick(activity, view,
+					getItemDatas("download_url", position),
+					getItemDatas("title", position),
+					getItemDatas("package_name", position));
+		}
 		CommonTools.setLayout(position, view);
 		return convertView;
 	}

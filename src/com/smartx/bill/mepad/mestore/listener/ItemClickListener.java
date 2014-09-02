@@ -27,7 +27,6 @@ public class ItemClickListener implements OnItemClickListener {
 
 	private Context mContext;
 	private Activity mActivity;
-	private Bundle savedInstanceState;
 	private JSONArray jsonArray;
 	private Bitmap mBitmap;
 
@@ -35,7 +34,6 @@ public class ItemClickListener implements OnItemClickListener {
 			Bundle savedInstanceState, JSONArray response) {
 		this.mActivity = mActivity;
 		this.mContext = mContext;
-		this.savedInstanceState = savedInstanceState;
 		this.jsonArray = response;
 	}
 
@@ -43,6 +41,7 @@ public class ItemClickListener implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		JSONObject jsonObject;
+		arg1.findViewById(R.id.app_icon).setDrawingCacheEnabled(true);
 		mBitmap = arg1.findViewById(R.id.app_icon).getDrawingCache();
 		try {
 			jsonObject = jsonArray.getJSONObject(arg2);
@@ -50,18 +49,19 @@ public class ItemClickListener implements OnItemClickListener {
 			intent.putExtra("jsonObject", jsonObject.toString());
 			intent.putExtra("mBitmap", mBitmap);
 			mActivity.startActivity(intent);
-			setBrodacast(arg1,jsonObject.get("title").toString());
+			arg1.findViewById(R.id.app_icon).setDrawingCacheEnabled(false);
+			setBrodacast(arg1,jsonObject.get("package_name").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	private void setBrodacast(View convertView,String appName) {
+	private void setBrodacast(View convertView,String appPackageName) {
 		CommonViewHolder view = new CommonViewHolder();
 		CommonTools.setViewById(view, convertView);
 		MySynchroBroadcast syschroReceiver = new MySynchroBroadcast(mActivity, view,
-				appName);
-		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE + appName;
+				appPackageName);
+		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE + appPackageName;
 		mActivity.registerReceiver(syschroReceiver, new IntentFilter(broadcastFilter));
 	}
 

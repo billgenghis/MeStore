@@ -2,6 +2,7 @@ package com.smartx.bill.mepad.mestore.broadcast;
 
 import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
+import com.smartx.bill.mepad.mestore.util.OpenHelper;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -44,6 +45,7 @@ public class DownloadCompleteReceiver extends BroadcastReceiver {
 				mView.appInstall.setVisibility(View.INVISIBLE);
 				mView.appDownload.setVisibility(View.INVISIBLE);
 				mView.appOpen.setVisibility(View.VISIBLE);
+//				OpenHelper.startViewIntent(context, downloadId, Intent.FLAG_ACTIVITY_SINGLE_TOP);
 				mActivity.unregisterReceiver(this);
 				mActivity.getContentResolver().unregisterContentObserver(
 						downloadObserver);

@@ -6,11 +6,15 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.LocalActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -39,6 +43,7 @@ import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
+import com.smartx.bill.mepad.mestore.listener.OpenClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
@@ -55,11 +60,10 @@ public class DialogAppInfo extends MyBaseActivity {
 	private JSONObject appInfo;
 	private CommonViewHolder view;
 	private Bitmap mBitmap;
-	private Context mContext;
 	private List<TextView> tViews;
 	private String downloadUrl;
 	private String appName;
-	private MySynchroBroadcast syschroReceiver;
+	private String appPackageName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +73,15 @@ public class DialogAppInfo extends MyBaseActivity {
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
 		this.mBitmap = getIntent().getParcelableExtra("mBitmap");
-		mContext = this;
 		setLayout();
 		try {
 			this.appInfo = new JSONObject(getIntent().getStringExtra(
 					"jsonObject"));
 			downloadUrl = appInfo.getString("download_url");
 			appName = appInfo.getString("title");
+			appPackageName = appInfo.getString("package_name");
 			initdatas();
-			initInstallStatus();
+			initInstallStatus(appPackageName);
 			initPagerViewer();
 			initTextView();
 		} catch (JSONException e1) {
@@ -85,12 +89,12 @@ public class DialogAppInfo extends MyBaseActivity {
 		}
 	}
 
-	/** 
-	* @Title: setBrodacast 
-	* @Description: 注册广播
-	* @return void    返回类型 
-	* @throws 
-	*/
+	/**
+	 * @Title: setBrodacast
+	 * @Description: 注册广播
+	 * @return void 返回类型
+	 * @throws
+	 */
 
 	private void setLayout() {
 		// TODO Auto-generated method stub
@@ -110,7 +114,6 @@ public class DialogAppInfo extends MyBaseActivity {
 
 	private void initdatas() throws JSONException {
 		pager = (ViewPager) findViewById(R.id.dialog_viewpage);
-		// cursor = (ImageView) findViewById(R.id.cursor);
 		tViews = new ArrayList<TextView>();
 		t1 = (TextView) findViewById(R.id.dialog_detail_info);
 		t2 = (TextView) findViewById(R.id.dialog_judge_score);
@@ -124,12 +127,14 @@ public class DialogAppInfo extends MyBaseActivity {
 		view.downloadCount.setText(appInfo.getString("downloads") + "次下载");
 		view.appScore.setRating(Float.parseFloat(appInfo.getString("score")));
 		view.imgViewFlag.setImageBitmap(mBitmap);
-		view.imgViewFlag.setDrawingCacheEnabled(false);
 		view.appScore.setFocusable(false);
 
 		view.appInstall.setOnClickListener(new InstallClickListener(this, view,
-				downloadUrl, appName));
+				downloadUrl, appName, appPackageName));
+		view.appOpen.setOnClickListener(new OpenClickListener(appPackageName,
+				this));
 		view.appOpen.setVisibility(View.INVISIBLE);
+		getAppForPackage();
 		view.appDownload.setVisibility(View.INVISIBLE);
 
 		findViewById(R.id.dialog_appinfo_tab).setVisibility(View.GONE);
@@ -141,6 +146,21 @@ public class DialogAppInfo extends MyBaseActivity {
 		// tViews.add(t2);
 		// tViews.add(t3);
 		// tViews.add(t4);
+	}
+
+	private void getAppForPackage() {
+		PackageManager mPm = getPackageManager();
+		PackageInfo pkgInfo;
+		try {
+			pkgInfo = mPm.getPackageInfo(appPackageName, 0);
+		} catch (NameNotFoundException e) {
+			pkgInfo = null;
+			return;
+		}
+		if (pkgInfo != null) {
+			view.appInstall.setVisibility(View.INVISIBLE);
+			view.appOpen.setVisibility(View.VISIBLE);
+		}
 	}
 
 	/**
@@ -183,21 +203,23 @@ public class DialogAppInfo extends MyBaseActivity {
 		pager.setOnPageChangeListener(new MyOnPageChangeListener(this, tViews,
 				IOStreamDatas.VIEWPAGER_DIALOG));
 	}
-	
-	/** 
-	* @Title: aa 
-	* @Description: TODO(这里用一句话描述这个方法的作用) 
-	* @param     设定文件 
-	* @return void    返回类型 
-	* @throws 
-	*/
-	private void initInstallStatus(){
-		long downloadId = PreferencesUtils.getLong(this, appName,
-				0);
-		RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(view, this);
-		MyApplication installApplication = (MyApplication)getApplication();
-		DownloadManager downloadManager = installApplication.getDownloadManager();
-		DownloadManagerPro downloadManagerPro = new DownloadManagerPro(downloadManager);
+
+	/**
+	 * @Title: initInstallStatus
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param 设定文件
+	 * @return void 返回类型
+	 * @throws
+	 */
+	private void initInstallStatus(String appPackageName) {
+		long downloadId = PreferencesUtils.getLong(this, appPackageName, 0);
+		RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(view,
+				this);
+		MyApplication installApplication = (MyApplication) getApplication();
+		DownloadManager downloadManager = installApplication
+				.getDownloadManager();
+		DownloadManagerPro downloadManagerPro = new DownloadManagerPro(
+				downloadManager);
 		DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
 				handler, downloadManagerPro, downloadId);
 		getContentResolver().registerContentObserver(
@@ -207,7 +229,7 @@ public class DialogAppInfo extends MyBaseActivity {
 		registerReceiver(completeReceiver, new IntentFilter(
 				DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 	}
-	
+
 	/**
 	 * 通过activity获取视图
 	 * 
@@ -230,10 +252,12 @@ public class DialogAppInfo extends MyBaseActivity {
 		super.onResume();
 		manager.dispatchResume();
 	}
-	public void onStop(){
-        //取消广播接收器
-        super.onStop();
-    }
+
+	public void onStop() {
+		// 取消广播接收器
+		super.onStop();
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

@@ -57,6 +57,7 @@ public class CommonTools {
 		public TextView appDescription;
 		public Button appOpen;
 		public MyRoundProgressBar appDownload;
+		public View verticalLine;
 		public ImageView appDownloadConnect;
 	}
 
@@ -71,7 +72,6 @@ public class CommonTools {
 	public static void setViewById(CommonViewHolder view, View convertView) {
 		view.txtViewTitle = (TextView) convertView.findViewById(R.id.app_title);
 		view.imgViewFlag = (ImageView) convertView.findViewById(R.id.app_icon);
-		view.imgViewFlag.setDrawingCacheEnabled(true);
 		view.appScore = (RatingBar) convertView.findViewById(R.id.app_score);
 		view.downloadCount = (TextView) convertView
 				.findViewById(R.id.app_download_count);
@@ -82,8 +82,11 @@ public class CommonTools {
 		view.appDescription = (TextView) convertView
 				.findViewById(R.id.app_description);
 		view.appOpen = (Button) convertView.findViewById(R.id.app_open);
-		view.appDownload = (MyRoundProgressBar) convertView.findViewById(R.id.app_download);
-		view.appDownloadConnect = (ImageView)convertView.findViewById(R.id.app_download_connect);
+		view.appDownload = (MyRoundProgressBar) convertView
+				.findViewById(R.id.app_download);
+		view.appDownloadConnect = (ImageView) convertView
+				.findViewById(R.id.app_download_connect);
+		view.verticalLine = (View) convertView.findViewById(R.id.vertical_line);
 	}
 
 	public static String getHtmlText(String content) {

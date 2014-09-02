@@ -114,7 +114,8 @@ public class SearchGridviewAdapter extends MyBaseAdapter {
 			// view.appReview, options);
 			setInstallClick(activity, view,
 					getItemDatas("download_url", position),
-					getItemDatas("title", position));
+					getItemDatas("title", position),
+					getItemDatas("package_name", position));
 		}
 		CommonTools.setLayout(position, view);
 		view.appDescription.setHeight(0);
