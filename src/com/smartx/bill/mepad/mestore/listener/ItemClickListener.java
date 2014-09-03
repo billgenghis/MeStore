@@ -20,6 +20,7 @@ import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.broadcast.MySynchroBroadcast;
 import com.smartx.bill.mepad.mestore.dialog.DialogAppInfo;
 import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
+import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
@@ -46,23 +47,36 @@ public class ItemClickListener implements OnItemClickListener {
 		try {
 			jsonObject = jsonArray.getJSONObject(arg2);
 			Intent intent = new Intent(mContext, DialogAppInfo.class);
+
+			MyRoundProgressBar myRoundProgressBar = (MyRoundProgressBar) arg1
+					.findViewById(R.id.app_download);
+			if (myRoundProgressBar!= null && myRoundProgressBar.getVisibility() == 0) {
+				intent.putExtra("progress", myRoundProgressBar.getProgress());
+			} else {
+				intent.putExtra("progress", -1);// 代表进度为-1，没有进行下载
+			}
 			intent.putExtra("jsonObject", jsonObject.toString());
 			intent.putExtra("mBitmap", mBitmap);
 			mActivity.startActivity(intent);
 			arg1.findViewById(R.id.app_icon).setDrawingCacheEnabled(false);
-			setBrodacast(arg1,jsonObject.get("package_name").toString());
+			setBrodacast(arg1, jsonObject.get("package_name").toString(),
+					jsonObject.get("title").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	private void setBrodacast(View convertView,String appPackageName) {
+
+	private void setBrodacast(View convertView, String appPackageName,
+			String appName) {
 		CommonViewHolder view = new CommonViewHolder();
 		CommonTools.setViewById(view, convertView);
-		MySynchroBroadcast syschroReceiver = new MySynchroBroadcast(mActivity, view,
-				appPackageName);
-		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE + appPackageName;
-		mActivity.registerReceiver(syschroReceiver, new IntentFilter(broadcastFilter));
+		MySynchroBroadcast syschroReceiver = new MySynchroBroadcast(mActivity,
+				view, appPackageName, appName);
+		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE
+				+ appPackageName;
+		mActivity.registerReceiver(syschroReceiver, new IntentFilter(
+				broadcastFilter));
 	}
 
 }

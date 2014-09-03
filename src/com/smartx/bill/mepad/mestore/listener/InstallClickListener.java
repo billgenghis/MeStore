@@ -19,6 +19,7 @@ import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
 import com.smartx.bill.mepad.mestore.application.MyApplication;
 import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
+import com.smartx.bill.mepad.mestore.broadcast.InstallCompleteReceiver;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
 import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
@@ -48,7 +49,7 @@ public class InstallClickListener implements OnClickListener {
 	public InstallClickListener(Activity activity, CommonViewHolder view,
 			String downloadUrl, String appName, String appPackageName) {
 		mActivity = activity;
-		handler = new RefreshDownloadUIHandler(view, mActivity);
+		handler = new RefreshDownloadUIHandler(view,appName,mActivity);
 		downloadManager = (DownloadManager) mActivity
 				.getSystemService(mActivity.DOWNLOAD_SERVICE);
 		MyApplication installApplication = (MyApplication) mActivity
@@ -90,7 +91,7 @@ public class InstallClickListener implements OnClickListener {
 
 	/**
 	 * @Title: sendBroadcastToLaunch
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @Description: sendBroadcastToLaunch
 	 * @param 设定文件
 	 * @return void 返回类型
 	 * @throws
@@ -108,8 +109,8 @@ public class InstallClickListener implements OnClickListener {
 	}
 
 	/**
-	 * @Title: sendBroadcastToLaunch
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @Title: sendBroadcastToDialog
+	 * @Description: sendBroadcastToDialog
 	 * @param 设定文件
 	 * @return void 返回类型
 	 * @throws
@@ -145,9 +146,15 @@ public class InstallClickListener implements OnClickListener {
 		mActivity.getContentResolver().registerContentObserver(
 				DownloadManagerPro.CONTENT_URI, true, downloadObserver);
 		DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
-				downloadId, mActivity, downloadObserver, mView);
-		mActivity.registerReceiver(completeReceiver, new IntentFilter(
-				DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+				downloadId, mActivity, downloadObserver, mView,appName,appPackageName);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+		intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+		mActivity.registerReceiver(completeReceiver,intentFilter);
+//		InstallCompleteReceiver installCompleteReceiver = new InstallCompleteReceiver(
+//				mActivity, mView, appPackageName);
+//		mActivity.registerReceiver(installCompleteReceiver,
+//				new IntentFilter(Intent.ACTION_PACKAGE_ADDED));
 	}
 
 	private void setDownloadManagerRequest() {

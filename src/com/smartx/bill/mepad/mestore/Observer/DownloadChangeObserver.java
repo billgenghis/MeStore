@@ -26,5 +26,4 @@ public class DownloadChangeObserver extends ContentObserver {
 		handler.sendMessage(handler.obtainMessage(0, bytesAndStatus[0],
 				bytesAndStatus[1], bytesAndStatus[2]));
 	}
-
 }

@@ -5,14 +5,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.IntentFilter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.trinea.android.common.util.DownloadManagerPro;
+import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
+import com.smartx.bill.mepad.mestore.application.MyApplication;
+import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
+import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
@@ -90,14 +99,18 @@ public class RankingGridviewAdapter extends MyBaseAdapter {
 			view.imgViewFlag.setVisibility(View.INVISIBLE);
 			view.verticalLine.setVisibility(View.INVISIBLE);
 		} else {
+			view.appInstall.setVisibility(View.VISIBLE);
+			view.appOpen.setVisibility(View.INVISIBLE);
+			view.appDownload.setVisibility(View.INVISIBLE);
+			view.appDownloadConnect.setVisibility(View.INVISIBLE);
 			view.mRelativeLayout.setVisibility(View.VISIBLE);
 			view.imgViewFlag.setVisibility(View.VISIBLE);
 			view.verticalLine.setVisibility(View.VISIBLE);
-			view.appInstall.setVisibility(View.VISIBLE);
-			view.appOpen.setVisibility(View.INVISIBLE);
 
 			view.txtViewTitle.setText(rankingCount + "."
 					+ getItemDatas("title", position));
+			view.txtViewTitle.setTag(getItemDatas("title", position));
+			
 			view.downloadCount.setText(getItemDatas("downloads", position)
 					+ "次下载");
 			view.appScore.setRating(Float.parseFloat(getItemDatas("score",

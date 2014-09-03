@@ -64,6 +64,7 @@ public class DialogAppInfo extends MyBaseActivity {
 	private String downloadUrl;
 	private String appName;
 	private String appPackageName;
+	private int progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class DialogAppInfo extends MyBaseActivity {
 		manager = new LocalActivityManager(this, true);
 		manager.dispatchCreate(savedInstanceState);
 		this.mBitmap = getIntent().getParcelableExtra("mBitmap");
+		progress = getIntent().getIntExtra("progress", -1);
 		setLayout();
 		try {
 			this.appInfo = new JSONObject(getIntent().getStringExtra(
@@ -81,7 +83,7 @@ public class DialogAppInfo extends MyBaseActivity {
 			appName = appInfo.getString("title");
 			appPackageName = appInfo.getString("package_name");
 			initdatas();
-			initInstallStatus(appPackageName);
+			initInstallStatus();
 			initPagerViewer();
 			initTextView();
 		} catch (JSONException e1) {
@@ -124,19 +126,20 @@ public class DialogAppInfo extends MyBaseActivity {
 
 		view.appDescription.setVisibility(View.GONE);
 		view.txtViewTitle.setText(appInfo.getString("title"));
+		view.txtViewTitle.setTag(appInfo.getString("title"));
 		view.downloadCount.setText(appInfo.getString("downloads") + "次下载");
 		view.appScore.setRating(Float.parseFloat(appInfo.getString("score")));
 		view.imgViewFlag.setImageBitmap(mBitmap);
-		view.appScore.setFocusable(false);
+		// view.appScore.setFocusable(false);
 
 		view.appInstall.setOnClickListener(new InstallClickListener(this, view,
 				downloadUrl, appName, appPackageName));
 		view.appOpen.setOnClickListener(new OpenClickListener(appPackageName,
 				this));
 		view.appOpen.setVisibility(View.INVISIBLE);
-		getAppForPackage();
 		view.appDownload.setVisibility(View.INVISIBLE);
 
+		getAppForPackage();
 		findViewById(R.id.dialog_appinfo_tab).setVisibility(View.GONE);
 		t1.setVisibility(View.GONE);
 		t2.setVisibility(View.GONE);
@@ -148,6 +151,13 @@ public class DialogAppInfo extends MyBaseActivity {
 		// tViews.add(t4);
 	}
 
+	/**
+	 * @Title: getAppForPackage
+	 * @Description: 判断app是否已经安装在平板中
+	 * @param 设定文件
+	 * @return void 返回类型
+	 * @throws
+	 */
 	private void getAppForPackage() {
 		PackageManager mPm = getPackageManager();
 		PackageInfo pkgInfo;
@@ -211,10 +221,10 @@ public class DialogAppInfo extends MyBaseActivity {
 	 * @return void 返回类型
 	 * @throws
 	 */
-	private void initInstallStatus(String appPackageName) {
-		long downloadId = PreferencesUtils.getLong(this, appPackageName, 0);
+	private void initInstallStatus() {
+		long downloadId = PreferencesUtils.getLong(this, appPackageName, -1);
 		RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(view,
-				this);
+				appName, this);
 		MyApplication installApplication = (MyApplication) getApplication();
 		DownloadManager downloadManager = installApplication
 				.getDownloadManager();
@@ -225,9 +235,12 @@ public class DialogAppInfo extends MyBaseActivity {
 		getContentResolver().registerContentObserver(
 				DownloadManagerPro.CONTENT_URI, true, downloadObserver);
 		DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
-				downloadId, this, downloadObserver, view);
-		registerReceiver(completeReceiver, new IntentFilter(
-				DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+				downloadId, this, downloadObserver, view, appName,
+				appPackageName);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+		intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+		registerReceiver(completeReceiver, intentFilter);
 	}
 
 	/**

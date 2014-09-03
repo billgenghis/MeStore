@@ -3,6 +3,7 @@ package com.smartx.bill.mepad.mestore.adapter;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -13,14 +14,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import cn.trinea.android.common.util.DownloadManagerPro;
+import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
+import com.smartx.bill.mepad.mestore.application.MyApplication;
+import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.OpenClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
 public class MyBaseAdapter extends BaseAdapter {
@@ -108,17 +115,50 @@ public class MyBaseAdapter extends BaseAdapter {
 		view.appOpen.setOnClickListener(new OpenClickListener(packageName,
 				activity));
 		getAppForPackage(activity, packageName, appTitle, view);
+		initInstallStatus(activity, packageName, appTitle, view);
 	}
 
-	private void getAppForPackage(Activity activity, String packageName,
+	/**
+	 * @Title: initInstallStatus
+	 * @Description: TODO(这里用一句话描述这个方法的作用)
+	 * @param 设定文件
+	 * @return void 返回类型
+	 * @throws
+	 */
+	private void initInstallStatus(Activity activity, String appPackageName,
+			String appTitle, CommonViewHolder mView) {
+		long downloadId = PreferencesUtils.getLong(activity, appPackageName, -1);
+		if (downloadId != -1) {
+			RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(
+					mView, appTitle, activity);
+			MyApplication installApplication = (MyApplication) activity
+					.getApplication();
+			DownloadManager downloadManager = installApplication
+					.getDownloadManager();
+			DownloadManagerPro downloadManagerPro = new DownloadManagerPro(
+					downloadManager);
+			DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
+					handler, downloadManagerPro, downloadId);
+			activity.getContentResolver().registerContentObserver(
+					DownloadManagerPro.CONTENT_URI, true, downloadObserver);
+			DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
+					downloadId, activity, downloadObserver, mView, appTitle,appPackageName);
+			activity.registerReceiver(completeReceiver, new IntentFilter(
+					DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+		}else{
+			
+		}
+	}
+
+	private void getAppForPackage(Activity activity, String appPackageName,
 			String appTitle, CommonViewHolder mView) {
 		if (mActivity == null) {
-			mActivity = activity;
+			mActivity = activity;      
 			mPm = activity.getPackageManager();
 		}
 		PackageInfo pkgInfo;
 		try {
-			pkgInfo = mPm.getPackageInfo(packageName, 0);
+			pkgInfo = mPm.getPackageInfo(appPackageName, 0);
 		} catch (NameNotFoundException e) {
 			pkgInfo = null;
 			return;

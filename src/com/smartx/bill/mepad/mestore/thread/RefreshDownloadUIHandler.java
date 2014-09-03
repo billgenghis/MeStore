@@ -23,16 +23,29 @@ public class RefreshDownloadUIHandler extends Handler {
 	private CommonViewHolder mView;
 	private Activity mActivity;
 	private boolean animationFlag;
+	private String appName;
 
-	public RefreshDownloadUIHandler(CommonViewHolder mView, Activity mActivity) {
+	public RefreshDownloadUIHandler(CommonViewHolder mView, String appName,
+			Activity mActivity) {
 		this.mView = mView;
 		this.mActivity = mActivity;
 		animationFlag = false;
+		this.appName = appName;
 	}
+
+	// public RefreshDownloadUIHandler(CommonViewHolder mView, Activity
+	// mActivity) {
+	// this.mView = mView;
+	// this.mActivity = mActivity;
+	// animationFlag = false;
+	// }
 
 	@Override
 	public void handleMessage(Message msg) {
 		super.handleMessage(msg);
+		if (!appName.equals(mView.txtViewTitle.getTag())) {
+			msg.what = 1;
+		}
 		switch (msg.what) {
 		case 0:
 			int downloadManagerStatus = (Integer) msg.obj;
@@ -47,10 +60,10 @@ public class RefreshDownloadUIHandler extends Handler {
 				if (msg.arg2 < 0) {
 					mView.appDownload.setVisibility(View.INVISIBLE);
 					mView.appDownloadConnect.setVisibility(View.VISIBLE);
-					if(!animationFlag){
-					mView.appDownloadConnect
-							.startAnimation(hyperspaceJumpAnimation);
-					animationFlag = true;
+					if (!animationFlag) {
+						mView.appDownloadConnect
+								.startAnimation(hyperspaceJumpAnimation);
+						animationFlag = true;
 					}
 				} else {
 					mView.appDownloadConnect.clearAnimation();
