@@ -49,7 +49,6 @@ public class InstallClickListener implements OnClickListener {
 	public InstallClickListener(Activity activity, CommonViewHolder view,
 			String downloadUrl, String appName, String appPackageName) {
 		mActivity = activity;
-		handler = new RefreshDownloadUIHandler(view,appName,mActivity);
 		downloadManager = (DownloadManager) mActivity
 				.getSystemService(mActivity.DOWNLOAD_SERVICE);
 		MyApplication installApplication = (MyApplication) mActivity
@@ -141,20 +140,27 @@ public class InstallClickListener implements OnClickListener {
 	}
 
 	public void initRegister() {
+		handler = new RefreshDownloadUIHandler(mView, appName, mActivity);
 		DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
 				handler, downloadManagerPro, downloadId);
 		mActivity.getContentResolver().registerContentObserver(
 				DownloadManagerPro.CONTENT_URI, true, downloadObserver);
 		DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
-				downloadId, mActivity, downloadObserver, mView,appName,appPackageName);
+				downloadId, mActivity, downloadObserver, mView, appName,
+				appPackageName);
+		MyApplication installApplication = (MyApplication) mActivity
+				.getApplication();
+		installApplication.setBroadCast(String.valueOf(downloadId),
+				completeReceiver);
+
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-		intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
-		mActivity.registerReceiver(completeReceiver,intentFilter);
-//		InstallCompleteReceiver installCompleteReceiver = new InstallCompleteReceiver(
-//				mActivity, mView, appPackageName);
-//		mActivity.registerReceiver(installCompleteReceiver,
-//				new IntentFilter(Intent.ACTION_PACKAGE_ADDED));
+		mActivity.registerReceiver(completeReceiver, intentFilter);
+		// InstallCompleteReceiver installCompleteReceiver = new
+		// InstallCompleteReceiver(
+		// mActivity, mView, appPackageName);
+		// mActivity.registerReceiver(installCompleteReceiver,
+		// new IntentFilter(Intent.ACTION_PACKAGE_ADDED));
 	}
 
 	private void setDownloadManagerRequest() {

@@ -6,10 +6,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.LocalActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
@@ -18,35 +16,26 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.trinea.android.common.util.DownloadManagerPro;
 import cn.trinea.android.common.util.PreferencesUtils;
 
 import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
-import com.smartx.bill.mepad.mestore.R.id;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.application.MyApplication;
 import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
-import com.smartx.bill.mepad.mestore.broadcast.MySynchroBroadcast;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.listener.OpenClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
-import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
-import com.smartx.bill.mepad.mestore.myview.MyRoundProgressBar;
 import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
@@ -64,6 +53,7 @@ public class DialogAppInfo extends MyBaseActivity {
 	private String downloadUrl;
 	private String appName;
 	private String appPackageName;
+	private DownloadCompleteReceiver completeReceiver;
 	private int progress;
 
 	@Override
@@ -223,24 +213,24 @@ public class DialogAppInfo extends MyBaseActivity {
 	 */
 	private void initInstallStatus() {
 		long downloadId = PreferencesUtils.getLong(this, appPackageName, -1);
-		RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(view,
-				appName, this);
-		MyApplication installApplication = (MyApplication) getApplication();
-		DownloadManager downloadManager = installApplication
-				.getDownloadManager();
-		DownloadManagerPro downloadManagerPro = new DownloadManagerPro(
-				downloadManager);
-		DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
-				handler, downloadManagerPro, downloadId);
-		getContentResolver().registerContentObserver(
-				DownloadManagerPro.CONTENT_URI, true, downloadObserver);
-		DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
-				downloadId, this, downloadObserver, view, appName,
-				appPackageName);
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-		intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
-		registerReceiver(completeReceiver, intentFilter);
+		if (downloadId != -1) {
+			RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(
+					view, appName, this);
+			MyApplication installApplication = (MyApplication) getApplication();
+			DownloadManager downloadManager = installApplication
+					.getDownloadManager();
+			DownloadManagerPro downloadManagerPro = new DownloadManagerPro(
+					downloadManager);
+			DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
+					handler, downloadManagerPro, downloadId);
+			getContentResolver().registerContentObserver(
+					DownloadManagerPro.CONTENT_URI, true, downloadObserver);
+			completeReceiver = new DownloadCompleteReceiver(downloadId, this,
+					downloadObserver, view, appName, appPackageName);
+			IntentFilter intentFilter = new IntentFilter();
+			intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+			registerReceiver(completeReceiver, intentFilter);
+		}
 	}
 
 	/**
@@ -268,6 +258,8 @@ public class DialogAppInfo extends MyBaseActivity {
 
 	public void onStop() {
 		// 取消广播接收器
+//		if (completeReceiver != null)
+//			unregisterReceiver(completeReceiver);
 		super.onStop();
 	}
 

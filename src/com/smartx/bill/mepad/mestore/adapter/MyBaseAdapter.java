@@ -125,13 +125,13 @@ public class MyBaseAdapter extends BaseAdapter {
 	 * @return void 返回类型
 	 * @throws
 	 */
-	private void initInstallStatus(Activity activity, String appPackageName,
+	private void initInstallStatus(Activity mActivity, String appPackageName,
 			String appTitle, CommonViewHolder mView) {
-		long downloadId = PreferencesUtils.getLong(activity, appPackageName, -1);
+		long downloadId = PreferencesUtils.getLong(mActivity, appPackageName, -1);
 		if (downloadId != -1) {
 			RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(
-					mView, appTitle, activity);
-			MyApplication installApplication = (MyApplication) activity
+					mView, appTitle, mActivity);
+			MyApplication installApplication = (MyApplication) mActivity
 					.getApplication();
 			DownloadManager downloadManager = installApplication
 					.getDownloadManager();
@@ -139,11 +139,12 @@ public class MyBaseAdapter extends BaseAdapter {
 					downloadManager);
 			DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
 					handler, downloadManagerPro, downloadId);
-			activity.getContentResolver().registerContentObserver(
+			mActivity.getContentResolver().registerContentObserver(
 					DownloadManagerPro.CONTENT_URI, true, downloadObserver);
 			DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
-					downloadId, activity, downloadObserver, mView, appTitle,appPackageName);
-			activity.registerReceiver(completeReceiver, new IntentFilter(
+					downloadId, mActivity, downloadObserver, mView, appTitle,appPackageName);
+			installApplication.setBroadCast(String.valueOf(downloadId) + "adapter", completeReceiver);
+			mActivity.registerReceiver(completeReceiver, new IntentFilter(
 					DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 		}else{
 			

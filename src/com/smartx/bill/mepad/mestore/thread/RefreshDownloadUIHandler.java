@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.smartx.bill.mepad.mestore.R;
+import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
 /**
@@ -24,6 +25,7 @@ public class RefreshDownloadUIHandler extends Handler {
 	private Activity mActivity;
 	private boolean animationFlag;
 	private String appName;
+	private DownloadChangeObserver downloadObserver;
 
 	public RefreshDownloadUIHandler(CommonViewHolder mView, String appName,
 			Activity mActivity) {
@@ -31,6 +33,7 @@ public class RefreshDownloadUIHandler extends Handler {
 		this.mActivity = mActivity;
 		animationFlag = false;
 		this.appName = appName;
+//		this.downloadObserver = downloadObserver;
 	}
 
 	// public RefreshDownloadUIHandler(CommonViewHolder mView, Activity
@@ -95,6 +98,8 @@ public class RefreshDownloadUIHandler extends Handler {
 				mView.appOpen.setVisibility(View.INVISIBLE);
 				mView.appDownloadConnect.clearAnimation();
 				mView.appDownload.setVisibility(View.INVISIBLE);
+//				mActivity.getContentResolver().unregisterContentObserver(
+//						downloadObserver);
 				// mView.appDownloadConnect.setVisibility(View.INVISIBLE);
 				// } else {
 				// mView.appInstall.setVisibility(View.VISIBLE);
