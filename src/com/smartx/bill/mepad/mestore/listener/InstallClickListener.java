@@ -64,7 +64,8 @@ public class InstallClickListener implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		initDatas();
-		sendBroadcastToDialog();
+		initRegister();
+		sendBroadcastToGridView();
 		sendBroadcastToLauncher();
 		setListener();
 	}
@@ -85,7 +86,6 @@ public class InstallClickListener implements OnClickListener {
 		setDownloadManagerRequest();
 		downloadId = downloadManager.enqueue(request);
 		PreferencesUtils.putLong(mActivity, appPackageName, downloadId);
-		initRegister();
 	}
 
 	/**
@@ -108,13 +108,13 @@ public class InstallClickListener implements OnClickListener {
 	}
 
 	/**
-	 * @Title: sendBroadcastToDialog
-	 * @Description: sendBroadcastToDialog
+	 * @Title: sendBroadcastToGridView
+	 * @Description: sendBroadcastToGridView
 	 * @param 设定文件
 	 * @return void 返回类型
 	 * @throws
 	 */
-	private void sendBroadcastToDialog() {
+	private void sendBroadcastToGridView() {
 		String broadcastFilter = MyBroadcast.MESTORE_BROADCAST_TITLE
 				+ appPackageName;
 		Intent intent = new Intent(broadcastFilter);
@@ -141,6 +141,7 @@ public class InstallClickListener implements OnClickListener {
 
 	public void initRegister() {
 		handler = new RefreshDownloadUIHandler(mView, appName, mActivity);
+		
 		DownloadChangeObserver downloadObserver = new DownloadChangeObserver(
 				handler, downloadManagerPro, downloadId);
 		mActivity.getContentResolver().registerContentObserver(
@@ -156,11 +157,10 @@ public class InstallClickListener implements OnClickListener {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 		mActivity.registerReceiver(completeReceiver, intentFilter);
-		// InstallCompleteReceiver installCompleteReceiver = new
-		// InstallCompleteReceiver(
-		// mActivity, mView, appPackageName);
-		// mActivity.registerReceiver(installCompleteReceiver,
-		// new IntentFilter(Intent.ACTION_PACKAGE_ADDED));
+		InstallCompleteReceiver installCompleteReceiver = new InstallCompleteReceiver(
+				mActivity, mView, appPackageName);
+		mActivity.registerReceiver(installCompleteReceiver, new IntentFilter(
+				MyBroadcast.MESTORE_INSTALL_FINASH));
 	}
 
 	private void setDownloadManagerRequest() {

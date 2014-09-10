@@ -104,6 +104,7 @@ public class SearchGridviewAdapter extends MyBaseAdapter {
 		} else {
 			view.txtViewTitle.setText(rankingCount + "."
 					+ getItemDatas("title", position));
+			view.txtViewTitle.setTag(getItemDatas("title", position));
 			view.downloadCount.setText(getItemDatas("downloads", position)
 					+ "次下载");
 			view.appScore.setRating(Float.parseFloat(getItemDatas("score",

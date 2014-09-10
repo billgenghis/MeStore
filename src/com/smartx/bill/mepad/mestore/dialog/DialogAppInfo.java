@@ -30,12 +30,14 @@ import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
 import com.smartx.bill.mepad.mestore.adapter.MyViewPagerAdapter;
 import com.smartx.bill.mepad.mestore.application.MyApplication;
 import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
+import com.smartx.bill.mepad.mestore.broadcast.InstallCompleteReceiver;
 import com.smartx.bill.mepad.mestore.home.MyBaseActivity;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyHomeTextClickListener;
 import com.smartx.bill.mepad.mestore.listener.MyOnPageChangeListener;
 import com.smartx.bill.mepad.mestore.listener.OpenClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
@@ -47,7 +49,7 @@ public class DialogAppInfo extends MyBaseActivity {
 	LocalActivityManager manager = null;
 	ViewPager pager = null;
 	private JSONObject appInfo;
-	private CommonViewHolder view;
+	private CommonViewHolder mView;
 	private Bitmap mBitmap;
 	private List<TextView> tViews;
 	private String downloadUrl;
@@ -111,23 +113,23 @@ public class DialogAppInfo extends MyBaseActivity {
 		t2 = (TextView) findViewById(R.id.dialog_judge_score);
 		t3 = (TextView) findViewById(R.id.dialog_same_developers);
 		t4 = (TextView) findViewById(R.id.dialog_detail_permission);
-		view = new CommonViewHolder();
-		CommonTools.setViewById(view, getWindow().getDecorView());
+		mView = new CommonViewHolder();
+		CommonTools.setViewById(mView, getWindow().getDecorView());
 
-		view.appDescription.setVisibility(View.GONE);
-		view.txtViewTitle.setText(appInfo.getString("title"));
-		view.txtViewTitle.setTag(appInfo.getString("title"));
-		view.downloadCount.setText(appInfo.getString("downloads") + "次下载");
-		view.appScore.setRating(Float.parseFloat(appInfo.getString("score")));
-		view.imgViewFlag.setImageBitmap(mBitmap);
+		mView.appDescription.setVisibility(View.GONE);
+		mView.txtViewTitle.setText(appInfo.getString("title"));
+		mView.txtViewTitle.setTag(appInfo.getString("title"));
+		mView.downloadCount.setText(appInfo.getString("downloads") + "次下载");
+		mView.appScore.setRating(Float.parseFloat(appInfo.getString("score")));
+		mView.imgViewFlag.setImageBitmap(mBitmap);
 		// view.appScore.setFocusable(false);
 
-		view.appInstall.setOnClickListener(new InstallClickListener(this, view,
-				downloadUrl, appName, appPackageName));
-		view.appOpen.setOnClickListener(new OpenClickListener(appPackageName,
+		mView.appInstall.setOnClickListener(new InstallClickListener(this,
+				mView, downloadUrl, appName, appPackageName));
+		mView.appOpen.setOnClickListener(new OpenClickListener(appPackageName,
 				this));
-		view.appOpen.setVisibility(View.INVISIBLE);
-		view.appDownload.setVisibility(View.INVISIBLE);
+		mView.appOpen.setVisibility(View.INVISIBLE);
+		mView.appDownload.setVisibility(View.INVISIBLE);
 
 		getAppForPackage();
 		findViewById(R.id.dialog_appinfo_tab).setVisibility(View.GONE);
@@ -158,8 +160,8 @@ public class DialogAppInfo extends MyBaseActivity {
 			return;
 		}
 		if (pkgInfo != null) {
-			view.appInstall.setVisibility(View.INVISIBLE);
-			view.appOpen.setVisibility(View.VISIBLE);
+			mView.appInstall.setVisibility(View.INVISIBLE);
+			mView.appOpen.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -215,7 +217,7 @@ public class DialogAppInfo extends MyBaseActivity {
 		long downloadId = PreferencesUtils.getLong(this, appPackageName, -1);
 		if (downloadId != -1) {
 			RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(
-					view, appName, this);
+					mView, appName, this);
 			MyApplication installApplication = (MyApplication) getApplication();
 			DownloadManager downloadManager = installApplication
 					.getDownloadManager();
@@ -226,7 +228,7 @@ public class DialogAppInfo extends MyBaseActivity {
 			getContentResolver().registerContentObserver(
 					DownloadManagerPro.CONTENT_URI, true, downloadObserver);
 			completeReceiver = new DownloadCompleteReceiver(downloadId, this,
-					downloadObserver, view, appName, appPackageName);
+					downloadObserver, mView, appName, appPackageName);
 			IntentFilter intentFilter = new IntentFilter();
 			intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 			registerReceiver(completeReceiver, intentFilter);
@@ -258,8 +260,8 @@ public class DialogAppInfo extends MyBaseActivity {
 
 	public void onStop() {
 		// 取消广播接收器
-//		if (completeReceiver != null)
-//			unregisterReceiver(completeReceiver);
+		// if (completeReceiver != null)
+		// unregisterReceiver(completeReceiver);
 		super.onStop();
 	}
 

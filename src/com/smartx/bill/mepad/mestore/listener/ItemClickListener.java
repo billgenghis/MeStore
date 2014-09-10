@@ -59,7 +59,7 @@ public class ItemClickListener implements OnItemClickListener {
 			intent.putExtra("mBitmap", mBitmap);
 			mActivity.startActivity(intent);
 			arg1.findViewById(R.id.app_icon).setDrawingCacheEnabled(false);
-			setBrodacast(arg1, jsonObject.get("package_name").toString(),
+			registerBrodacast(arg1, jsonObject.get("package_name").toString(),
 					jsonObject.get("title").toString());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -67,7 +67,16 @@ public class ItemClickListener implements OnItemClickListener {
 		}
 	}
 
-	private void setBrodacast(View convertView, String appPackageName,
+	/** 
+	* @Title: registerBrodacast 
+	* @Description: 注册广播，解决dialog与gridView的同步问题
+	* @param @param convertView
+	* @param @param appPackageName
+	* @param @param appName    设定文件 
+	* @return void    返回类型 
+	* @throws 
+	*/
+	private void registerBrodacast(View convertView, String appPackageName,
 			String appName) {
 		CommonViewHolder view = new CommonViewHolder();
 		CommonTools.setViewById(view, convertView);

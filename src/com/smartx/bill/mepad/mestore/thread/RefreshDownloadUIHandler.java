@@ -25,7 +25,6 @@ public class RefreshDownloadUIHandler extends Handler {
 	private Activity mActivity;
 	private boolean animationFlag;
 	private String appName;
-	private DownloadChangeObserver downloadObserver;
 
 	public RefreshDownloadUIHandler(CommonViewHolder mView, String appName,
 			Activity mActivity) {
@@ -33,7 +32,6 @@ public class RefreshDownloadUIHandler extends Handler {
 		this.mActivity = mActivity;
 		animationFlag = false;
 		this.appName = appName;
-//		this.downloadObserver = downloadObserver;
 	}
 
 	// public RefreshDownloadUIHandler(CommonViewHolder mView, Activity

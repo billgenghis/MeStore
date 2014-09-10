@@ -55,9 +55,6 @@ public class MySynchroBroadcast extends BroadcastReceiver {
 		DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
 				downloadId, mActivity, downloadObserver, mView, appName,
 				appPackageName);
-//		MyApplication installApplication = (MyApplication) mActivity
-//				.getApplication();
-//		installApplication.setBroadCast(String.valueOf(downloadId) + "Synchro", completeReceiver);
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 		intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);

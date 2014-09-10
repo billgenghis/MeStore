@@ -54,7 +54,6 @@ public class Ranking extends AbsListViewBaseActivity {
 										.valueOf(IOStreamDatas.rankingPages)),
 								IOStreamDatas.RANKING_GRIDVIEW).execute();
 					}
-
 				});
 		// 数据初始化
 		initGridView();

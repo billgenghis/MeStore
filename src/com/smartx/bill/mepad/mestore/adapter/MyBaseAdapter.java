@@ -24,9 +24,11 @@ import com.smartx.bill.mepad.mestore.R;
 import com.smartx.bill.mepad.mestore.Observer.DownloadChangeObserver;
 import com.smartx.bill.mepad.mestore.application.MyApplication;
 import com.smartx.bill.mepad.mestore.broadcast.DownloadCompleteReceiver;
+import com.smartx.bill.mepad.mestore.broadcast.InstallCompleteReceiver;
 import com.smartx.bill.mepad.mestore.listener.InstallClickListener;
 import com.smartx.bill.mepad.mestore.listener.OpenClickListener;
 import com.smartx.bill.mepad.mestore.matadata.IOStreamDatas;
+import com.smartx.bill.mepad.mestore.matadata.MyBroadcast;
 import com.smartx.bill.mepad.mestore.thread.RefreshDownloadUIHandler;
 import com.smartx.bill.mepad.mestore.util.CommonTools.CommonViewHolder;
 
@@ -127,7 +129,8 @@ public class MyBaseAdapter extends BaseAdapter {
 	 */
 	private void initInstallStatus(Activity mActivity, String appPackageName,
 			String appTitle, CommonViewHolder mView) {
-		long downloadId = PreferencesUtils.getLong(mActivity, appPackageName, -1);
+		long downloadId = PreferencesUtils.getLong(mActivity, appPackageName,
+				-1);
 		if (downloadId != -1) {
 			RefreshDownloadUIHandler handler = new RefreshDownloadUIHandler(
 					mView, appTitle, mActivity);
@@ -142,19 +145,23 @@ public class MyBaseAdapter extends BaseAdapter {
 			mActivity.getContentResolver().registerContentObserver(
 					DownloadManagerPro.CONTENT_URI, true, downloadObserver);
 			DownloadCompleteReceiver completeReceiver = new DownloadCompleteReceiver(
-					downloadId, mActivity, downloadObserver, mView, appTitle,appPackageName);
-			installApplication.setBroadCast(String.valueOf(downloadId) + "adapter", completeReceiver);
+					downloadId, mActivity, downloadObserver, mView, appTitle,
+					appPackageName);
 			mActivity.registerReceiver(completeReceiver, new IntentFilter(
 					DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-		}else{
-			
+			InstallCompleteReceiver installCompleteReceiver = new InstallCompleteReceiver(
+					mActivity, mView, appPackageName);
+			mActivity.registerReceiver(installCompleteReceiver,
+					new IntentFilter(MyBroadcast.MESTORE_INSTALL_FINASH));
+		} else {
+
 		}
 	}
 
 	private void getAppForPackage(Activity activity, String appPackageName,
 			String appTitle, CommonViewHolder mView) {
 		if (mActivity == null) {
-			mActivity = activity;      
+			mActivity = activity;
 			mPm = activity.getPackageManager();
 		}
 		PackageInfo pkgInfo;
